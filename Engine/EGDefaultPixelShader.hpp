@@ -8,15 +8,15 @@ namespace Engine::Shader
 	class DefaultPixelShader final : public Abstract::Shader
 	{
 	public:
-		DefaultPixelShader(std::wstring key);
+		DefaultPixelShader(const std::wstring& key);
 		~DefaultPixelShader() override = default;
 		inline void Load() override;
 	};
 
-	inline DefaultPixelShader::DefaultPixelShader(std::wstring key) :
+	inline DefaultPixelShader::DefaultPixelShader(const std::wstring& key) :
 		Shader(
 			L"DefaultPixelShader", 
-			std::move(key),
+			key,
 			"TrianglePS.hlsl",
 			D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST,
 			nullptr,

@@ -16,6 +16,7 @@ namespace Engine::Graphics
 		void Create(size_t size);
 		void Bind(void* data) const;
 		void SetPipeline(ShaderStage stage);
+		void Release() const;
 
 	private:
 		const CBTYPES mType;
@@ -43,5 +44,13 @@ namespace Engine::Graphics
 	inline void ConstantBuffer::SetPipeline(ShaderStage stage)
 	{
 		 D3DDevice::GetDevice()->SetConstantBuffer(stage, mType, buffer.GetAddressOf());
+	}
+
+	inline void ConstantBuffer::Release() const
+	{
+		if(buffer)
+		{
+			buffer->Release();
+		}
 	}
 }

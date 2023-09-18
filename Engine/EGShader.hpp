@@ -16,14 +16,14 @@ namespace Engine::Abstract
 		[[nodiscard]] Graphics::ShaderStage GetStage() const { return mStage; }
 
 	protected:
-		Shader(std::wstring name, 
-		std::wstring key, 
-		std::filesystem::path path,
+		Shader(const std::wstring& name, 
+		const std::wstring& key, 
+		const std::filesystem::path& path,
 		D3D11_PRIMITIVE_TOPOLOGY topology,
 		const D3D11_INPUT_ELEMENT_DESC* input_desc, 
 		const size_t* input_size, 
 		const Graphics::ShaderStage stage,
-		std::string entrypoint);
+		const std::string& entrypoint);
 
 		~Shader() override = default;
 
@@ -66,14 +66,14 @@ namespace Engine::Abstract
 	};
 
 	inline Shader::Shader(
-		std::wstring name, 
-		std::wstring key, 
-		std::filesystem::path path,
+		const std::wstring& name, 
+		const std::wstring& key, 
+		const std::filesystem::path& path,
 		D3D11_PRIMITIVE_TOPOLOGY topology,
 		const D3D11_INPUT_ELEMENT_DESC* input_desc, 
 		const size_t* input_size, 
 		const Graphics::ShaderStage stage,
-		std::string entrypoint) : Resource(std::move(name), std::move(key), std::move(path)),
+		const std::string& entrypoint) : Resource(name, key, path),
 		m_entry_point_(entrypoint), mTopology(topology), mInputDesc(input_desc), mInputSize(input_size), mStage(stage)
 	{
 	}

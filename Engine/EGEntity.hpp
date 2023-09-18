@@ -17,7 +17,7 @@ namespace Engine::Abstract
 		}
 
 	protected:
-		explicit Entity(std::wstring name) : mName(std::move(name)), mID(reinterpret_cast<UINT32>(this))
+		explicit Entity(const std::wstring& name) : mName(name), mID(reinterpret_cast<UINT32>(this))
 		{
 		}
 

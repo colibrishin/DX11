@@ -8,9 +8,7 @@ namespace Engine::Abstract
 	{
 	public:
 		Mesh(
-			std::wstring name, 
-			std::wstring key, 
-			std::filesystem::path path, 
+			const std::wstring& name, const std::wstring& key, const std::filesystem::path& path, 
 			const Renderer::Vertex* vertex_data,
 			const size_t* vertex_size,
 			const UINT* index_data,

@@ -14,7 +14,7 @@ namespace Engine::Abstract
 			Dead,
 		};
 
-		GameObject(std::wstring name);
+		GameObject(const std::wstring& name);
 		~GameObject() override = default;
 
 		void AddComponent(const std::weak_ptr<Component>& component);
@@ -42,8 +42,8 @@ namespace Engine::Abstract
 		std::vector<std::weak_ptr<Component>> mComponents{};
 	};
 
-	inline GameObject::GameObject(std::wstring name)
-		: Entity(std::move(name)), mState(Active)
+	inline GameObject::GameObject(const std::wstring& name)
+		: Entity(name), mState(Active)
 	{
 		mComponents.resize(Enums::COMPONENTTYPE::END);
 	}

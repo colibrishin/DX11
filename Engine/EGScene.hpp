@@ -8,7 +8,7 @@ namespace Engine::Abstract
 	class Scene : public Entity
 	{
 	public:
-		Scene(std::wstring name);
+		Scene(const std::wstring& name);
 		virtual ~Scene() = default;
 
 		virtual void Initialize();
@@ -23,7 +23,7 @@ namespace Engine::Abstract
 		Layer mLayers[Enums::LAYER::MAX];
 	};
 
-	inline Scene::Scene(std::wstring name) : Entity(std::move(name))
+	inline Scene::Scene(const std::wstring& name) : Entity(name)
 	{
 	}
 

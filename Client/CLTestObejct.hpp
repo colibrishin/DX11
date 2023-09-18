@@ -14,7 +14,7 @@ namespace Client::Object
 	class TestObject final : public Engine::Abstract::GameObject
 	{
 	public:
-		TestObject(std::wstring name);
+		TestObject(const std::wstring& name);
 		~TestObject() override = default;
 		inline void Initialize() override;
 		inline void Update() override;
@@ -30,7 +30,7 @@ namespace Client::Object
 		void scale_down();
 	};
 
-	inline TestObject::TestObject(std::wstring name) : GameObject(std::move(name))
+	inline TestObject::TestObject(const std::wstring& name) : GameObject(std::move(name))
 	{
 	}
 

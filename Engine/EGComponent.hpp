@@ -22,14 +22,14 @@ namespace Engine::Abstract
 		[[nodiscard]] UINT GetUpdateOrder() const { return static_cast<UINT>(mType); }
 
 	protected:
-		Component(std::wstring name, Enums::COMPONENTTYPE type);
+		Component(const std::wstring& name, Enums::COMPONENTTYPE type);
 
 	private:
 		const Enums::COMPONENTTYPE mType;
 		std::weak_ptr<GameObject> mOwner;
 	};
 
-	inline Component::Component(std::wstring name, Enums::COMPONENTTYPE type) : Entity(std::move(name)), mType(type),
+	inline Component::Component(const std::wstring& name, Enums::COMPONENTTYPE type) : Entity(name), mType(type),
 		mOwner({})
 	{
 	}

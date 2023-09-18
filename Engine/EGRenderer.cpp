@@ -16,4 +16,12 @@ namespace Engine::Renderer
 			buffer = std::make_shared<Graphics::ConstantBuffer>();
 		}
 	}
+
+	void Release()
+	{
+		for(const auto& buffer : constantBuffers)
+		{
+			buffer->Release();
+		}
+	}
 }

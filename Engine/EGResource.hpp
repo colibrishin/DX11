@@ -17,8 +17,8 @@ namespace Engine::Abstract
 		void SetPath(const std::filesystem::path& path) { mPath = path; }
 
 	protected:
-		Resource(std::wstring name, std::wstring key, std::filesystem::path path) : Entity(std::move(name)),
-			mKey(std::move(key)), mPath(std::move(path))
+		Resource(const std::wstring& name, const std::wstring& key, const std::filesystem::path& path) : Entity(name),
+			mKey(key), mPath(path)
 		{
 		}
 

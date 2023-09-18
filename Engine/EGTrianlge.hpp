@@ -11,9 +11,9 @@ namespace Engine::Mesh
 	class TriangleMesh : public Abstract::Mesh
 	{
 	public:
-		TriangleMesh(std::wstring key) : Mesh(
+		TriangleMesh(const std::wstring& key) : Mesh(
 			L"Triangle", 
-			std::move(key), 
+			key, 
 			"", 
 			m_vertex_, 
 			&m_vertex_count_, 

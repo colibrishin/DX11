@@ -7,12 +7,12 @@
 #include "EGD3DDevice.hpp"
 #include "EGRenderer.h"
 
-Engine::Abstract::Mesh::Mesh(std::wstring name, std::wstring key, std::filesystem::path path, 
+Engine::Abstract::Mesh::Mesh(const std::wstring& name, const std::wstring& key, const std::filesystem::path& path, 
 			const Renderer::Vertex* vertex_data,
 			const size_t* vertex_size,
 			const UINT* index_data,
 			const size_t* index_size) :
-	Resource(std::move(name), std::move(key), std::move(path)), mVertexData(vertex_data), mVertexCount(vertex_size),
+	Resource(name, key, path), mVertexData(vertex_data), mVertexCount(vertex_size),
 	mIndexData(index_data), mIndexCount(index_size)
 {
 	Mesh::Load();
