@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Abstract">
+      <UniqueIdentifier>{3b0ff7f2-5f6b-4eaa-8f41-368200a335f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics">
+      <UniqueIdentifier>{15522ec5-accc-4c94-87f0-17884bd45f09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{688501a5-4eb4-4ab4-9544-2cccb7f01fc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager">
+      <UniqueIdentifier>{b4e24b5e-7aa1-4962-848a-536552bc48bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{8bf60a5b-5a73-4e25-b4d9-2e50e6435a25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component">
+      <UniqueIdentifier>{ea430949-31b4-487d-9f32-c8962f127f82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mesh">
+      <UniqueIdentifier>{59ed5c6d-3486-401d-a9bd-ea54de0ce7e8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="EGRenderer.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="EGResource.hpp">
+      <Filter>Abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="EGEntity.hpp">
+      <Filter>Abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="EGMesh.hpp">
+      <Filter>Abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="EGGraphics.hpp">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="EGConstantBuffer.hpp">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="EGD3DDevice.hpp">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="EGShader.hpp">
+      <Filter>Abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="EGDefaultVertexShader.hpp">
+      <Filter>Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="EGDefaultPixelShader.hpp">
+      <Filter>Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="EGSceneManager.hpp">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="EGLayer.hpp">
+      <Filter>Abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="EGScene.hpp">
+      <Filter>Abstract</Filter>
+    </ClInclude>
+    <ClInclude Include="EGResourceManager.hpp">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="EGComponent.hpp">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="EGTransform.hpp">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="EGGameObject.hpp">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="EGEnums.hpp" />
+    <ClInclude Include="framework.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="EGMeshRenderer.hpp">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="EGTrianlge.hpp">
+      <Filter>Mesh</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="EGD3DDevice.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="EGMesh.cpp">
+      <Filter>Abstract</Filter>
+    </ClCompile>
+    <ClCompile Include="EGDeltaTime.hpp" />
+    <ClCompile Include="EGSceneManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="EGTransform.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="EGMeshRenderer.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="EGGameObjectManager.hpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="EGComponetManager.hpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="EGShaderManager.hpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="EGRenderer.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\TrianglePS.hlsl" />
+    <FxCompile Include="..\TriangleVS.hlsl" />
+  </ItemGroup>
+</Project>
