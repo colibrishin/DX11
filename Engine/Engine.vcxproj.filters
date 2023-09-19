@@ -95,6 +95,7 @@
     <ClInclude Include="EGTextureTriangleMesh.hpp">
       <Filter>Mesh</Filter>
     </ClInclude>
+    <ClInclude Include="EGCommon.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EGD3DDevice.cpp">
@@ -128,6 +129,9 @@
     </ClCompile>
     <ClCompile Include="EGTexturePS.cpp">
       <Filter>Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="EGGameObject.cpp">
+      <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

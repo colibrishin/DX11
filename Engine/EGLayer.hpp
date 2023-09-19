@@ -15,6 +15,7 @@ namespace Engine::Abstract
 		virtual void Render();
 
 		void AddGameObject(const std::weak_ptr<GameObject>& gameObject);
+		void RemoveGameObject(const std::weak_ptr<GameObject>& gameObject);
 
 	private:
 		std::vector<std::weak_ptr<GameObject>> mGameObjects;
@@ -28,7 +29,11 @@ namespace Engine::Abstract
 	{
 		for (const auto gameObject : mGameObjects)
 		{
-			gameObject.lock()->Initialize();
+			if(const auto obj = gameObject.lock())
+			{
+				obj->Initialize();
+			}
+				
 		}
 	}
 
@@ -36,7 +41,10 @@ namespace Engine::Abstract
 	{
 		for (const auto gameObject : mGameObjects)
 		{
-			gameObject.lock()->Update();
+			if(const auto obj = gameObject.lock())
+			{
+				obj->Update();
+			}
 		}
 	}
 
@@ -44,7 +52,10 @@ namespace Engine::Abstract
 	{
 		for (const auto gameObject : mGameObjects)
 		{
-			gameObject.lock()->FixedUpdate();
+			if(const auto obj = gameObject.lock())
+			{
+				obj->FixedUpdate();
+			}
 		}
 	}
 
@@ -52,12 +63,26 @@ namespace Engine::Abstract
 	{
 		for (const auto gameObject : mGameObjects)
 		{
-			gameObject.lock()->Render();
+			if(const auto obj = gameObject.lock())
+			{
+				obj->Render();
+			}
 		}
 	}
 
 	inline void Layer::AddGameObject(const std::weak_ptr<GameObject>& gameObject)
 	{
 		mGameObjects.push_back(gameObject);
+	}
+
+	inline void Layer::RemoveGameObject(const std::weak_ptr<GameObject>& gameObject)
+	{
+		std::erase_if(
+			mGameObjects,
+			[gameObject](const std::weak_ptr<GameObject>& vObj)
+			{
+				return vObj.lock() == gameObject.lock();
+			}
+		);
 	}
 }

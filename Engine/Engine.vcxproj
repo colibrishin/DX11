@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="EGCommon.hpp" />
     <ClInclude Include="EGComponent.hpp" />
     <ClInclude Include="EGConstantBuffer.hpp" />
     <ClInclude Include="EGD3DDevice.hpp" />
@@ -177,6 +178,7 @@
     <ClCompile Include="EGComponetManager.hpp" />
     <ClCompile Include="EGD3DDevice.cpp" />
     <ClCompile Include="EGDeltaTime.hpp" />
+    <ClCompile Include="EGGameObject.cpp" />
     <ClCompile Include="EGGameObjectManager.hpp" />
     <ClCompile Include="EGRenderer.cpp" />
     <ClCompile Include="EGSceneManager.cpp" />
@@ -240,6 +242,7 @@
     <Import Project="..\packages\directxmath.2022.12.12.1\build\native\directxmath.targets" Condition="Exists('..\packages\directxmath.2022.12.12.1\build\native\directxmath.targets')" />
     <Import Project="..\packages\Microsoft.XAudio2.Redist.1.2.11\build\native\Microsoft.XAudio2.Redist.targets" Condition="Exists('..\packages\Microsoft.XAudio2.Redist.1.2.11\build\native\Microsoft.XAudio2.Redist.targets')" />
     <Import Project="..\packages\directxtk_desktop_2019.2023.9.6.1\build\native\directxtk_desktop_2019.targets" Condition="Exists('..\packages\directxtk_desktop_2019.2023.9.6.1\build\native\directxtk_desktop_2019.targets')" />
+    <Import Project="..\packages\directxmesh_desktop_2019.2023.4.28.1\build\native\directxmesh_desktop_2019.targets" Condition="Exists('..\packages\directxmesh_desktop_2019.2023.4.28.1\build\native\directxmesh_desktop_2019.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -248,5 +251,6 @@
     <Error Condition="!Exists('..\packages\directxmath.2022.12.12.1\build\native\directxmath.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\directxmath.2022.12.12.1\build\native\directxmath.targets'))" />
     <Error Condition="!Exists('..\packages\Microsoft.XAudio2.Redist.1.2.11\build\native\Microsoft.XAudio2.Redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.XAudio2.Redist.1.2.11\build\native\Microsoft.XAudio2.Redist.targets'))" />
     <Error Condition="!Exists('..\packages\directxtk_desktop_2019.2023.9.6.1\build\native\directxtk_desktop_2019.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\directxtk_desktop_2019.2023.9.6.1\build\native\directxtk_desktop_2019.targets'))" />
+    <Error Condition="!Exists('..\packages\directxmesh_desktop_2019.2023.4.28.1\build\native\directxmesh_desktop_2019.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\directxmesh_desktop_2019.2023.4.28.1\build\native\directxmesh_desktop_2019.targets'))" />
   </Target>
 </Project>

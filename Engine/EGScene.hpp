@@ -18,6 +18,7 @@ namespace Engine::Abstract
 
 		Layer* GetLayer(UINT index) { return &mLayers[index]; }
 		void AddGameObject(const std::weak_ptr<GameObject>& gameObject, UINT layerIndex);
+		void RemoveGameObject(const std::weak_ptr<GameObject>& gameObject, UINT layerIndex);
 
 	private:
 		Layer mLayers[Enums::LAYER::MAX];
@@ -62,5 +63,10 @@ namespace Engine::Abstract
 	inline void Scene::AddGameObject(const std::weak_ptr<GameObject>& gameObject, UINT layerIndex)
 	{
 		mLayers[layerIndex].AddGameObject(gameObject);
+	}
+
+	inline void Scene::RemoveGameObject(const std::weak_ptr<GameObject>& gameObject, UINT layerIndex)
+	{
+		mLayers[layerIndex].RemoveGameObject(gameObject);
 	}
 }

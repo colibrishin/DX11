@@ -34,11 +34,15 @@ namespace Engine::Manager
 				return object;
 			}
 
-			auto insertion = std::make_shared<T>(name);
-			insertion->Initialize();
-			mObjects.insert({name, insertion});
+			mObjects.insert({name, std::make_shared<T>(name)});
+			mObjects[name]->Initialize();
 
-			return insertion;
+			return std::dynamic_pointer_cast<T>(mObjects[name]);
+		}
+
+		static void Remove(const std::wstring& name)
+		{
+			mObjects.erase(name);
 		}
 
 	private:

@@ -31,4 +31,9 @@ namespace Engine::Manager
 			mPlayScene = mScenes[name];
 		}
 	}
+
+	std::weak_ptr<Abstract::Scene> SceneManager::GetActiveScene()
+	{
+		return mPlayScene;
+	}
 }

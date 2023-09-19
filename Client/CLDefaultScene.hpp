@@ -58,5 +58,9 @@ namespace Client
 		{
 			cast->scale_down();
 		}
+		if(key.Space)
+		{
+			cast->shoot();
+		}
 	}
 }

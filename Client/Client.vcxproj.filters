@@ -33,6 +33,12 @@
     <ClCompile Include="CLStoneTexture.hpp">
       <Filter>Texture</Filter>
     </ClCompile>
+    <ClCompile Include="CLProjectileTestObject.hpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CLTestObject.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

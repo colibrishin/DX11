@@ -1,19 +1,13 @@
 #pragma once
 #include "CLStoneTexture.hpp"
 #include "../Engine/EGGameObject.hpp"
-#include "../Engine/EGComponetManager.hpp"
 #include "../Engine/EGTransform.hpp"
-#include "../Engine/EGMeshRenderer.hpp"
-#include "../Engine/EGTextureVS.hpp"
-#include "../Engine/EGTexturePS.hpp"
-#include "../Engine/EGResourceManager.hpp"
 #include "../Engine/EGTextureTriangleMesh.hpp"
-#include "../Engine/EGDeltaTime.hpp"
-#include "CLStoneTexture.hpp"
+#include "../Engine/EGCommon.hpp"
 
 namespace Client::Object
 {
-	class TestObject final : public Engine::Abstract::GameObject
+	class TestObject : public Engine::Abstract::GameObject
 	{
 	public:
 		TestObject(const std::wstring& name);
@@ -30,100 +24,10 @@ namespace Client::Object
 
 		void scale_up();
 		void scale_down();
+
+		void shoot();
+
+	protected:
+		DirectX::SimpleMath::Vector3 m_offset_;
 	};
-
-	inline TestObject::TestObject(const std::wstring& name) : GameObject(std::move(name))
-	{
-	}
-
-	inline void TestObject::Initialize()
-	{
-		GameObject::Initialize();
-
-		const auto tr = Engine::Manager::ComponentManager::Create<Engine::Abstract::Transform>();
-		tr.lock()->SetPosition({0.0f, 0.0f, 0.0f});
-		AddComponent(tr);
-
-		const auto mesh = Engine::Manager::ResourceManager::Load<Engine::Mesh::TextureTriangleMesh>(
-			L"TriangleMesh");
-		const auto ps = Engine::Manager::ResourceManager::Load<Engine::Shader::TexturePixelShader>(
-			L"TexturePS");
-		const auto vs = Engine::Manager::ResourceManager::Load<Engine::Shader::TextureVertexShader>(
-			L"TextureVS");
-		const auto tex = Engine::Manager::ResourceManager::Load<Texture::StoneTexture>(
-			L"TestTexture");
-
-		const auto meshRenderer = 
-			Engine::Manager::ComponentManager::Create<Engine::MeshRenderer<Engine::Renderer::TextureVertex>>().lock();
-
-		meshRenderer->SetMesh(mesh);
-		meshRenderer->SetShader(ps);
-		meshRenderer->SetShader(vs);
-		meshRenderer->SetTexture(tex);
-
-		AddComponent(meshRenderer);
-	}
-
-	inline void TestObject::Update()
-	{
-		GameObject::Update();
-	}
-
-	inline void TestObject::FixedUpdate()
-	{
-		GameObject::FixedUpdate();
-	}
-
-	inline void TestObject::Render()
-	{
-		GameObject::Render();
-	}
-
-	inline void TestObject::move_up()
-	{
-		const auto tr = GetComponent<Engine::Abstract::Transform>().lock();
-		auto pos = tr->GetPosition();
-		pos += {0, 10.0f * Engine::DeltaTime::GetDeltaTime()->GetElapsedSeconds(), 0};
-		tr->SetPosition(pos);
-	}
-
-	inline void TestObject::move_down()
-	{
-		const auto tr = GetComponent<Engine::Abstract::Transform>().lock();
-		auto pos = tr->GetPosition();
-		pos += {0, -10.0f * Engine::DeltaTime::GetDeltaTime()->GetElapsedSeconds(), 0};
-		tr->SetPosition(pos);
-	}
-
-	inline void TestObject::move_left()
-	{
-		const auto tr = GetComponent<Engine::Abstract::Transform>().lock();
-		auto pos = tr->GetPosition();
-		pos += {-10.0f * Engine::DeltaTime::GetDeltaTime()->GetElapsedSeconds(), -0.0f, 0};
-		tr->SetPosition(pos);
-	}
-
-	inline void TestObject::move_right()
-	{
-		const auto tr = GetComponent<Engine::Abstract::Transform>().lock();
-		auto pos = tr->GetPosition();
-		pos += {10.0f * Engine::DeltaTime::GetDeltaTime()->GetElapsedSeconds(), -0.0f, 0};
-		tr->SetPosition(pos);
-	}
-
-	inline void TestObject::scale_up()
-	{
-		const auto tr = GetComponent<Engine::Abstract::Transform>().lock();
-		auto pos = tr->GetScale();
-		pos += {0.25f, 0.25f, 0.25f} * Engine::DeltaTime::GetDeltaTime()->GetElapsedSeconds();
-		tr->SetScale(pos);
-	}
-
-	inline void TestObject::scale_down()
-	{
-		const auto tr = GetComponent<Engine::Abstract::Transform>().lock();
-		auto pos = tr->GetScale();
-		pos -= {0.25f, 0.25f, 0.25f} * Engine::DeltaTime::GetDeltaTime()->GetElapsedSeconds();
-		tr->SetScale(pos);
-	}
 }

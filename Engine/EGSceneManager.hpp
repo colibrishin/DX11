@@ -18,6 +18,7 @@ namespace Engine::Manager
 			mScenes[name] = std::make_shared<T>();
 			mScenes[name]->Initialize();
 		}
+		static std::weak_ptr<Abstract::Scene> GetActiveScene();
 
 	private:
 		inline static std::map<std::wstring, std::shared_ptr<Abstract::Scene>> mScenes{};

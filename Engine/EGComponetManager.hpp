@@ -18,9 +18,13 @@ namespace Engine::Manager
 		{
 			auto comp = std::make_shared<T>(args...);
 
-			mComponents.insert({std::to_wstring(comp->GetID()), comp});
+			mComponents.emplace(std::to_wstring(comp->GetID()), comp);
 
 			return comp;
+		}
+		static void Remove(const UINT id)
+		{
+			mComponents.erase(std::to_wstring(id));
 		}
 
 	private:
