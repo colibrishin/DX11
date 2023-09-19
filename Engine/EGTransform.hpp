@@ -2,22 +2,13 @@
 #include "EGComponent.hpp"
 #include <SimpleMath.h>
 
+#include "EGRenderer.h"
+
 namespace Engine::Abstract
 {
 	class Transform : public Component
 	{
 	public:
-		struct TransformBuffer
-		{
-			// TODO: Without padding version.
-			DirectX::SimpleMath::Vector3 position;
-			float _paddingA = 1.f;
-			DirectX::SimpleMath::Vector3 rotation;
-			float _paddingB = 1.f;
-			DirectX::SimpleMath::Vector3 scale;
-			float _paddingC = 1.f;
-		};
-
 		Transform();
 		~Transform() override = default;
 
@@ -41,6 +32,6 @@ namespace Engine::Abstract
 		DirectX::SimpleMath::Vector3 GetScale() const { return m_buffer_.scale; }
 
 	private:
-		TransformBuffer m_buffer_;
+		Renderer::TransformBuffer m_buffer_;
 	};
 }

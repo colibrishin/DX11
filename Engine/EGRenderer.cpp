@@ -7,10 +7,8 @@ namespace Engine::Renderer
 
 	void Initialize()
 	{
-		for(auto& buffer : constantBuffers)
-		{
-			buffer = std::make_shared<Graphics::ConstantBuffer>();
-		}
+		constantBuffers[(UINT)Graphics::CBTYPES::TRANSFORM] = std::make_shared<Graphics::ConstantBuffer>();
+		constantBuffers[(UINT)Graphics::CBTYPES::TRANSFORM]->Create(sizeof(TransformBuffer));
 	}
 
 	void Release()

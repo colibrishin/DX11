@@ -52,7 +52,6 @@ void Client::Application::Render()
 	dev->AdjustViewport();
 	Engine::Manager::SceneManager::Render();
 	dev->Present();
-	Engine::Renderer::Release();
 }
 
 DirectX::Keyboard::State Client::Application::GetKeyState()

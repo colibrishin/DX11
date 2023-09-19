@@ -32,7 +32,6 @@ namespace Engine::Abstract
 	{
 		const std::weak_ptr pb = Renderer::constantBuffers[(UINT)Graphics::CBTYPES::TRANSFORM];
 
-		pb.lock()->Create(sizeof(TransformBuffer));
 		pb.lock()->Bind(&m_buffer_);
 		pb.lock()->SetPipeline(Graphics::ShaderStage::VS);
 	}
