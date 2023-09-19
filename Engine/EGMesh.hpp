@@ -105,7 +105,5 @@ namespace Engine::Abstract
 		CreateIndexBuffer((void*)mIndexData, *mIndexCount);
 		BindBuffer();
 		Graphics::D3DDevice::GetDevice()->DrawIndexed(*mIndexCount, 0, 0);
-		mVertexBuffer->Release();
-		mIndexBuffer->Release();
 	}
 }
