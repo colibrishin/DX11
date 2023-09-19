@@ -166,6 +166,7 @@
     <ClInclude Include="EGScene.hpp" />
     <ClInclude Include="EGSceneManager.hpp" />
     <ClInclude Include="EGShader.hpp" />
+    <ClInclude Include="EGSquareMesh.hpp" />
     <ClInclude Include="EGTexture2D.hpp" />
     <ClInclude Include="EGTexturePS.hpp" />
     <ClInclude Include="EGTextureTriangleMesh.hpp" />
@@ -185,6 +186,7 @@
     <ClCompile Include="EGShaderManager.hpp" />
     <ClCompile Include="EGTexture2D.cpp" />
     <ClCompile Include="EGTexturePS.cpp" />
+    <ClCompile Include="EGTextureSquareMesh.hpp" />
     <ClCompile Include="EGTextureVS.hpp" />
     <ClCompile Include="EGTransform.cpp" />
     <ClCompile Include="pch.cpp">

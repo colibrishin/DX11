@@ -6,7 +6,9 @@
 #include "../Engine/EGTextureVS.hpp"
 #include "../Engine/EGDeltaTime.hpp"
 #include "CLProjectileTestObject.hpp"
-#include "../Engine/EGSceneManager.hpp"	
+#include "../Engine/EGSceneManager.hpp"
+#include "../Engine/EGTextureSquareMesh.hpp"
+
 
 namespace Client::Object
 {
@@ -22,8 +24,8 @@ namespace Client::Object
 		tr.lock()->SetPosition({0.0f, 0.0f, 0.0f});
 		AddComponent(tr);
 
-		const auto mesh = Engine::Manager::ResourceManager::Load<Engine::Mesh::TextureTriangleMesh>(
-			L"TriangleMesh");
+		const auto mesh = Engine::Manager::ResourceManager::Load<Engine::Mesh::TextureSquareMesh>(
+			L"SquareMesh");
 		const auto ps = Engine::Manager::ResourceManager::Load<Engine::Shader::TexturePixelShader>(
 			L"TexturePS");
 		const auto vs = Engine::Manager::ResourceManager::Load<Engine::Shader::TextureVertexShader>(

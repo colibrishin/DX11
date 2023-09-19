@@ -91,11 +91,16 @@
     <ClInclude Include="EGTexture2D.hpp">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="EGTexturePS.hpp" />
     <ClInclude Include="EGTextureTriangleMesh.hpp">
       <Filter>Mesh</Filter>
     </ClInclude>
     <ClInclude Include="EGCommon.hpp" />
+    <ClInclude Include="EGTexturePS.hpp">
+      <Filter>Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="EGSquareMesh.hpp">
+      <Filter>Mesh</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EGD3DDevice.cpp">
@@ -132,6 +137,9 @@
     </ClCompile>
     <ClCompile Include="EGGameObject.cpp">
       <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="EGTextureSquareMesh.hpp">
+      <Filter>Mesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
