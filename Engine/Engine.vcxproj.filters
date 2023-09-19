@@ -85,16 +85,20 @@
     <ClInclude Include="EGMeshRenderer.hpp">
       <Filter>Component</Filter>
     </ClInclude>
-    <ClInclude Include="EGTrianlge.hpp">
+    <ClInclude Include="EGTrianlgeMesh.hpp">
+      <Filter>Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="EGTexture2D.hpp">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="EGTexturePS.hpp" />
+    <ClInclude Include="EGTextureTriangleMesh.hpp">
       <Filter>Mesh</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EGD3DDevice.cpp">
       <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="EGMesh.cpp">
-      <Filter>Abstract</Filter>
     </ClCompile>
     <ClCompile Include="EGDeltaTime.hpp" />
     <ClCompile Include="EGSceneManager.cpp">
@@ -104,9 +108,6 @@
       <Filter>Component</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="EGMeshRenderer.cpp">
-      <Filter>Component</Filter>
-    </ClCompile>
     <ClCompile Include="EGGameObjectManager.hpp">
       <Filter>Manager</Filter>
     </ClCompile>
@@ -119,6 +120,15 @@
     <ClCompile Include="EGRenderer.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="EGTexture2D.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="EGTextureVS.hpp">
+      <Filter>Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="EGTexturePS.cpp">
+      <Filter>Shader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -126,5 +136,7 @@
   <ItemGroup>
     <FxCompile Include="..\TrianglePS.hlsl" />
     <FxCompile Include="..\TriangleVS.hlsl" />
+    <FxCompile Include="..\TexturePS.hlsl" />
+    <FxCompile Include="..\TextureVS.hlsl" />
   </ItemGroup>
 </Project>

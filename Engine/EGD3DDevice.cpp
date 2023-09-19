@@ -87,7 +87,7 @@ Engine::Graphics::D3DDevice::D3DDevice(HWND hwnd, UINT width, UINT height)
 	texdesc.MipLevels = 0;
 	texdesc.MiscFlags = 0;
 
-	CreateTexture(texdesc);
+	CreateDepthStencil(texdesc);
 }
 
 void Engine::Graphics::D3DDevice::CreateSwapChain(DXGI_SWAP_CHAIN_DESC& swapChainDesc)
@@ -111,7 +111,12 @@ void Engine::Graphics::D3DDevice::CreateBuffer(const D3D11_BUFFER_DESC& desc,
 	DX::ThrowIfFailed(mDevice->CreateBuffer(&desc, initial_data, buffer));
 }
 
-void Engine::Graphics::D3DDevice::CreateTexture(const D3D11_TEXTURE2D_DESC& desc)
+void Engine::Graphics::D3DDevice::CreateTexture(const D3D11_TEXTURE2D_DESC& desc, ID3D11Texture2D** texture) const
+{
+	DX::ThrowIfFailed(mDevice->CreateTexture2D(&desc, nullptr, texture));
+}
+
+void Engine::Graphics::D3DDevice::CreateDepthStencil(const D3D11_TEXTURE2D_DESC& desc)
 {
 	// Create Depth Stencil Buffer
 	DX::ThrowIfFailed(mDevice->CreateTexture2D(&desc, nullptr, mDepthStencilBuffer.GetAddressOf()));
@@ -119,6 +124,28 @@ void Engine::Graphics::D3DDevice::CreateTexture(const D3D11_TEXTURE2D_DESC& desc
 	// Create Depth Stencil Buffer View
 	DX::ThrowIfFailed(
 		mDevice->CreateDepthStencilView(mDepthStencilBuffer.Get(), nullptr, mDepthStencilView.GetAddressOf()));
+}
+
+void Engine::Graphics::D3DDevice::CreateShaderResourceView(
+	ID3D11Texture2D* texture, const D3D11_SHADER_RESOURCE_VIEW_DESC& desc, ID3D11ShaderResourceView** resource_view) const
+{
+	DX::ThrowIfFailed(mDevice->CreateShaderResourceView(
+				texture, &desc, resource_view));
+}
+
+void Engine::Graphics::D3DDevice::GenerateMips(ID3D11ShaderResourceView* resource_view) const
+{
+	mContext->GenerateMips(resource_view);
+}
+
+void Engine::Graphics::D3DDevice::UpdateSubresource(ID3D11Resource* resource, void* data, const UINT stride, const UINT offset)
+{
+	mContext->UpdateSubresource(resource, 0, nullptr, data, stride, offset);
+}
+
+void Engine::Graphics::D3DDevice::CreateSampler(const D3D11_SAMPLER_DESC& desc, ID3D11SamplerState** sampler_state) const
+{
+	DX::ThrowIfFailed(mDevice->CreateSamplerState(&desc, sampler_state));
 }
 
 void Engine::Graphics::D3DDevice::CreateInputLayout(const D3D11_INPUT_ELEMENT_DESC* pInputElementDescs,
@@ -196,6 +223,16 @@ void Engine::Graphics::D3DDevice::BindVertexShader(ID3D11VertexShader* pVertexSh
 void Engine::Graphics::D3DDevice::BindPixelShader(ID3D11PixelShader* pPixelShader) const
 {
 	mContext->PSSetShader(pPixelShader, nullptr, 0);
+}
+
+void Engine::Graphics::D3DDevice::BindSamplerState(ID3D11SamplerState** pSamplerState) const
+{
+	mContext->PSSetSamplers(0, 1, pSamplerState);
+}
+
+void Engine::Graphics::D3DDevice::BIndPixelShaderResource(ID3D11ShaderResourceView** pResourceView) const
+{
+	mContext->PSSetShaderResources(0, 1, pResourceView);
 }
 
 void Engine::Graphics::D3DDevice::BindViewports(D3D11_VIEWPORT* viewPort) const
@@ -282,17 +319,4 @@ void Engine::Graphics::D3DDevice::DrawIndexed(UINT IndexCount, UINT StartIndexLo
 void Engine::Graphics::D3DDevice::Present() const
 {
 	mSwapChain->Present(1, 0);
-}
-
-void Engine::Graphics::D3DDevice::Render() const
-{
-	Renderer::constantBuffers[static_cast<UINT>(CBTYPES::TRANSFORM)]->SetPipeline(ShaderStage::VS);
-
-	Renderer::mesh.lock()->BindBuffer();
-	DirectX::SimpleMath::Vector4 pos(0.0f, 0.0f, 0.0f, 0.0f);
-	Renderer::constantBuffers[static_cast<UINT>(CBTYPES::TRANSFORM)]->Bind(&pos);
-
-	Renderer::shader.lock()->Update();
-
-	DrawIndexed(6, 0, 0);
 }

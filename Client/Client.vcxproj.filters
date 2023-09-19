@@ -11,6 +11,9 @@
     <Filter Include="Object">
       <UniqueIdentifier>{823d8461-1ab9-4554-b331-817012de1816}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Texture">
+      <UniqueIdentifier>{7cfe7ef4-99c7-4b90-8337-53e71b3b3bde}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -26,6 +29,9 @@
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="CLDefaultScene.hpp">
       <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CLStoneTexture.hpp">
+      <Filter>Texture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

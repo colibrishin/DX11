@@ -1,14 +1,14 @@
 #pragma once
 #include "pch.h"
 
-#include <SimpleMath.h>
 #include <string>
 
 #include "../Engine/EGMeshRenderer.hpp"
+#include "../Engine/EGRenderer.h"
 
 namespace Engine::Mesh
 {
-	class TriangleMesh : public Abstract::Mesh
+	class TriangleMesh : public Abstract::Mesh<Renderer::Vertex>
 	{
 	public:
 		TriangleMesh(const std::wstring& key) : Mesh(

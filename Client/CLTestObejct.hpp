@@ -1,13 +1,15 @@
 #pragma once
+#include "CLStoneTexture.hpp"
 #include "../Engine/EGGameObject.hpp"
 #include "../Engine/EGComponetManager.hpp"
 #include "../Engine/EGTransform.hpp"
 #include "../Engine/EGMeshRenderer.hpp"
-#include "../Engine/EGDefaultPixelShader.hpp"
-#include "../Engine/EGDefaultVertexShader.hpp"
+#include "../Engine/EGTextureVS.hpp"
+#include "../Engine/EGTexturePS.hpp"
 #include "../Engine/EGResourceManager.hpp"
-#include "../Engine/EGTrianlge.hpp"
+#include "../Engine/EGTextureTriangleMesh.hpp"
 #include "../Engine/EGDeltaTime.hpp"
+#include "CLStoneTexture.hpp"
 
 namespace Client::Object
 {
@@ -42,18 +44,22 @@ namespace Client::Object
 		tr.lock()->SetPosition({0.0f, 0.0f, 0.0f});
 		AddComponent(tr);
 
-		const auto mesh = Engine::Manager::ResourceManager::Load<Engine::Mesh::TriangleMesh>(
+		const auto mesh = Engine::Manager::ResourceManager::Load<Engine::Mesh::TextureTriangleMesh>(
 			L"TriangleMesh");
-		const auto ps = Engine::Manager::ResourceManager::Load<Engine::Shader::DefaultPixelShader>(
-			L"DefaultPS");
-		const auto vs = Engine::Manager::ResourceManager::Load<Engine::Shader::DefaultVertexShader>(
-			L"DefaultVS");
+		const auto ps = Engine::Manager::ResourceManager::Load<Engine::Shader::TexturePixelShader>(
+			L"TexturePS");
+		const auto vs = Engine::Manager::ResourceManager::Load<Engine::Shader::TextureVertexShader>(
+			L"TextureVS");
+		const auto tex = Engine::Manager::ResourceManager::Load<Texture::StoneTexture>(
+			L"TestTexture");
+
 		const auto meshRenderer = 
-			Engine::Manager::ComponentManager::Create<Engine::MeshRenderer>().lock();
+			Engine::Manager::ComponentManager::Create<Engine::MeshRenderer<Engine::Renderer::TextureVertex>>().lock();
 
 		meshRenderer->SetMesh(mesh);
 		meshRenderer->SetShader(ps);
 		meshRenderer->SetShader(vs);
+		meshRenderer->SetTexture(tex);
 
 		AddComponent(meshRenderer);
 	}

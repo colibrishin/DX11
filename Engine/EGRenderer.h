@@ -1,16 +1,6 @@
 #pragma once
 #include <memory>
 #include "EGConstantBuffer.hpp"
-#include "EGShader.hpp"
-#include <SimpleMath.h>
-
-namespace Engine
-{
-	namespace Abstract
-	{
-		class Mesh;
-	}
-}
 
 namespace Engine::Renderer
 {
@@ -20,8 +10,12 @@ namespace Engine::Renderer
 		DirectX::XMFLOAT4 color;
 	};
 
-	extern std::weak_ptr<Abstract::Mesh> mesh;
-	extern std::weak_ptr<Abstract::Shader> shader;
+	struct TextureVertex
+	{
+		DirectX::XMFLOAT3 pos;
+		DirectX::XMFLOAT2 tex;
+	};
+
 	extern std::shared_ptr<Graphics::ConstantBuffer> constantBuffers[];
 
 	// Initialize the renderer

@@ -68,15 +68,6 @@ struct TextureVertexType
 	DirectX::XMFLOAT2 texture;
 };
 
-struct TargaHeader
-{
-    unsigned char data1[12];
-    unsigned short width;
-    unsigned short height;
-    unsigned char bpp;
-    unsigned char data2;
-};
-
 namespace DX
 {
 	// Enable enum flags:

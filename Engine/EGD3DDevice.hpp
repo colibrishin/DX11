@@ -18,8 +18,12 @@ namespace Engine::Graphics
 		void CreateBuffer(const D3D11_BUFFER_DESC& desc, const D3D11_SUBRESOURCE_DATA* initial_data,
 		                  ID3D11Buffer
 		                  ** buffer) const;
-		void CreateTexture(const D3D11_TEXTURE2D_DESC& desc);
-		bool CreateSampler();
+		void CreateTexture(const D3D11_TEXTURE2D_DESC& desc, ID3D11Texture2D** texture) const;
+		void CreateDepthStencil(const D3D11_TEXTURE2D_DESC& desc);
+		void CreateShaderResourceView(ID3D11Texture2D* texture, const D3D11_SHADER_RESOURCE_VIEW_DESC& desc, ID3D11ShaderResourceView** resource_view) const;
+		void GenerateMips(ID3D11ShaderResourceView* resource_view) const;
+		void UpdateSubresource(ID3D11Resource* resource, void* data, const UINT stride, const UINT offset);
+		void CreateSampler(const D3D11_SAMPLER_DESC& desc, ID3D11SamplerState** sampler_state) const;
 
 		//bool CreateShader(const graphics::ShaderStage stage, const std::wstring& file, const std::string& funcName);
 		void CreateInputLayout(const D3D11_INPUT_ELEMENT_DESC* pInputElementDescs, UINT NumElements
@@ -39,6 +43,8 @@ namespace Engine::Graphics
 
 		void BindVertexShader(ID3D11VertexShader* pVertexShader) const;
 		void BindPixelShader(ID3D11PixelShader* pPixelShader) const;
+		void BindSamplerState(ID3D11SamplerState** pSamplerState) const;
+		void BIndPixelShaderResource(ID3D11ShaderResourceView** pResourceView) const;
 
 		void BindViewports(D3D11_VIEWPORT* viewPort) const;
 		void BindConstantBuffer(ID3D11Buffer* buffer, void* data, UINT size) const;

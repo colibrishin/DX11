@@ -12,7 +12,7 @@ namespace Engine::Abstract
 		void Load() override;
 
 		void Create(const Graphics::ShaderStage stage, const std::filesystem::path& file, const std::string& entrypoint);
-		void Update() const;
+		virtual void Update();
 		[[nodiscard]] Graphics::ShaderStage GetStage() const { return mStage; }
 
 	protected:
@@ -86,12 +86,8 @@ namespace Engine::Abstract
 	inline void Shader::Create(const Graphics::ShaderStage stage, const std::filesystem::path& file,
 		const std::string& entrypoint)
 	{
-		std::filesystem::path path 
-			= std::filesystem::current_path().parent_path();
-		path += "\\Shaders_SOURCE\\";
-
-		std::wstring shaderPath(path);
-		shaderPath += file;
+		std::filesystem::path path = std::filesystem::current_path().parent_path();
+		std::filesystem::path shaderPath = path / file;
 
 		if (stage == Graphics::ShaderStage::VS)
 		{
@@ -108,7 +104,7 @@ namespace Engine::Abstract
 		}
 	}
 
-	inline void Shader::Update() const
+	inline void Shader::Update()
 	{
 		if(mVS != nullptr)
 		{
