@@ -64,10 +64,14 @@ namespace Engine::Mesh
 			m_index_[index + 2] = last;
 			first = last;
 			last += 1;
+
+			// TODO: better recurrence relation
+			std::swap(m_index_[index + 1], m_index_[index + 2]);
+
 			index += 3;
 		}
 
 		m_index_[0] = 0;
-		m_index_[47] = 1;
+		m_index_[46] = 1;
 	}
 }
