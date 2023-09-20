@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="EGCamera.hpp" />
     <ClInclude Include="EGCommon.hpp" />
     <ClInclude Include="EGComponent.hpp" />
     <ClInclude Include="EGConstantBuffer.hpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="EGCamera.cpp" />
     <ClCompile Include="EGComponetManager.hpp" />
     <ClCompile Include="EGD3DDevice.cpp" />
     <ClCompile Include="EGDeltaTime.hpp" />

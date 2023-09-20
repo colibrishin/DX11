@@ -101,6 +101,9 @@
     <ClInclude Include="EGSquareMesh.hpp">
       <Filter>Mesh</Filter>
     </ClInclude>
+    <ClInclude Include="EGCamera.hpp">
+      <Filter>Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EGD3DDevice.cpp">
@@ -140,6 +143,9 @@
     </ClCompile>
     <ClCompile Include="EGTextureSquareMesh.hpp">
       <Filter>Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="EGCamera.cpp">
+      <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
