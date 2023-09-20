@@ -12,6 +12,7 @@
 #include "../Engine/EGSceneManager.hpp"
 #include "../Engine/EGDeltaTime.hpp"
 #include "../Engine/EGGameObjectManager.hpp"
+#include "../Engine/EGCircleMesh.hpp"
 #include "CLTestObejct.hpp"
 
 namespace Client::Object

@@ -18,7 +18,7 @@ namespace Engine::Shader
 			L"DefaultPixelShader", 
 			key,
 			"TrianglePS.hlsl",
-			D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST,
+			D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST,
 			nullptr,
 			nullptr,
 			Graphics::ShaderStage::PS,

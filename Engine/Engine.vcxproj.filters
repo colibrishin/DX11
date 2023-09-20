@@ -104,6 +104,9 @@
     <ClInclude Include="EGCamera.hpp">
       <Filter>Object</Filter>
     </ClInclude>
+    <ClInclude Include="EGCircleMesh.hpp">
+      <Filter>Mesh</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EGD3DDevice.cpp">

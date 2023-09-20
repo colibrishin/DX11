@@ -8,7 +8,7 @@ namespace Engine::Abstract
 {
 	Transform::Transform()
 		: Component(L"Transform" + std::to_wstring(GetID()), Enums::COMPONENTTYPE::TRANSFORM),
-		m_buffer_({}, {}, {}, {}, {1.0f, 1.0f, 1.0f}, {})
+		m_buffer_({}, {}, {}, {}, {1.0f, 1.0f, 1.0f}, 1.0f)
 	{
 	}
 

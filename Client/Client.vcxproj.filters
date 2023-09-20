@@ -39,6 +39,12 @@
     <ClCompile Include="CLTestObject.cpp">
       <Filter>Object</Filter>
     </ClCompile>
+    <ClCompile Include="CLTestCircleObject.hpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CLTestCircleObject.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
