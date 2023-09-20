@@ -12,7 +12,7 @@
 #include "../Engine/EGTextureSquareMesh.hpp"
 #include "../Engine/EGDefaultPixelShader.hpp"
 #include "../Engine/EGDefaultVertexShader.hpp"
-
+#include "../Engine/EGSquareMesh.hpp"
 
 namespace Client::Object
 {

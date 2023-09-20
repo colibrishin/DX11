@@ -5,6 +5,7 @@ VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Windows", "kolibri\kolibri.vcxproj", "{CC4216F4-9077-44E9-B72E-1A0A33654E22}"
 	ProjectSection(ProjectDependencies) = postProject
+		{6ECB7359-9375-4095-A3DD-3712E9B86F52} = {6ECB7359-9375-4095-A3DD-3712E9B86F52}
 		{F8C99D5D-6819-4D95-B325-F6B10B2A78E4} = {F8C99D5D-6819-4D95-B325-F6B10B2A78E4}
 	EndProjectSection
 EndProject

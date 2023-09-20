@@ -30,9 +30,9 @@ namespace Engine::Mesh
 		void generate_vertices();
 		void generate_indices();
 		
-		Renderer::Vertex m_vertex_[30] = {};
+		Renderer::Vertex m_vertex_[17] = {};
 		const size_t m_vertex_count_ = std::size(m_vertex_);
-		UINT m_index_[30] = {};
+		UINT m_index_[48] = {};
 		const size_t m_index_count_ = std::size(m_index_);
 	};
 
@@ -40,25 +40,34 @@ namespace Engine::Mesh
 	{
 		// TODO: https://github.com/microsoft/DirectXTK12/wiki/GeometricPrimitive
 		// TODO: Make it constant value.
-		int n = 10; // number of triangles
-		const float deltaTheta = DirectX::XM_2PI / n; // Change in theta for each vertex
-		for (int i = 0; i < n; i++) 
-		{
-		    int theta = i * deltaTheta; // Theta is the angle for that triangle
-		    int index = 3 * i;
-			m_vertex_[index + 0] = Renderer::Vertex{{0, 0, 0}, {0.0f, 1.0f, 0.0f, 1.0f}};
-		    // Given an angle theta, cosine [cos] will give you the x coordinate,
-		    // and sine [sin] will give you the y coordinate.
+		int n = 16; // number of triangles
 
-			m_vertex_[index + 1] = Renderer::Vertex{
-				{cosf(theta), sinf(theta), 0}, {0.0f, 1.0f, 0.0f, 1.0f}};
-			m_vertex_[index + 2] = Renderer::Vertex{
-				{cosf(theta + deltaTheta), sinf(theta + deltaTheta), 0}, {0.0f, 1.0f, 0.0f, 1.0f}};
+		m_vertex_[0] = {{0, 0, 0,}, {0, 1, 0, 1}};
+
+		const float deltaTheta = DirectX::XM_2PI / n; // Change in theta for each vertex
+		for (int i = 1; i <= n; i++) 
+		{
+		    m_vertex_[i] = Renderer::Vertex{{cosf(deltaTheta * i), sinf(deltaTheta * i), 0}, {0.0f, 1.0f, 0.0f, 1.0f}};
 		}
 	}
 
 	inline void CircleMesh::generate_indices()
 	{
-		// TODO
+		int index = 0;
+		int first = 1;
+		int last = 2;
+
+		for(int i = 0; i < 16; ++i)
+		{
+			m_index_[index] = 0;
+			m_index_[index + 1] = first;
+			m_index_[index + 2] = last;
+			first = last;
+			last += 1;
+			index += 3;
+		}
+
+		m_index_[0] = 0;
+		m_index_[47] = 1;
 	}
 }
