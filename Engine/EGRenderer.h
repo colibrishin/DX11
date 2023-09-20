@@ -15,6 +15,13 @@ namespace Engine::Renderer
 		float _paddingC = 1.f;
 	};
 
+	struct PerspectiveMatrix
+	{
+		DirectX::XMMATRIX world;
+		DirectX::XMMATRIX view;
+		DirectX::XMMATRIX projection;
+	};
+
 	struct Vertex
 	{
 		DirectX::XMFLOAT3 pos;

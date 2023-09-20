@@ -16,7 +16,7 @@ namespace Engine::Abstract
 			const size_t* vertex_size,
 			const UINT* index_data,
 			const size_t* index_size);
-		~Mesh() override = default;
+		~Mesh() override;
 
 		void Load() override;
 
@@ -41,6 +41,19 @@ namespace Engine::Abstract
 	Mesh<T>::Mesh(const std::wstring& name, const std::wstring& key, const std::filesystem::path& path,
 		const T* vertex_data, const size_t* vertex_size, const UINT* index_data, const size_t* index_size): Resource(name, key, path), mVertexData(vertex_data), mVertexCount(vertex_size), mIndexData(index_data), mIndexCount(index_size)
 	{
+	}
+
+	template <typename T>
+	Mesh<T>::~Mesh()
+	{
+		if(mVertexBuffer)
+		{
+			mVertexBuffer->Release();
+		}
+		if(mIndexBuffer)
+		{
+			mIndexBuffer->Release();
+		}
 	}
 
 	template <typename T>
@@ -105,5 +118,7 @@ namespace Engine::Abstract
 		CreateIndexBuffer((void*)mIndexData, *mIndexCount);
 		BindBuffer();
 		Graphics::D3DDevice::GetDevice()->DrawIndexed(*mIndexCount, 0, 0);
+		mVertexBuffer->Release();
+		mIndexBuffer->Release();
 	}
 }
