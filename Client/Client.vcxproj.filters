@@ -22,6 +22,7 @@
     <ClInclude Include="CLTestObejct.hpp">
       <Filter>Object</Filter>
     </ClInclude>
+    <ClInclude Include="CLTestCircleObject.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -37,9 +38,6 @@
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="CLTestObject.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="CLTestCircleObject.hpp">
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="CLTestCircleObject.cpp">

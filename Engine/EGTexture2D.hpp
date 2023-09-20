@@ -1,6 +1,7 @@
 #pragma once
 #include <filesystem>
 #include <wrl/client.h>
+#include <DirectXTex.h>
 
 #include "EGResource.hpp"
 
@@ -10,15 +11,6 @@ namespace Engine::Graphics
 
 	class Texture2D : public Abstract::Resource
 	{
-		struct TargaHeader
-		{
-		    unsigned char data1[12];
-		    unsigned short width;
-		    unsigned short height;
-		    unsigned char bpp;
-		    unsigned char data2;
-		};
-
 	public:
 		explicit Texture2D(
 			const std::wstring& name, const std::wstring& key, 
@@ -32,11 +24,12 @@ namespace Engine::Graphics
 		[[nodiscard]] ID3D11ShaderResourceView** GetTexture();
 
 	private:
-		char* load_tga_32bit();
-		void initialize_texture(const char* data);
+		void load_tga_32bit();
+		void initialize_texture();
 
 		ComPtr<ID3D11ShaderResourceView> m_texture_view_;
 		ComPtr<ID3D11Texture2D> m_texture_;
-		TargaHeader m_targa_header_;
+		DirectX::TexMetadata m_tex_metadata_;
+		std::unique_ptr<DirectX::ScratchImage> m_image_;
 	};
 }

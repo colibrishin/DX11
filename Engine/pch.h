@@ -44,6 +44,8 @@
 #include "VertexTypes.h"
 #include "WICTextureLoader.h"
 
+#include <DirectXTex.h>
+
 #include <exception>
 
 #pragma comment(lib, "d3d11.lib")

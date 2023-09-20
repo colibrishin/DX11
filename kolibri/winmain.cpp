@@ -119,6 +119,13 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
 
+	// this is required for DirectXTex
+	HRESULT hr = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
+	if (FAILED(hr))
+	{
+		return FALSE;
+	}
+
 	application.SetWindow(hWnd, 1600, 900);
 	application.Initialize();
 
