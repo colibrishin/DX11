@@ -16,7 +16,7 @@ namespace Engine::Abstract
 			const size_t* vertex_size,
 			const UINT* index_data,
 			const size_t* index_size);
-		~Mesh() override;
+		~Mesh() override = default;
 
 		void Load() override;
 
@@ -41,19 +41,6 @@ namespace Engine::Abstract
 	Mesh<T>::Mesh(const std::wstring& name, const std::wstring& key, const std::filesystem::path& path,
 		const T* vertex_data, const size_t* vertex_size, const UINT* index_data, const size_t* index_size): Resource(name, key, path), mVertexData(vertex_data), mVertexCount(vertex_size), mIndexData(index_data), mIndexCount(index_size)
 	{
-	}
-
-	template <typename T>
-	Mesh<T>::~Mesh()
-	{
-		if(mVertexBuffer)
-		{
-			mVertexBuffer->Release();
-		}
-		if(mIndexBuffer)
-		{
-			mIndexBuffer->Release();
-		}
 	}
 
 	template <typename T>
@@ -85,7 +72,7 @@ namespace Engine::Abstract
 
 		const D3D11_SUBRESOURCE_DATA subData{data};
 
-		Graphics::D3DDevice::GetDevice()->CreateBuffer(mVBDesc, &subData, mVertexBuffer.GetAddressOf());
+		Graphics::D3DDevice::GetDevice()->CreateBuffer(mVBDesc, &subData, mVertexBuffer.ReleaseAndGetAddressOf());
 	}
 
 	template <typename T>
@@ -98,7 +85,7 @@ namespace Engine::Abstract
 
 		const D3D11_SUBRESOURCE_DATA subData{data};
 
-		Graphics::D3DDevice::GetDevice()->CreateBuffer(mIBDesc, &subData, mIndexBuffer.GetAddressOf());
+		Graphics::D3DDevice::GetDevice()->CreateBuffer(mIBDesc, &subData, mIndexBuffer.ReleaseAndGetAddressOf());
 	}
 
 	template <typename T>
@@ -118,7 +105,5 @@ namespace Engine::Abstract
 		CreateIndexBuffer((void*)mIndexData, *mIndexCount);
 		BindBuffer();
 		Graphics::D3DDevice::GetDevice()->DrawIndexed(*mIndexCount, 0, 0);
-		mVertexBuffer->Release();
-		mIndexBuffer->Release();
 	}
 }
