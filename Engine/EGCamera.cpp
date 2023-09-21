@@ -36,8 +36,8 @@ namespace Engine::Object
 	void Camera::Render()
 	{
 		GameObject::Render();
-		const XMFLOAT3 up {0.0f, 0.1f, 0.0f};
-		const XMFLOAT3 lookAt {0.0f, 0.0f, 1.0f};
+		const XMFLOAT3 up = SimpleMath::Vector3::Up;
+		const XMFLOAT3 lookAt = SimpleMath::Vector3::Backward;
 
 		const auto tr = GetComponent<Abstract::Transform>().lock();
 		const auto position = tr->GetPosition();

@@ -65,7 +65,7 @@ namespace Client::Object
 		auto pos = tr->GetPosition();
 		pos += {0, 10.0f * Engine::DeltaTime::GetDeltaTime()->GetElapsedSeconds(), 0};
 		tr->SetPosition(pos);
-		m_offset_ = up;
+		m_offset_ = DirectX::SimpleMath::Vector3::Up;
 	}
 
 	void TestObject::move_down()
@@ -74,7 +74,7 @@ namespace Client::Object
 		auto pos = tr->GetPosition();
 		pos += {0, -10.0f * Engine::DeltaTime::GetDeltaTime()->GetElapsedSeconds(), 0};
 		tr->SetPosition(pos);
-		m_offset_ = down;
+		m_offset_ = DirectX::SimpleMath::Vector3::Down;
 	}
 
 	void TestObject::move_left()
@@ -83,7 +83,7 @@ namespace Client::Object
 		auto pos = tr->GetPosition();
 		pos += {-10.0f * Engine::DeltaTime::GetDeltaTime()->GetElapsedSeconds(), -0.0f, 0};
 		tr->SetPosition(pos);
-		m_offset_ = left;
+		m_offset_ = DirectX::SimpleMath::Vector3::Left;
 	}
 
 	void TestObject::move_right()
@@ -92,7 +92,7 @@ namespace Client::Object
 		auto pos = tr->GetPosition();
 		pos += {10.0f * Engine::DeltaTime::GetDeltaTime()->GetElapsedSeconds(), -0.0f, 0};
 		tr->SetPosition(pos);
-		m_offset_ = right;
+		m_offset_ = DirectX::SimpleMath::Vector3::Right;
 	}
 
 	void TestObject::scale_up()

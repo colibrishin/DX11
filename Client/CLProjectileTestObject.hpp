@@ -68,15 +68,15 @@ namespace Client::Object
 	inline void ProjectileTestObject::Update()
 	{
 		GameObject::Update();
-		if(m_offset_ == up)
+		if(m_offset_ == DirectX::SimpleMath::Vector3::Up)
 		{
 			move_up();
 		}
-		else if(m_offset_ == down)
+		else if(m_offset_ == DirectX::SimpleMath::Vector3::Down)
 		{
 			move_down();
 		}
-		else if(m_offset_ == left)
+		else if(m_offset_ == DirectX::SimpleMath::Vector3::Left)
 		{
 			move_left();
 		}
