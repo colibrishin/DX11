@@ -35,7 +35,7 @@ namespace Engine::Object
 
 	void Camera::Render()
 	{
-		GameObject::Update();
+		GameObject::Render();
 		const XMFLOAT3 up {0.0f, 0.1f, 0.0f};
 		const XMFLOAT3 lookAt {0.0f, 0.0f, 1.0f};
 
