@@ -7,7 +7,7 @@ namespace Engine::Graphics
 	class ConstantBuffer : public GpuBuffer
 	{
 	public:
-		ConstantBuffer() : mType(CBTYPES::NONE)
+		ConstantBuffer(CBTYPES buffer_type) : mType(buffer_type)
 		{
 		}
 

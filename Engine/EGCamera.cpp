@@ -8,13 +8,17 @@ namespace Engine::Object
 {
 	Camera::Camera(const std::wstring& name) : GameObject(name), m_view_matrix_()
 	{
-		const auto tr = Manager::ComponentManager::Create<Abstract::Transform>().lock();
-		AddComponent(tr);
 	}
 
 	Camera::~Camera()
 	{
 		Destroy();
+	}
+
+	void Camera::Initialize()
+	{
+		const auto tr = Manager::ComponentManager::Create<Abstract::Transform>().lock();
+		AddComponent(tr);
 	}
 
 	void Camera::SetPosition(SimpleMath::Vector3 position)
@@ -31,7 +35,7 @@ namespace Engine::Object
 
 	void Camera::Render()
 	{
-		GameObject::Render();
+		GameObject::Update();
 		const XMFLOAT3 up {0.0f, 0.1f, 0.0f};
 		const XMFLOAT3 lookAt {0.0f, 0.0f, 1.0f};
 

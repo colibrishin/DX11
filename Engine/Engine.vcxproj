@@ -167,6 +167,7 @@
     <ClInclude Include="EGResourceManager.hpp" />
     <ClInclude Include="EGScene.hpp" />
     <ClInclude Include="EGSceneManager.hpp" />
+    <ClInclude Include="EGScript.hpp" />
     <ClInclude Include="EGShader.hpp" />
     <ClInclude Include="EGSquareMesh.hpp" />
     <ClInclude Include="EGTexture2D.hpp" />
@@ -185,6 +186,7 @@
     <ClCompile Include="EGGameObject.cpp" />
     <ClCompile Include="EGGameObjectManager.hpp" />
     <ClCompile Include="EGRenderer.cpp" />
+    <ClCompile Include="EGScene.cpp" />
     <ClCompile Include="EGSceneManager.cpp" />
     <ClCompile Include="EGShaderManager.hpp" />
     <ClCompile Include="EGTexture2D.cpp" />

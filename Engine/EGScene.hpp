@@ -1,10 +1,14 @@
 #pragma once
+#include "EGCamera.hpp"
+#include "EGRenderer.h"
 #include "EGComponent.hpp"
 #include "EGEntity.hpp"
 #include "EGLayer.hpp"
 
 namespace Engine::Abstract
 {
+	using namespace DirectX;
+
 	class Scene : public Entity
 	{
 	public:
@@ -14,6 +18,7 @@ namespace Engine::Abstract
 		virtual void Initialize();
 		virtual void Update();
 		virtual void FixedUpdate();
+		
 		virtual void Render();
 
 		Layer* GetLayer(UINT index) { return &mLayers[index]; }
@@ -21,52 +26,15 @@ namespace Engine::Abstract
 		void RemoveGameObject(const std::weak_ptr<GameObject>& gameObject, UINT layerIndex);
 
 	private:
+		void Transpose(Renderer::PerspectiveMatrix& perspective_matrix);
+		void UpdateBuffer(Renderer::PerspectiveMatrix& buffer) const;
+
 		Layer mLayers[Enums::LAYER::MAX];
+		std::weak_ptr<Object::Camera> m_camera_;
+
+		Renderer::PerspectiveMatrix m_matrix_buffer_{};
+		XMMATRIX m_world_{};
+		XMMATRIX m_ortho_{};
+		XMMATRIX m_projection_{};
 	};
-
-	inline Scene::Scene(const std::wstring& name) : Entity(name)
-	{
-	}
-
-	inline void Scene::Initialize()
-	{
-		for(auto& ly : mLayers)
-		{
-			ly.Initialize();
-		}
-	}
-
-	inline void Scene::Update()
-	{
-		for(auto& ly : mLayers)
-		{
-			ly.Update();
-		}
-	}
-
-	inline void Scene::FixedUpdate()
-	{
-		for(auto& ly : mLayers)
-		{
-			ly.FixedUpdate();
-		}
-	}
-
-	inline void Scene::Render()
-	{
-		for(auto& ly : mLayers)
-		{
-			ly.Render();
-		}
-	}
-
-	inline void Scene::AddGameObject(const std::weak_ptr<GameObject>& gameObject, UINT layerIndex)
-	{
-		mLayers[layerIndex].AddGameObject(gameObject);
-	}
-
-	inline void Scene::RemoveGameObject(const std::weak_ptr<GameObject>& gameObject, UINT layerIndex)
-	{
-		mLayers[layerIndex].RemoveGameObject(gameObject);
-	}
 }

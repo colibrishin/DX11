@@ -199,6 +199,7 @@ namespace Engine::Graphics
 	enum class CBTYPES
 	{
 		NONE,
+		PERSPECTIVE,
 		TRANSFORM,
 		END,
 	};

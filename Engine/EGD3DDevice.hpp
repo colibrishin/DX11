@@ -70,6 +70,10 @@ namespace Engine::Graphics
 		{
 			return m_device_.get();
 		}
+		
+		UINT GetWidth() const { return m_width_; }
+		UINT GetHeight() const { return m_height_; }
+		float GetAspectRatio() const { return (float)m_width_ / (float)m_height_; }
 
 	private:
 		D3DDevice(HWND hwnd, UINT width, UINT height);

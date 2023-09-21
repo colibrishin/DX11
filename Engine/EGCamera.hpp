@@ -1,5 +1,6 @@
 #pragma once
 #include "EGGameObject.hpp"
+#include <SimpleMath.h>
 
 namespace Engine::Object
 {
@@ -10,6 +11,7 @@ namespace Engine::Object
 		Camera(const std::wstring& name);
 		Camera(const Camera&) = default;
 		~Camera() override;
+		void Initialize() override;
 
 		void SetPosition(SimpleMath::Vector3 position);
 		void SetRotation(SimpleMath::Vector3 rotation);

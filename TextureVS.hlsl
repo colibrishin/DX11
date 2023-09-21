@@ -13,7 +13,15 @@ struct PixelInputType
     float2 tex : TEXCOORD;
 };
 
-cbuffer TRANSFORM : register(b0)
+cbuffer MatrixBuffer : register(b1)
+{
+    matrix worldMatrix;
+    matrix viewMatrix;
+    matrix projectionMatrix;
+};
+
+
+cbuffer TRANSFORM : register(b2)
 {
     float4 cbPos;
     float4 cbRot;
@@ -34,6 +42,9 @@ PixelInputType TextureVertexShader(VertexInputType input)
     scaledPos.z *= cbScale.z;
 
     output.position = float4(scaledPos + cbPos.xyz, 1.f);
+    output.position = mul(output.position, worldMatrix);
+    output.position = mul(output.position, viewMatrix);
+    output.position = mul(output.position, projectionMatrix);
 
     // Store the texture coordinates for the pixel shader.
     output.tex = input.tex;
