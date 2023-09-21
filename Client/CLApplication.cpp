@@ -6,7 +6,7 @@
 #include "../Engine/EGD3DDevice.hpp"
 #include "../Engine/EGSceneManager.hpp"
 
-Client::Application::Application() : m_hwnd_(nullptr), m_width_(1600), m_height_(900)
+Client::Application::Application() : m_hwnd_(nullptr), m_width_(1024), m_height_(768)
 {
 }
 
