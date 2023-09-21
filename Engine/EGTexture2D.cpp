@@ -32,7 +32,7 @@ namespace Engine::Graphics
 	{
 		std::filesystem::path path = std::filesystem::current_path().parent_path() / GetPath();
 		m_image_ = std::make_unique<DirectX::ScratchImage>();
-		LoadFromTGAFile(path.c_str(), DirectX::TGA_FLAGS_NONE, &m_tex_metadata_, *m_image_);
+		DX::ThrowIfFailed(LoadFromTGAFile(path.c_str(), DirectX::TGA_FLAGS_NONE, &m_tex_metadata_, *m_image_));
 	}
 
 	void Texture2D::initialize_texture()
