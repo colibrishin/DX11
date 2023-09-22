@@ -6,6 +6,7 @@
 #include "../Engine/EGScene.hpp"
 #include "../Engine/EGGameObjectManager.hpp"
 #include "CLTestObejct.hpp"
+#include "../Engine/EGDeltaTime.hpp"
 
 namespace Client
 {
@@ -37,8 +38,13 @@ namespace Client
 	inline void DefaultScene::Update()
 	{
 		Scene::Update();
+		static float yaw = 0.f;
 		const auto key = Application::GetKeyState();
 		const auto cast = std::dynamic_pointer_cast<Object::TestObject>(m_triangle_.lock());
+
+		const auto tr = m_triangle_.lock()->GetComponent<Engine::Abstract::Transform>();
+		tr.lock()->SetRotation(DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(yaw, 0, 0));
+		yaw += Engine::DeltaTime::GetDeltaTime()->GetElapsedSeconds();
 
 		if(key.W)
 		{

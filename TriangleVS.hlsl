@@ -25,8 +25,6 @@ cbuffer TRANSFORM : register(b2)
     float4 cbScale;
 };
 
-// TODO: rotation https://gist.github.com/kevinmoran/b45980723e53edeb8a5a43c49f134724
-
 VTX_OUT VS_Test(VTX_IN _in)
 {
     VTX_OUT output = (VTX_OUT) 0.f;
