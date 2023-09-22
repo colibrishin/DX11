@@ -26,10 +26,10 @@ namespace Engine::Mesh
 	private:
 		const Renderer::TextureVertex m_vertex_[4] =
 		{
-			{{-1.0f, -1.0f, 0.0f}, {0.0f, 0.0f}},
-			{{-1.0f, 1.0f, 0.0f}, {1.0f, 0.0f}},
-			{{1.0f, 1.0f, 0.0f}, {0.0f, 1.0f}},
-			{{1.0f, -1.0f, 0.0f}, {1.0f, 1.0f}}
+			{{-1.0f, -1.0f, 0.0f}, {0.0f, 0.0f}, DirectX::SimpleMath::Vector3::Forward},
+			{{-1.0f, 1.0f, 0.0f}, {1.0f, 0.0f}, DirectX::SimpleMath::Vector3::Forward},
+			{{1.0f, 1.0f, 0.0f}, {0.0f, 1.0f}, DirectX::SimpleMath::Vector3::Forward},
+			{{1.0f, -1.0f, 0.0f}, {1.0f, 1.0f}, DirectX::SimpleMath::Vector3::Forward}
 		};
 		const size_t m_vertex_count_ = std::size(m_vertex_);
 		const UINT m_index_[6] = {0, 1, 2, 0, 2, 3};
