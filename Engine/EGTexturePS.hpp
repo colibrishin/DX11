@@ -1,6 +1,4 @@
 #pragma once
-#include "pch.h"
-
 #include "EGShader.hpp"
 #include "EGTexture2D.hpp"
 

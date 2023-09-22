@@ -7,6 +7,9 @@ namespace Engine::Renderer
 
 	void Initialize()
 	{
+		constantBuffers[(UINT)Graphics::CBTYPES::LIGHT] = std::make_shared<Graphics::ConstantBuffer>(Graphics::CBTYPES::LIGHT);
+		constantBuffers[(UINT)Graphics::CBTYPES::LIGHT]->Create(sizeof(LightBuffer));
+
 		constantBuffers[(UINT)Graphics::CBTYPES::PERSPECTIVE] = std::make_shared<Graphics::ConstantBuffer>(Graphics::CBTYPES::PERSPECTIVE);
 		constantBuffers[(UINT)Graphics::CBTYPES::PERSPECTIVE]->Create(sizeof(PerspectiveMatrix));
 

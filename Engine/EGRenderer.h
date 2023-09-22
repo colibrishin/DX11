@@ -41,10 +41,6 @@ namespace Engine::Renderer
 	{
 		DirectX::XMFLOAT3 pos;
 		DirectX::XMFLOAT2 tex;
-	};
-
-	struct LightTextureVertex : public TextureVertex
-	{
 		DirectX::XMFLOAT3 normal;
 	};
 

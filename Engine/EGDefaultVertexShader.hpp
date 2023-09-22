@@ -8,7 +8,7 @@ namespace Engine::Shader
 	class DefaultVertexShader final : public Abstract::Shader
 	{
 	public:
-		DefaultVertexShader(std::wstring key);
+		DefaultVertexShader(const std::wstring& key);
 		~DefaultVertexShader() override = default;
 		inline void Load() override;
 
@@ -26,7 +26,7 @@ namespace Engine::Shader
 		const size_t m_input_size = std::size(m_input_desc_);
 	};
 
-	inline DefaultVertexShader::DefaultVertexShader(std::wstring key) :
+	inline DefaultVertexShader::DefaultVertexShader(const std::wstring& key) :
 		Shader(
 			L"DefaultVertexShader", 
 			key,
