@@ -66,13 +66,13 @@ namespace Engine::Abstract
 		// But why?
 		Transpose(m_matrix_buffer_);
 
-		const auto light = Renderer::constantBuffers[(UINT)Graphics::CBTYPES::LIGHT];
-		light->Bind(&m_light_.lock()->GetLightBuffer());
-		light->SetPipeline(Graphics::ShaderStage::PS);
-
 		const auto buffer = Renderer::constantBuffers[(UINT)Graphics::CBTYPES::PERSPECTIVE];
 		buffer->Bind(&m_matrix_buffer_);
 		buffer->SetPipeline(Graphics::ShaderStage::VS);
+
+		const auto light = Renderer::constantBuffers[(UINT)Graphics::CBTYPES::LIGHT];
+		light->Bind(&m_light_.lock()->GetLightBuffer());
+		light->SetPipeline(Graphics::ShaderStage::PS);
 
 		for(auto& ly : mLayers)
 		{
