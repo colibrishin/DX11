@@ -162,6 +162,9 @@
     <ClCompile Include="EGScene.cpp">
       <Filter>Abstract</Filter>
     </ClCompile>
+    <ClCompile Include="LightTexturePS.hlsl">
+      <Filter>리소스 파일\PS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -177,6 +180,9 @@
       <Filter>리소스 파일\VS</Filter>
     </FxCompile>
     <FxCompile Include="..\TriangleVS.hlsl">
+      <Filter>리소스 파일\VS</Filter>
+    </FxCompile>
+    <FxCompile Include="LightTextureVS.hlsl">
       <Filter>리소스 파일\VS</Filter>
     </FxCompile>
   </ItemGroup>

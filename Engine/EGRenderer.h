@@ -4,6 +4,13 @@
 
 namespace Engine::Renderer
 {
+	struct PerspectiveMatrix
+	{
+		DirectX::XMMATRIX world;
+		DirectX::XMMATRIX view;
+		DirectX::XMMATRIX projection;
+	};
+
 	struct TransformBuffer
 	{
 		// TODO: Without padding version.
@@ -15,12 +22,14 @@ namespace Engine::Renderer
 		float _paddingC = 1.f;
 	};
 
-	struct PerspectiveMatrix
+	struct LightBuffer
 	{
-		DirectX::XMMATRIX world;
-		DirectX::XMMATRIX view;
-		DirectX::XMMATRIX projection;
+		DirectX::XMFLOAT4 diffuseColor;
+		DirectX::XMFLOAT3 lightDirection;
+		float _padding;
 	};
+
+	// Shader input types
 
 	struct Vertex
 	{
@@ -32,6 +41,11 @@ namespace Engine::Renderer
 	{
 		DirectX::XMFLOAT3 pos;
 		DirectX::XMFLOAT2 tex;
+	};
+
+	struct LightTextureVertex : public TextureVertex
+	{
+		DirectX::XMFLOAT3 normal;
 	};
 
 	extern std::shared_ptr<Graphics::ConstantBuffer> constantBuffers[];
