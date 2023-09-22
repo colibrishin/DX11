@@ -1,5 +1,6 @@
 #pragma once
 #include "EGGameObject.hpp"
+#include "EGRenderer.h"
 
 namespace Engine::Object
 {
@@ -10,14 +11,16 @@ namespace Engine::Object
 		Light(const Light& other) = default;
 		~Light() override = default;
 
+		// in order of r, g, b, a
 		void SetDiffuseColor(DirectX::XMFLOAT4 color);
 		void SetDirection(DirectX::XMFLOAT3 dir);
 
 		[[nodiscard]] DirectX::XMFLOAT4 GetDiffuseColor() const;
 		[[nodiscard]] DirectX::XMFLOAT3 GetDirection() const;
 
+		[[nodiscard]] Engine::Renderer::LightBuffer& GetLightBuffer();
+
 	private:
-		DirectX::XMFLOAT4 m_diffuseColor_;
-		DirectX::XMFLOAT3 m_direction_;
+		Renderer::LightBuffer m_lightBuffer_;
 	};
 }

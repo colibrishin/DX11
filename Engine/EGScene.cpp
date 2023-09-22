@@ -7,7 +7,8 @@
 namespace Engine::Abstract
 {
 	Scene::Scene(const std::wstring& name) : Entity(name), m_camera_(
-		Manager::GameObjectManager::Add<Object::Camera>(name + L" Camera"))
+		Manager::GameObjectManager::Add<Object::Camera>(name + L" Camera")),
+		m_light_(Manager::GameObjectManager::Add<Object::Light>(name + L" Light"))
 	{
 	}
 
@@ -20,9 +21,12 @@ namespace Engine::Abstract
 			nearZ,
 			farZ);
 		m_projection_ = XMMatrixPerspectiveFovLH(
-			fov, 
+			fov,
 			Graphics::D3DDevice::GetDevice()->GetAspectRatio(), nearZ, farZ);
-		m_camera_.lock()->SetPosition({0.0f, 0.0f, -5.0f});
+		m_camera_.lock()->SetPosition({ 0.0f, 0.0f, -5.0f });
+
+		m_light_.lock()->SetDiffuseColor({ 1.0f, 1.0f, 1.0f, 1.0f });
+		m_light_.lock()->SetDirection(DirectX::SimpleMath::Vector3::Backward);
 
 		for(auto& ly : mLayers)
 		{
@@ -61,6 +65,10 @@ namespace Engine::Abstract
 		// Make sure to transpose "matrices" before sending them into the shader, this is a requirement for DirectX 11. 
 		// But why?
 		Transpose(m_matrix_buffer_);
+
+		const auto light = Renderer::constantBuffers[(UINT)Graphics::CBTYPES::LIGHT];
+		light->Bind(&m_light_.lock()->GetLightBuffer());
+		light->SetPipeline(Graphics::ShaderStage::PS);
 
 		const auto buffer = Renderer::constantBuffers[(UINT)Graphics::CBTYPES::PERSPECTIVE];
 		buffer->Bind(&m_matrix_buffer_);

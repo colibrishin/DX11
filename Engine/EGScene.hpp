@@ -4,6 +4,7 @@
 #include "EGComponent.hpp"
 #include "EGEntity.hpp"
 #include "EGLayer.hpp"
+#include "EGLight.hpp"
 
 namespace Engine::Abstract
 {
@@ -13,7 +14,7 @@ namespace Engine::Abstract
 	{
 	public:
 		Scene(const std::wstring& name);
-		virtual ~Scene() = default;
+		~Scene() override = default;
 
 		virtual void Initialize();
 		virtual void Update();
@@ -31,6 +32,7 @@ namespace Engine::Abstract
 
 		Layer mLayers[Enums::LAYER::MAX];
 		std::weak_ptr<Object::Camera> m_camera_;
+		std::weak_ptr<Object::Light> m_light_;
 
 		Renderer::PerspectiveMatrix m_matrix_buffer_{};
 		XMMATRIX m_world_{};
