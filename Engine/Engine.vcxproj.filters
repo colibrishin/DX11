@@ -116,6 +116,9 @@
     <ClInclude Include="EGScript.hpp">
       <Filter>Component</Filter>
     </ClInclude>
+    <ClInclude Include="EGLight.hpp">
+      <Filter>Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EGD3DDevice.cpp">
@@ -162,6 +165,7 @@
     <ClCompile Include="EGScene.cpp">
       <Filter>Abstract</Filter>
     </ClCompile>
+    <ClCompile Include="EGLight.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

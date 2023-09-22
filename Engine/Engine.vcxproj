@@ -160,6 +160,7 @@
     <ClInclude Include="EGGameObject.hpp" />
     <ClInclude Include="EGGraphics.hpp" />
     <ClInclude Include="EGLayer.hpp" />
+    <ClInclude Include="EGLight.hpp" />
     <ClInclude Include="EGMesh.hpp" />
     <ClInclude Include="EGMeshRenderer.hpp" />
     <ClInclude Include="EGRenderer.h" />
@@ -185,6 +186,7 @@
     <ClCompile Include="EGDeltaTime.hpp" />
     <ClCompile Include="EGGameObject.cpp" />
     <ClCompile Include="EGGameObjectManager.hpp" />
+    <ClCompile Include="EGLight.cpp" />
     <ClCompile Include="EGRenderer.cpp" />
     <ClCompile Include="EGScene.cpp" />
     <ClCompile Include="EGSceneManager.cpp" />
