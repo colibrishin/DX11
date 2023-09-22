@@ -27,11 +27,11 @@ namespace Client
 	{
 		Scene::Initialize();
 
-		//m_triangle_ = Engine::Manager::GameObjectManager::Add<Object::TestObject>(L"Test");
-		//AddGameObject(m_triangle_, Engine::Enums::LAYER::NONE);
+		m_triangle_ = Engine::Manager::GameObjectManager::Add<Object::TestObject>(L"Test");
+		AddGameObject(m_triangle_, Engine::Enums::LAYER::NONE);
 
-		m_circle_ = Engine::Manager::GameObjectManager::Add<Object::TestCircleObject>(L"TestCircle");
-		AddGameObject(m_circle_, Engine::Enums::LAYER::NONE);
+		//m_circle_ = Engine::Manager::GameObjectManager::Add<Object::TestCircleObject>(L"TestCircle");
+		//AddGameObject(m_circle_, Engine::Enums::LAYER::NONE);
 	}
 
 	inline void DefaultScene::Update()
