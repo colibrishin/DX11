@@ -26,6 +26,12 @@
     <Filter Include="Mesh">
       <UniqueIdentifier>{59ed5c6d-3486-401d-a9bd-ea54de0ce7e8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="리소스 파일\VS">
+      <UniqueIdentifier>{4e2e6456-ad47-4963-85c8-b184e3ab50d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\PS">
+      <UniqueIdentifier>{48cdeb6d-fef1-4b8e-aa4a-7abd76980f15}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EGRenderer.h">
@@ -161,9 +167,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="..\TrianglePS.hlsl" />
-    <FxCompile Include="..\TriangleVS.hlsl" />
-    <FxCompile Include="..\TexturePS.hlsl" />
-    <FxCompile Include="..\TextureVS.hlsl" />
+    <FxCompile Include="..\TexturePS.hlsl">
+      <Filter>리소스 파일\PS</Filter>
+    </FxCompile>
+    <FxCompile Include="..\TrianglePS.hlsl">
+      <Filter>리소스 파일\PS</Filter>
+    </FxCompile>
+    <FxCompile Include="..\TextureVS.hlsl">
+      <Filter>리소스 파일\VS</Filter>
+    </FxCompile>
+    <FxCompile Include="..\TriangleVS.hlsl">
+      <Filter>리소스 파일\VS</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
