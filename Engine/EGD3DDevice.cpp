@@ -26,18 +26,16 @@ Engine::Graphics::D3DDevice::D3DDevice(HWND hwnd, UINT width, UINT height)
 
 #if defined( DEBUG ) || defined( _DEBUG )
 	// Set up debug layer to break on D3D11 errors
-	ID3D11Debug* d3dDebug = nullptr;
-	mDevice->QueryInterface(__uuidof(ID3D11Debug), reinterpret_cast<void**>(&d3dDebug));
-	if (d3dDebug)
+	mDevice->QueryInterface(__uuidof(ID3D11Debug), reinterpret_cast<void**>(mDebug.GetAddressOf()));
+	if (mDebug)
 	{
 		ID3D11InfoQueue* d3dInfoQueue = nullptr;
-		if (SUCCEEDED(d3dDebug->QueryInterface(__uuidof(ID3D11InfoQueue), reinterpret_cast<void**>(&d3dInfoQueue))))
+		if (SUCCEEDED(mDebug->QueryInterface(__uuidof(ID3D11InfoQueue), reinterpret_cast<void**>(&d3dInfoQueue))))
 		{
 			d3dInfoQueue->SetBreakOnSeverity(D3D11_MESSAGE_SEVERITY_CORRUPTION, true);
 			d3dInfoQueue->SetBreakOnSeverity(D3D11_MESSAGE_SEVERITY_ERROR, true);
 			d3dInfoQueue->Release();
 		}
-		d3dDebug->Release();
 	}
 #endif
 
@@ -90,6 +88,16 @@ Engine::Graphics::D3DDevice::D3DDevice(HWND hwnd, UINT width, UINT height)
 	CreateDepthStencil(texdesc);
 }
 
+void Engine::Graphics::D3DDevice::ResizeSwapChain() const
+{
+#if defined( DEBUG ) || defined( _DEBUG )
+	mDebug->ReportLiveDeviceObjects(D3D11_RLDO_DETAIL);
+#endif
+
+	DX::ThrowIfFailed(
+		mSwapChain->ResizeBuffers(0, 0, 0, DXGI_FORMAT_UNKNOWN, 0));
+}
+
 void Engine::Graphics::D3DDevice::CreateSwapChain(DXGI_SWAP_CHAIN_DESC& swapChainDesc)
 {
 	ComPtr<IDXGIDevice> pDXGIDevice = nullptr;
@@ -119,11 +127,11 @@ void Engine::Graphics::D3DDevice::CreateTexture(const D3D11_TEXTURE2D_DESC& desc
 void Engine::Graphics::D3DDevice::CreateDepthStencil(const D3D11_TEXTURE2D_DESC& desc)
 {
 	// Create Depth Stencil Buffer
-	DX::ThrowIfFailed(mDevice->CreateTexture2D(&desc, nullptr, mDepthStencilBuffer.GetAddressOf()));
+	DX::ThrowIfFailed(mDevice->CreateTexture2D(&desc, nullptr, mDepthStencilBuffer.ReleaseAndGetAddressOf()));
 
 	// Create Depth Stencil Buffer View
 	DX::ThrowIfFailed(
-		mDevice->CreateDepthStencilView(mDepthStencilBuffer.Get(), nullptr, mDepthStencilView.GetAddressOf()));
+		mDevice->CreateDepthStencilView(mDepthStencilBuffer.Get(), nullptr, mDepthStencilView.ReleaseAndGetAddressOf()));
 }
 
 void Engine::Graphics::D3DDevice::CreateShaderResourceView(
@@ -230,7 +238,7 @@ void Engine::Graphics::D3DDevice::BindSamplerState(ID3D11SamplerState** pSampler
 	mContext->PSSetSamplers(0, 1, pSamplerState);
 }
 
-void Engine::Graphics::D3DDevice::BIndPixelShaderResource(ID3D11ShaderResourceView** pResourceView) const
+void Engine::Graphics::D3DDevice::BindPixelShaderResource(ID3D11ShaderResourceView** pResourceView) const
 {
 	mContext->PSSetShaderResources(0, 1, pResourceView);
 }
@@ -298,12 +306,31 @@ void Engine::Graphics::D3DDevice::AdjustViewport()
 {
 	// ViewPort, RenderTaget
 	RECT winRect;
-	GetClientRect(m_hwnd_, &winRect);
 	D3D11_VIEWPORT mViewPort = {
-		0.0f, 0.0f, static_cast<FLOAT>(winRect.right - winRect.left), static_cast<FLOAT>(winRect.bottom - winRect.top)
+		0.0f, 0.0f, static_cast<float>(m_width_), static_cast<float>(m_height_)
 	};
+
 	BindViewports(&mViewPort);
-	mContext->OMSetRenderTargets(1, mRenderTargetView.GetAddressOf(), mDepthStencilView.Get());
+
+	D3D11_TEXTURE2D_DESC texdesc = {};
+
+	texdesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+	texdesc.Usage = D3D11_USAGE_DEFAULT;
+	texdesc.CPUAccessFlags = 0;
+	texdesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	texdesc.Width = m_width_;
+	texdesc.Height = m_height_;
+	texdesc.ArraySize = 1;
+	texdesc.SampleDesc.Count = 1;
+	texdesc.SampleDesc.Quality = 0;
+	texdesc.MipLevels = 0;
+	texdesc.MiscFlags = 0;
+
+	CreateDepthStencil(texdesc);
+
+	mContext->OMSetRenderTargets(1, 
+		mRenderTargetView.GetAddressOf(), 
+		mDepthStencilView.Get());
 }
 
 void Engine::Graphics::D3DDevice::Draw(UINT VertexCount, UINT StartVertexLocation) const
@@ -319,4 +346,32 @@ void Engine::Graphics::D3DDevice::DrawIndexed(UINT IndexCount, UINT StartIndexLo
 void Engine::Graphics::D3DDevice::Present() const
 {
 	mSwapChain->Present(1, 0);
+}
+
+void Engine::Graphics::D3DDevice::Resize(UINT width, UINT height)
+{
+	m_width_ = width;
+	m_height_ = height;
+
+	mContext->OMSetRenderTargets(0, nullptr, nullptr);
+	mRenderTargetView->Release();
+	mFrameBuffer->Release();
+
+	ResizeSwapChain();
+
+	DX::ThrowIfFailed(
+		mSwapChain->GetBuffer(
+			0, 
+			__uuidof(ID3D11Texture2D), 
+			reinterpret_cast<void**>(mFrameBuffer.GetAddressOf())));
+
+	DX::ThrowIfFailed(
+		mDevice->CreateRenderTargetView(
+			mFrameBuffer.Get(), 
+			nullptr, 
+			mRenderTargetView.GetAddressOf()));
+
+	AdjustViewport();
+
+	m_resized_ = false;
 }

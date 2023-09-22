@@ -15,10 +15,11 @@ namespace Client
 
 		void Run();
 
-		virtual void Initialize();
+		virtual void Initialize(HWND hwnd, UINT width, UINT height);
 		virtual void Update();
 		virtual void FixedUpdate();
 		virtual void Render();
+		void Resize(UINT width, UINT height);
 
 		static DirectX::Keyboard::State GetKeyState();
 

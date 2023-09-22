@@ -108,19 +108,19 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
 	hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
-	RECT rect = {0, 0, 1024, 768};
+	constexpr int initialWidth = 1024;
+	constexpr int initialHeight = 768;
+
+	RECT rect = {0, 0, initialWidth, initialHeight };
 	AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, true);
 
-	HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-	                          0, 0, rect.right - rect.left, rect.bottom - rect.top,nullptr, nullptr, hInstance, nullptr);
+	HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 
+		rect.right - rect.left, rect.bottom - rect.top,nullptr, nullptr, hInstance, nullptr);
 
 	if (!hWnd)
 	{
 		return FALSE;
 	}
-
-	ShowWindow(hWnd, nCmdShow);
-	UpdateWindow(hWnd);
 
 	// this is required for DirectXTex
 	HRESULT hr = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
@@ -129,8 +129,10 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 		return FALSE;
 	}
 
-	application.SetWindow(hWnd, 1024, 768);
-	application.Initialize();
+	application.Initialize(hWnd, initialWidth, initialHeight);
+
+	ShowWindow(hWnd, nCmdShow);
+	UpdateWindow(hWnd);
 
 	return TRUE;
 }
@@ -181,6 +183,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			// TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
 			EndPaint(hWnd, &ps);
 		}
+		break;
+	case WM_SIZE:
+		application.Resize(LOWORD(lParam), HIWORD(lParam));
 		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);

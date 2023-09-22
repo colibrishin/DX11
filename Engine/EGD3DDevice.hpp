@@ -44,7 +44,7 @@ namespace Engine::Graphics
 		void BindVertexShader(ID3D11VertexShader* pVertexShader) const;
 		void BindPixelShader(ID3D11PixelShader* pPixelShader) const;
 		void BindSamplerState(ID3D11SamplerState** pSamplerState) const;
-		void BIndPixelShaderResource(ID3D11ShaderResourceView** pResourceView) const;
+		void BindPixelShaderResource(ID3D11ShaderResourceView** pResourceView) const;
 
 		void BindViewports(D3D11_VIEWPORT* viewPort) const;
 		void BindConstantBuffer(ID3D11Buffer* buffer, void* data, UINT size) const;
@@ -55,8 +55,13 @@ namespace Engine::Graphics
 		void Draw(UINT VertexCount, UINT StartVertexLocation) const;
 		void DrawIndexed(UINT IndexCount, UINT StartIndexLocation, INT BaseVertexLocation) const;
 		void Present() const;
+		void Resize(UINT width, UINT height);
 
 		void Render() const;
+		bool IsResized() const { return m_resized_; }
+
+		void SetWidth(UINT width) { m_width_ = width; }
+		void SetHeight(UINT height) { m_height_ = height; }
 
 		static void Initialize(HWND hwnd, UINT width, UINT height)
 		{
@@ -70,7 +75,9 @@ namespace Engine::Graphics
 		{
 			return m_device_.get();
 		}
-		
+
+		void SetResized() { m_resized_ = true; }
+
 		UINT GetWidth() const { return m_width_; }
 		UINT GetHeight() const { return m_height_; }
 		float GetAspectRatio() const { return (float)m_width_ / (float)m_height_; }
@@ -78,7 +85,10 @@ namespace Engine::Graphics
 	private:
 		D3DDevice(HWND hwnd, UINT width, UINT height);
 
+		void ResizeSwapChain() const;
+
 		inline static std::unique_ptr<D3DDevice> m_device_ = nullptr;
+		std::atomic<bool> m_resized_ = false;
 
 		HWND m_hwnd_;
 		UINT m_width_;
@@ -86,6 +96,7 @@ namespace Engine::Graphics
 
 		ComPtr<ID3D11Device> mDevice;
 		ComPtr<ID3D11DeviceContext> mContext;
+		ComPtr<ID3D11Debug> mDebug;
 		ComPtr<ID3D11Texture2D> mFrameBuffer;
 		ComPtr<ID3D11RenderTargetView> mRenderTargetView;
 		ComPtr<ID3D11Texture2D> mDepthStencilBuffer;

@@ -10,10 +10,7 @@ namespace Engine::Object
 	{
 	}
 
-	Camera::~Camera()
-	{
-		Destroy();
-	}
+	Camera::~Camera() = default;
 
 	void Camera::Initialize()
 	{

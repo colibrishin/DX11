@@ -47,6 +47,6 @@ namespace Engine::Shader
 
 	void TexturePixelShader::SetTexture(const std::weak_ptr<Graphics::Texture2D>& texture)
 	{
-		Graphics::D3DDevice::GetDevice()->BIndPixelShaderResource(texture.lock()->GetTexture());
+		Graphics::D3DDevice::GetDevice()->BindPixelShaderResource(texture.lock()->GetTexture());
 	}
 } 
