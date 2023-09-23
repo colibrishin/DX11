@@ -34,9 +34,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EGRenderer.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="EGResource.hpp">
       <Filter>Abstract</Filter>
     </ClInclude>
@@ -49,20 +46,11 @@
     <ClInclude Include="EGGraphics.hpp">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="EGConstantBuffer.hpp">
-      <Filter>Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="EGD3DDevice.hpp">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="EGShader.hpp">
       <Filter>Abstract</Filter>
-    </ClInclude>
-    <ClInclude Include="EGDefaultVertexShader.hpp">
-      <Filter>Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="EGDefaultPixelShader.hpp">
-      <Filter>Shader</Filter>
     </ClInclude>
     <ClInclude Include="EGSceneManager.hpp">
       <Filter>Manager</Filter>
@@ -91,33 +79,12 @@
     <ClInclude Include="EGMeshRenderer.hpp">
       <Filter>Component</Filter>
     </ClInclude>
-    <ClInclude Include="EGTrianlgeMesh.hpp">
-      <Filter>Mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="EGTexture2D.hpp">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="EGTextureTriangleMesh.hpp">
-      <Filter>Mesh</Filter>
-    </ClInclude>
     <ClInclude Include="EGCommon.hpp" />
-    <ClInclude Include="EGTexturePS.hpp">
-      <Filter>Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="EGSquareMesh.hpp">
-      <Filter>Mesh</Filter>
-    </ClInclude>
     <ClInclude Include="EGCamera.hpp">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="EGCircleMesh.hpp">
-      <Filter>Mesh</Filter>
-    </ClInclude>
     <ClInclude Include="EGScript.hpp">
       <Filter>Component</Filter>
-    </ClInclude>
-    <ClInclude Include="EGLight.hpp">
-      <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -141,23 +108,8 @@
     <ClCompile Include="EGShaderManager.hpp">
       <Filter>Manager</Filter>
     </ClCompile>
-    <ClCompile Include="EGRenderer.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="EGTexture2D.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="EGTextureVS.hpp">
-      <Filter>Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="EGTexturePS.cpp">
-      <Filter>Shader</Filter>
-    </ClCompile>
     <ClCompile Include="EGGameObject.cpp">
       <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="EGTextureSquareMesh.hpp">
-      <Filter>Mesh</Filter>
     </ClCompile>
     <ClCompile Include="EGCamera.cpp">
       <Filter>Object</Filter>
@@ -165,7 +117,6 @@
     <ClCompile Include="EGScene.cpp">
       <Filter>Abstract</Filter>
     </ClCompile>
-    <ClCompile Include="EGLight.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

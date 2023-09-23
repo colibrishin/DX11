@@ -10,6 +10,12 @@ namespace Engine::Graphics
 
 	class D3DDevice
 	{
+	private:
+		inline static std::unique_ptr<D3DDevice> m_device_ = nullptr;
+		std::unique_ptr<DirectX::CommonStates> m_common_states_ = nullptr;
+
+		std::atomic<bool> m_resized_ = false;
+
 	public:
 		D3DDevice(const D3DDevice&) = default;
 		~D3DDevice() = default;
@@ -35,6 +41,13 @@ namespace Engine::Graphics
 		void CreateVertexShader(ID3DBlob* pShaderBytecode, ID3D11VertexShader** ppVertexShader) const;
 		void CreatePixelShader(ID3DBlob* pShaderBytecode, ID3D11PixelShader** ppPixelShader) const;
 
+		std::unique_ptr<DirectX::IEffectFactory> CreateEffectFactory() const;
+
+		std::unique_ptr<DirectX::CommonStates> CreateCommonStates() const;
+
+		std::unique_ptr<DirectX::Model> LoadModelFromCMO(const std::filesystem::path& fileName,
+		                                                 DirectX::IEffectFactory* effectFactory) const;
+
 		void BindInputLayout(ID3D11InputLayout* pInputLayout) const;
 		void BindPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY Topology) const;
 		void BindVertexBuffer(UINT startSlot, UINT numBuffers, ID3D11Buffer* const* ppVertexBuffers, UINT stride,
@@ -52,7 +65,9 @@ namespace Engine::Graphics
 
 		void Clear() const;
 		void AdjustViewport();
+
 		void Draw(UINT VertexCount, UINT StartVertexLocation) const;
+		void Draw(const DirectX::Model* model, const DirectX::XMMATRIX& world, const DirectX::XMMATRIX& view, const DirectX::XMMATRIX& proj, const std::function<void(ID3D11Device*, ID3D11DeviceContext*,  const DirectX::CommonStates*)>& customState = [&](const ID3D11Device*, const ID3D11DeviceContext*, const DirectX::CommonStates*){}, const bool wireframe = false) const;
 		void DrawIndexed(UINT IndexCount, UINT StartIndexLocation, INT BaseVertexLocation) const;
 		void Present() const;
 		void Resize(UINT width, UINT height);
@@ -86,9 +101,6 @@ namespace Engine::Graphics
 		D3DDevice(HWND hwnd, UINT width, UINT height);
 
 		void ResizeSwapChain() const;
-
-		inline static std::unique_ptr<D3DDevice> m_device_ = nullptr;
-		std::atomic<bool> m_resized_ = false;
 
 		HWND m_hwnd_;
 		UINT m_width_;

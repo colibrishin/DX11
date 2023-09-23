@@ -1,7 +1,6 @@
 ﻿#include "pch.h"
 #include "EGD3DDevice.hpp"
 #include "../Client/CLApplication.hpp"
-#include "EGRenderer.h"
 #include "EGMesh.hpp"
 #include "EGShader.hpp"
 
@@ -86,6 +85,8 @@ Engine::Graphics::D3DDevice::D3DDevice(HWND hwnd, UINT width, UINT height)
 	texdesc.MiscFlags = 0;
 
 	CreateDepthStencil(texdesc);
+
+	m_common_states_ = std::make_unique<DirectX::CommonStates>(mDevice.Get());
 }
 
 void Engine::Graphics::D3DDevice::ResizeSwapChain() const
@@ -199,6 +200,26 @@ void Engine::Graphics::D3DDevice::CreatePixelShader(ID3DBlob* pShaderBytecode,
 	                                             , pShaderBytecode->GetBufferSize()
 	                                             , nullptr
 	                                             , ppPixelShader));
+}
+
+std::unique_ptr<DirectX::IEffectFactory> Engine::Graphics::D3DDevice::CreateEffectFactory() const
+{
+	return std::move(std::make_unique<DirectX::EffectFactory>(mDevice.Get()));
+}
+
+std::unique_ptr<DirectX::CommonStates> Engine::Graphics::D3DDevice::CreateCommonStates() const
+{
+	return std::move(std::make_unique<DirectX::CommonStates>(mDevice.Get()));
+}
+
+std::unique_ptr<DirectX::Model> Engine::Graphics::D3DDevice::LoadModelFromCMO(const std::filesystem::path& fileName,
+                                                                              DirectX::IEffectFactory* effectFactory)
+const
+{
+	const auto path = std::filesystem::absolute(fileName);
+	auto model = DirectX::Model::CreateFromCMO(mDevice.Get(), path.c_str(), *effectFactory);
+
+	return std::move(model);
 }
 
 void Engine::Graphics::D3DDevice::BindInputLayout(ID3D11InputLayout* pInputLayout) const
@@ -336,6 +357,21 @@ void Engine::Graphics::D3DDevice::AdjustViewport()
 void Engine::Graphics::D3DDevice::Draw(UINT VertexCount, UINT StartVertexLocation) const
 {
 	mContext->Draw(VertexCount, StartVertexLocation);
+}
+
+void Engine::Graphics::D3DDevice::Draw(const DirectX::Model* model, const DirectX::XMMATRIX& world, const DirectX::XMMATRIX& view, const DirectX::XMMATRIX& proj, const std::function<void(ID3D11Device*, ID3D11DeviceContext*, const DirectX::CommonStates*)>& customState, const bool wireframe) const
+{
+	model->Draw(
+		mContext.Get(), 
+		*m_common_states_, 
+		world, 
+		view, 
+		proj, 
+		wireframe, 
+		[&]()
+		{
+			customState(mDevice.Get(), mContext.Get(), m_common_states_.get());
+		});
 }
 
 void Engine::Graphics::D3DDevice::DrawIndexed(UINT IndexCount, UINT StartIndexLocation, INT BaseVertexLocation) const

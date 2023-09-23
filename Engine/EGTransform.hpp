@@ -2,8 +2,7 @@
 #include "EGComponent.hpp"
 #include <SimpleMath.h>
 
-#include "EGRenderer.h"
-#include "../packages/directxtk_desktop_2019.2023.9.6.1/include/SimpleMath.h"
+#include "SimpleMath.h"
 
 namespace Engine::Abstract
 {
@@ -20,25 +19,27 @@ namespace Engine::Abstract
 
 		void SetConstantBuffer();
 
-		void SetPosition(DirectX::SimpleMath::Vector3 position) { m_buffer_.position = position; }
-		void SetRotation(DirectX::SimpleMath::Vector3 euler) { m_buffer_.rotation = euler; }
-		void SetRotation(DirectX::SimpleMath::Quaternion quaternion) { m_buffer_.rotation = quaternion.ToEuler(); }
-		void SetScale(DirectX::SimpleMath::Vector3 scale) { m_buffer_.scale = scale; }
+		void SetPosition(DirectX::SimpleMath::Vector3 position) { m_position_ = position; }
+		void SetRotation(DirectX::SimpleMath::Vector3 euler) { m_rotation_ = euler; }
+		void SetRotation(DirectX::SimpleMath::Quaternion quaternion) { m_rotation_ = quaternion.ToEuler(); }
+		void SetScale(DirectX::SimpleMath::Vector3 scale) { m_scale_ = scale; }
 
-		void SetPosition(float x, float y, float z) { m_buffer_.position = DirectX::SimpleMath::Vector3(x, y, z); }
+		void SetPosition(float x, float y, float z) { m_position_ = DirectX::SimpleMath::Vector3(x, y, z); }
 		void SetRotation(float yaw, float pitch, float roll)
 		{
 			const DirectX::SimpleMath::Quaternion quaternion = DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(
 				yaw, pitch, roll);
-			m_buffer_.rotation = quaternion.ToEuler();
+			m_rotation_ = quaternion.ToEuler();
 		}
-		void SetScale(float x, float y, float z) { m_buffer_.scale = DirectX::SimpleMath::Vector3(x, y, z); }
+		void SetScale(float x, float y, float z) { m_scale_ = DirectX::SimpleMath::Vector3(x, y, z); }
 
-		DirectX::SimpleMath::Vector3 GetPosition() const { return m_buffer_.position; }
-		DirectX::SimpleMath::Vector3 GetRotation() const { return m_buffer_.rotation; }
-		DirectX::SimpleMath::Vector3 GetScale() const { return m_buffer_.scale; }
+		DirectX::SimpleMath::Vector3 GetPosition() const { return m_position_; }
+		DirectX::SimpleMath::Vector3 GetRotation() const { return m_rotation_; }
+		DirectX::SimpleMath::Vector3 GetScale() const { return m_scale_; }
 
 	private:
-		Renderer::TransformBuffer m_buffer_;
+		DirectX::SimpleMath::Vector3 m_position_{};
+		DirectX::SimpleMath::Vector3 m_rotation_{};
+		DirectX::SimpleMath::Vector3 m_scale_{};
 	};
 }

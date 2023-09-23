@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "CLApplication.hpp"
 #include "CLDefaultScene.hpp"
-#include "../Engine/EGRenderer.h"
 #include "../Engine/EGDeltaTime.hpp"
 #include "../Engine/EGD3DDevice.hpp"
 #include "../Engine/EGSceneManager.hpp"
@@ -31,7 +30,6 @@ void Client::Application::Initialize(HWND hwnd, UINT width, UINT height)
 
 	Engine::DeltaTime::Initialize();
 	Engine::Graphics::D3DDevice::Initialize(m_hwnd_, m_width_, m_height_);
-	Engine::Renderer::Initialize();
 	Engine::Manager::SceneManager::Initialize();
 
 	Engine::Manager::SceneManager::AddScene<DefaultScene>(L"Default");

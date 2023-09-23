@@ -148,34 +148,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="EGCamera.hpp" />
-    <ClInclude Include="EGCircleMesh.hpp" />
     <ClInclude Include="EGCommon.hpp" />
     <ClInclude Include="EGComponent.hpp" />
-    <ClInclude Include="EGConstantBuffer.hpp" />
     <ClInclude Include="EGD3DDevice.hpp" />
-    <ClInclude Include="EGDefaultPixelShader.hpp" />
-    <ClInclude Include="EGDefaultVertexShader.hpp" />
     <ClInclude Include="EGEntity.hpp" />
     <ClInclude Include="EGEnums.hpp" />
     <ClInclude Include="EGGameObject.hpp" />
     <ClInclude Include="EGGraphics.hpp" />
     <ClInclude Include="EGLayer.hpp" />
-    <ClInclude Include="EGLight.hpp" />
     <ClInclude Include="EGMesh.hpp" />
     <ClInclude Include="EGMeshRenderer.hpp" />
-    <ClInclude Include="EGRenderer.h" />
     <ClInclude Include="EGResource.hpp" />
     <ClInclude Include="EGResourceManager.hpp" />
     <ClInclude Include="EGScene.hpp" />
     <ClInclude Include="EGSceneManager.hpp" />
     <ClInclude Include="EGScript.hpp" />
     <ClInclude Include="EGShader.hpp" />
-    <ClInclude Include="EGSquareMesh.hpp" />
-    <ClInclude Include="EGTexture2D.hpp" />
-    <ClInclude Include="EGTexturePS.hpp" />
-    <ClInclude Include="EGTextureTriangleMesh.hpp" />
     <ClInclude Include="EGTransform.hpp" />
-    <ClInclude Include="EGTrianlgeMesh.hpp" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
@@ -186,15 +175,9 @@
     <ClCompile Include="EGDeltaTime.hpp" />
     <ClCompile Include="EGGameObject.cpp" />
     <ClCompile Include="EGGameObjectManager.hpp" />
-    <ClCompile Include="EGLight.cpp" />
-    <ClCompile Include="EGRenderer.cpp" />
     <ClCompile Include="EGScene.cpp" />
     <ClCompile Include="EGSceneManager.cpp" />
     <ClCompile Include="EGShaderManager.hpp" />
-    <ClCompile Include="EGTexture2D.cpp" />
-    <ClCompile Include="EGTexturePS.cpp" />
-    <ClCompile Include="EGTextureSquareMesh.hpp" />
-    <ClCompile Include="EGTextureVS.hpp" />
     <ClCompile Include="EGTransform.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

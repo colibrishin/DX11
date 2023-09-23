@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -155,19 +155,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CLApplication.hpp" />
-    <ClInclude Include="CLTestObejct.hpp" />
-    <ClInclude Include="CLTestCircleObject.hpp" />
+    <ClInclude Include="CLExampleCupMesh.hpp" />
+    <ClInclude Include="CLExampleCupObject.hpp" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CLDefaultScene.hpp" />
+    <ClCompile Include="CLExampleCupObject.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="CLApplication.cpp" />
-    <ClCompile Include="CLProjectileTestObject.hpp" />
-    <ClCompile Include="CLStoneTexture.hpp" />
-    <ClCompile Include="CLTestCircleObject.cpp" />
-    <ClCompile Include="CLTestObject.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -176,12 +173,20 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\cup.cmo">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Engine\Engine.vcxproj">
       <Project>{6ecb7359-9375-4095-a3dd-3712e9b86f52}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\cup.jpg">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+    </Image>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

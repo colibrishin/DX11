@@ -1,17 +1,17 @@
 #pragma once
 #include <map>
 
+#include "EGCommon.hpp"
 #include "EGComponent.hpp"
 #include "EGMesh.hpp"
-#include "EGTexture2D.hpp"
 #include "EGShader.hpp"
 #include "EGTransform.hpp"
-#include "EGTexturePS.hpp"
 #include "EGGameObject.hpp"
 
 namespace Engine
 {
-	template <typename T>
+	using namespace DirectX;
+
 	class MeshRenderer : public Abstract::Component
 	{
 	public:
@@ -23,59 +23,48 @@ namespace Engine
 		void FixedUpdate() override;
 		void Render() override;
 
-		void SetMesh(const std::weak_ptr<Abstract::Mesh<T>>& mesh) { mMesh = mesh; }
-		void SetShader(const std::weak_ptr<Abstract::Shader>& shader) { mShaders[shader.lock()->GetStage()] = shader; }
-		void SetTexture(const std::weak_ptr<Graphics::Texture2D>& texture) { mTexture = texture; }
+		void SetMesh(const std::weak_ptr<Abstract::Mesh>& mesh) { mMesh = mesh; }
+		// SetShader
+		// SetTexture
 
 	private:
-		std::weak_ptr<Abstract::Mesh<T>> mMesh{};
-		std::weak_ptr<Graphics::Texture2D> mTexture{};
-		std::map<Graphics::ShaderStage, std::weak_ptr<Abstract::Shader>> mShaders{};
+		std::weak_ptr<Abstract::Mesh> mMesh{};
 	};
 
-	template <typename T>
-	MeshRenderer<T>::MeshRenderer()
+	inline MeshRenderer::MeshRenderer()
 		: Component(L"MeshRenderer" + std::to_wstring(GetID()), Enums::COMPONENTTYPE::MESH)
 	{
 	}
 
-	template <typename T>
-	void MeshRenderer<T>::Initialize()
+	inline void MeshRenderer::Initialize()
 	{
 	}
 
-	template <typename T>
-	void MeshRenderer<T>::Update()
+	inline void MeshRenderer::Update()
 	{
 	}
 
-	template <typename T>
-	void MeshRenderer<T>::FixedUpdate()
+	inline void MeshRenderer::FixedUpdate()
 	{
 	}
 
-	template <typename T>
-	void MeshRenderer<T>::Render()
+	inline void MeshRenderer::Render()
 	{
 		if(const auto tr = GetOwner().lock()->GetComponent<Abstract::Transform>().lock())
 		{
-			tr->SetConstantBuffer();
-			bool texture = false;
+			XMMATRIX view{};
+			XMMATRIX projection{};
 
-			if(mTexture.lock())
-			{
-				texture = true;
-			}
+			Manager::SceneManager::GetActiveScene().lock()->GetSceneCoordination(view, projection);
 
-			for(const auto shader : mShaders)
-			{
-				if(const auto texturePS = std::dynamic_pointer_cast<Shader::TexturePixelShader>(shader.second.lock()))
-				{
-					if(texture) texturePS->SetTexture(mTexture);
-				}
-				shader.second.lock()->Update();
-			}
-			mMesh.lock()->Render();
+			XMMATRIX worldPos = SimpleMath::Matrix::CreateWorld(tr->GetPosition(), FORWARD, UP);
+			const auto rotMat = SimpleMath::Matrix::CreateFromYawPitchRoll(tr->GetRotation());
+			worldPos = XMMatrixMultiply(worldPos, rotMat);
+
+			mMesh.lock()->Render(
+				worldPos,
+				view, 
+				projection);
 		}
 	}
 }
