@@ -148,6 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="EGCamera.hpp" />
+    <ClInclude Include="EGCollisionManager.hpp" />
     <ClInclude Include="EGCommon.hpp" />
     <ClInclude Include="EGComponent.hpp" />
     <ClInclude Include="EGD3DDevice.hpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="EGMeshRenderer.hpp" />
     <ClInclude Include="EGResource.hpp" />
     <ClInclude Include="EGResourceManager.hpp" />
+    <ClInclude Include="EGRigidBody.hpp" />
     <ClInclude Include="EGScene.hpp" />
     <ClInclude Include="EGSceneManager.hpp" />
     <ClInclude Include="EGScript.hpp" />
@@ -170,11 +172,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EGCamera.cpp" />
+    <ClCompile Include="EGCollisionManager.cpp" />
+    <ClCompile Include="EGCommon.cpp" />
     <ClCompile Include="EGComponetManager.hpp" />
     <ClCompile Include="EGD3DDevice.cpp" />
     <ClCompile Include="EGDeltaTime.hpp" />
+    <ClCompile Include="EGEntity.cpp" />
     <ClCompile Include="EGGameObject.cpp" />
     <ClCompile Include="EGGameObjectManager.hpp" />
+    <ClCompile Include="EGLayer.cpp" />
+    <ClCompile Include="EGRigidBody.cpp" />
     <ClCompile Include="EGScene.cpp" />
     <ClCompile Include="EGSceneManager.cpp" />
     <ClCompile Include="EGShaderManager.hpp" />

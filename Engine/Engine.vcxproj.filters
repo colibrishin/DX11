@@ -80,6 +80,12 @@
     <ClInclude Include="EGScript.hpp">
       <Filter>Component</Filter>
     </ClInclude>
+    <ClInclude Include="EGRigidBody.hpp">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="EGCollisionManager.hpp">
+      <Filter>Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EGD3DDevice.cpp">
@@ -109,6 +115,19 @@
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="EGScene.cpp">
+      <Filter>Abstract</Filter>
+    </ClCompile>
+    <ClCompile Include="EGRigidBody.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="EGCollisionManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="EGLayer.cpp">
+      <Filter>Abstract</Filter>
+    </ClCompile>
+    <ClCompile Include="EGCommon.cpp" />
+    <ClCompile Include="EGEntity.cpp">
       <Filter>Abstract</Filter>
     </ClCompile>
   </ItemGroup>
