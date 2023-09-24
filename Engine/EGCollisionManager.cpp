@@ -22,6 +22,9 @@ namespace Engine::Manager
 
 	void CollisionManager::CompareLayerObjects(const Abstract::Layer* layer, const std::shared_ptr<Abstract::RigidBody>& rb)
 	{
+		DirectX::BoundingBox bb1;
+		DirectX::BoundingBox bb2;
+
 		for(const auto& obj : layer->mGameObjects)
 		{
 			if(const auto other_rb = CheckCollisionality(obj))
@@ -31,9 +34,12 @@ namespace Engine::Manager
 					continue;
 				}
 
+				rb->GetBoundingBox(bb1);
+				other_rb->GetBoundingBox(bb2);
+
 				if(rb->m_bCollided_)
 				{
-					if(!rb->m_bounding_box_->Intersects(*other_rb->m_bounding_box_))
+					if(!bb1.Intersects(bb2))
 					{
 						m_collided_[rb->GetID()].erase(other_rb->GetID());
 						m_collided_[other_rb->GetID()].erase(rb->GetID());
@@ -45,8 +51,7 @@ namespace Engine::Manager
 						other_rb->OnCollisionExit();
 					}
 				}
-
-				if(rb->m_bounding_box_->Intersects(*other_rb->m_bounding_box_))
+				else if (bb1.Intersects(bb2))
 				{
 					if(const bool collided_by_other = m_collided_[other_rb->GetID()].contains(rb->GetID()))
 					{

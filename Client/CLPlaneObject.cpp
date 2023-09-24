@@ -15,13 +15,13 @@
 namespace Client::Object
 {
 	PlaneObject::PlaneObject(const std::wstring& name) : RigidBody(
-		name, false, {}, {0.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f})
+		name, false, {}, {10.0f, 1.0f, 10.0f})
 	{
 	}
 
 	void PlaneObject::Initialize()
 	{
-		GameObject::Initialize();
+		RigidBody::Initialize();
 
 		const auto tr = Engine::Manager::ComponentManager::Create<Engine::Abstract::Transform>(this);
 		tr.lock()->SetPosition({ 0.0f, 0.0f, 0.0f });
@@ -39,16 +39,16 @@ namespace Client::Object
 
 	void PlaneObject::Update()
 	{
-		GameObject::Update();
+		RigidBody::Update();
 	}
 
 	void PlaneObject::FixedUpdate()
 	{
-		GameObject::FixedUpdate();
+		RigidBody::FixedUpdate();
 	}
 
 	void PlaneObject::Render()
 	{
-		GameObject::Render();
+		RigidBody::Render();
 	}
 }

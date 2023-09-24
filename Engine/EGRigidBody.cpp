@@ -9,19 +9,17 @@ namespace Engine::Abstract
 		const std::wstring& name, 
 		bool gravity,
 		const SimpleMath::Vector3& center,
-		const SimpleMath::Vector3& top_left,
-		const SimpleMath::Vector3& bottom_right) :
+		const SimpleMath::Vector3& size) :
 		GameObject(name),
-		m_top_left_(top_left),
-		m_bottom_right_(bottom_right),
-		m_bounding_box_(nullptr),
+		m_size_(size),
+		m_bGravity_override_(gravity),
 		m_bGravity_(gravity),
-		m_bGrounded_(false)
+		m_bGrounded_(false),
+		m_bCollided_(false)
 	{
 		AddComponent(
 			Manager::ComponentManager::Create<Abstract::Transform>(this));
-		m_bounding_box_ = std::make_unique<BoundingBox>();
-		BoundingBox::CreateFromPoints(*m_bounding_box_.get(), m_top_left_, m_bottom_right_);
+
 		UpdatePosition(center);
 	}
 
@@ -44,7 +42,7 @@ namespace Engine::Abstract
 			return;
 		}
 
-		if (m_bGravity_)
+		if (m_bGravity_ && m_bGravity_override_)
 		{
 			auto position = GetCenter();
 			position.y -= GRAVITY_ACCEL * DeltaTime::GetDeltaTime()->GetElapsedSeconds();
@@ -62,6 +60,11 @@ namespace Engine::Abstract
 		GameObject::Render();
 	}
 
+	SimpleMath::Vector3 RigidBody::GetSize() const
+	{
+		return m_size_;
+	}
+
 	bool RigidBody::IsGravity() const
 	{
 		return m_bGravity_;
@@ -74,37 +77,54 @@ namespace Engine::Abstract
 
 	void RigidBody::OnCollision(RigidBody* other)
 	{
-		const float y = GetCenter().y;
-		const float y_p = other->GetCenter().y;
-		const float delta = std::abs(y - y_p);
-
-		if (delta <= 1.0f)
+		if(m_bGravity_override_)
 		{
-			m_bGrounded_ = true;
-			m_bGravity_ = false;
+			const auto nextT = GetCenter() + SimpleMath::Vector3{
+				0, -GRAVITY_ACCEL * DeltaTime::GetDeltaTime()->GetElapsedSeconds(), 0};
+
+			BoundingBox nextTBB;
+			BoundingBox::CreateFromPoints(
+				nextTBB, 
+				nextT + (GetSize() / 2), 
+				nextT - (GetSize() / 2));
+
+			BoundingBox bb;
+			other->GetBoundingBox(bb);
+
+			if(bb.Intersects(nextTBB))
+			{
+				m_bGrounded_ = true;
+				m_bGravity_ = false;
+			}
 		}
-		else
+	}
+
+	void RigidBody::OnCollisionExit()
+	{
+		if(!m_bGravity_)
 		{
 			m_bGrounded_ = false;
 			m_bGravity_ = true;
 		}
 	}
 
-	void RigidBody::OnCollisionExit()
+	void RigidBody::UpdatePosition(const SimpleMath::Vector3& center) const
 	{
-	}
-
-	void RigidBody::UpdatePosition(const SimpleMath::Vector3& center)
-	{
-		m_bounding_box_->Center = center;
-
 		const auto transform = GetComponent<Abstract::Transform>().lock();
 		transform->SetPosition(center);
 	}
 
-	SimpleMath::Vector3 RigidBody::GetCenter()
+	SimpleMath::Vector3 RigidBody::GetCenter() const
 	{
 		const auto transform = GetComponent<Abstract::Transform>().lock();
 		return transform->GetPosition();
+	}
+
+	void RigidBody::GetBoundingBox(BoundingBox& box) const
+	{
+		BoundingBox::CreateFromPoints(
+			box, 
+			GetCenter() + (GetSize() / 2), 
+			GetCenter() - (GetSize() / 2));
 	}
 }

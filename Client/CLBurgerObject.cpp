@@ -14,18 +14,13 @@
 namespace Client::Object
 {
 	BurgerObject::BurgerObject(const std::wstring& name) : RigidBody(
-		name, true, {}, { 10.0f, 10.0f, 10.0f }, { -10.0f, -10.0f, -10.0f })
+		name, true, {5.0f, 5.0f, 5.0f}, { 10.0f, 10.0f, 10.0f })
 	{
 	}
 
 	void BurgerObject::Initialize()
 	{
 		RigidBody::Initialize();
-
-		const auto tr = Engine::Manager::ComponentManager::Create<Engine::Abstract::Transform>(this);
-		tr.lock()->SetPosition({ 0.0f, 0.0f, 0.0f });
-		tr.lock()->SetScale({ 0.2f, 0.2f, 0.2f });
-		AddComponent(tr);
 
 		const auto mesh = Engine::Manager::ResourceManager::Load<Client::Mesh::TestBurgerMesh>(
 			L"BurgerMesh");
