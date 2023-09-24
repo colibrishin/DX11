@@ -35,7 +35,7 @@ namespace Client
 		AddGameObject(m_plane_, Engine::Enums::LAYER::NONE);
 
 		m_cup_ = Engine::Manager::GameObjectManager::Add<Object::BurgerObject>(L"Burger");
-		m_camera_.lock()->SetPosition({ 0.0f, 50.0f, 120.0f });
+		m_camera_.lock()->SetPosition({ 0.0f, 30.0f, 200.0f });
 		AddGameObject(m_cup_, Engine::Enums::LAYER::NONE);
 	}
 
