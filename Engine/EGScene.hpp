@@ -25,9 +25,11 @@ namespace Engine::Abstract
 
 		void GetSceneCoordination(XMMATRIX& view, XMMATRIX& projection) const;
 
+	protected:
+		std::weak_ptr<Object::Camera> m_camera_;
+
 	private:
 		Layer mLayers[Enums::LAYER::MAX];
-		std::weak_ptr<Object::Camera> m_camera_;
 
 		XMMATRIX m_world_{};
 		XMMATRIX m_ortho_{};
