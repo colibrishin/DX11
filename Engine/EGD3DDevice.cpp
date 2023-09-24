@@ -1,4 +1,4 @@
-﻿#include "pch.h"
+#include "pch.h"
 #include "EGD3DDevice.hpp"
 #include "../Client/CLApplication.hpp"
 #include "EGMesh.hpp"
@@ -331,9 +331,9 @@ void Engine::Graphics::D3DDevice::Clear() const
 void Engine::Graphics::D3DDevice::AdjustViewport()
 {
 	// ViewPort, RenderTaget
-	RECT winRect;
-	D3D11_VIEWPORT mViewPort = {
-		0.0f, 0.0f, static_cast<float>(m_width_), static_cast<float>(m_height_)
+	D3D11_VIEWPORT mViewPort = 
+	{
+		0.0f, 0.0f, static_cast<float>(m_width_), static_cast<float>(m_height_), 0.0f, 1.0f
 	};
 
 	BindViewports(&mViewPort);
