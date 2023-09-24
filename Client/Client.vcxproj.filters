@@ -42,13 +42,5 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="..\cup.cmo">
-      <Filter>리소스 파일</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\cup.jpg">
-      <Filter>리소스 파일</Filter>
-    </Image>
   </ItemGroup>
 </Project>

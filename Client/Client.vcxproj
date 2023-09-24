@@ -53,9 +53,9 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <ImportGroup Label="ExtensionSettings">
-  </ImportGroup>
+  <ImportGroup Label="ExtensionSettings" />
   <ImportGroup Label="Shared">
+    <Import Project="..\Assets\Assets.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -173,9 +173,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\cup.cmo">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -184,9 +181,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\cup.jpg">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
-    </Image>
+    <MeshContentTask Update="D:\document\Work\git\DX11\Assets\..\cup._obj">
+      <FileType>Document</FileType>
+    </MeshContentTask>
+    <MeshContentTask Update="D:\document\Work\git\DX11\Assets\Mesh\Cup\cup._obj">
+      <FileType>Document</FileType>
+    </MeshContentTask>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

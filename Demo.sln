@@ -16,6 +16,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Client", "Client\Client.vcx
 		{6ECB7359-9375-4095-A3DD-3712E9B86F52} = {6ECB7359-9375-4095-A3DD-3712E9B86F52}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Assets", "Assets\Assets.vcxitems", "{BD9457A4-4A12-45B1-AF4D-D6C982FD46B5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -54,5 +56,9 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {00CBA492-B12A-45C6-A406-7052D0299335}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Assets\Assets.vcxitems*{bd9457a4-4a12-45b1-af4d-d6c982fd46b5}*SharedItemsImports = 9
+		Assets\Assets.vcxitems*{f8c99d5d-6819-4d95-b325-f6b10b2a78e4}*SharedItemsImports = 4
 	EndGlobalSection
 EndGlobal
