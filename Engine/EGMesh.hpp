@@ -16,6 +16,7 @@ namespace Engine::Abstract
 
 		void Load() override;
 		virtual void Render(const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj);
+		virtual void GetBoundingBox(BoundingBox& box) const;
 
 	protected:
 		virtual void SetParameter(ID3D11Device* device, ID3D11DeviceContext* ctx, const DirectX::CommonStates* state) = 0;
@@ -54,5 +55,13 @@ namespace Engine::Abstract
 			{
 				SetParameter(device, ctx, state);
 			});
+	}
+
+	inline void Mesh::GetBoundingBox(BoundingBox& box) const
+	{
+		for(const auto& mesh : m_model_->meshes)
+		{
+			BoundingBox::CreateMerged(box, box, mesh->boundingBox);
+		}
 	}
 }
