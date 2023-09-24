@@ -219,6 +219,11 @@ const
 	const auto path = std::filesystem::absolute(fileName);
 	auto model = DirectX::Model::CreateFromCMO(mDevice.Get(), path.c_str(), *effectFactory);
 
+	if (model == nullptr)
+	{
+		throw std::exception("Failed to load model. See the debug output for more details.");
+	}
+
 	return std::move(model);
 }
 

@@ -33,11 +33,6 @@ namespace Engine::Abstract
 	inline void Mesh::Load()
 	{
 		m_model_ = Graphics::D3DDevice::GetDevice()->LoadModelFromCMO(GetPath(), m_effect_factory_.get());
-
-		if (m_model_ == nullptr)
-		{
-			throw std::exception("Failed to load model. See the debug output for more details.");
-		}
 	}
 
 	inline void Mesh::Render(
