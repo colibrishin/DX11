@@ -19,7 +19,7 @@ namespace Client::Object
 	{
 		GameObject::Initialize();
 
-		const auto tr = Engine::Manager::ComponentManager::Create<Engine::Abstract::Transform>();
+		const auto tr = Engine::Manager::ComponentManager::Create<Engine::Abstract::Transform>(this);
 		tr.lock()->SetPosition({ 0.0f, 0.0f, 0.0f });
 		AddComponent(tr);
 
@@ -27,7 +27,7 @@ namespace Client::Object
 			L"CupMesh");
 
 		const auto meshRenderer =
-			Engine::Manager::ComponentManager::Create<Engine::MeshRenderer>().lock();
+			Engine::Manager::ComponentManager::Create<Engine::MeshRenderer>(this).lock();
 
 		meshRenderer->SetMesh(mesh);
 		AddComponent(meshRenderer);

@@ -2,6 +2,7 @@
 #include "pch.h"
 #include <vector>
 
+#include "CLBurgerObject.hpp"
 #include "CLExampleCupObject.hpp"
 #include "../Engine/EGScene.hpp"
 #include "../Engine/EGGameObjectManager.hpp"
@@ -28,7 +29,8 @@ namespace Client
 	{
 		Scene::Initialize();
 
-		m_cup_ = Engine::Manager::GameObjectManager::Add<Object::ExampleCupObject>(L"TestCup");
+		m_cup_ = Engine::Manager::GameObjectManager::Add<Object::BurgerObject>(L"Burger");
+		m_camera_.lock()->SetPosition({ 0.0f, 0.0f, -500.0f });
 		AddGameObject(m_cup_, Engine::Enums::LAYER::NONE);
 	}
 
@@ -36,7 +38,7 @@ namespace Client
 	{
 		Scene::Update();
 
-		const auto obj = std::dynamic_pointer_cast<Object::ExampleCupObject>(m_cup_.lock());
+		const auto obj = std::dynamic_pointer_cast<Object::BurgerObject>(m_cup_.lock());
 		const auto key = Application::GetKeyState();
 
 
