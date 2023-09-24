@@ -36,6 +36,7 @@ namespace Engine::Manager
 					if(!rb->m_bounding_box_->Intersects(*other_rb->m_bounding_box_))
 					{
 						m_collided_[rb->GetID()].erase(other_rb->GetID());
+						m_collided_[other_rb->GetID()].erase(rb->GetID());
 
 						rb->m_bCollided_ = m_collided_[rb->GetID()].size() > 0;
 						other_rb->m_bCollided_ = m_collided_[other_rb->GetID()].size() > 0;
@@ -53,6 +54,7 @@ namespace Engine::Manager
 					}
 
 					m_collided_[rb->GetID()].insert(other_rb->GetID());
+					m_collided_[other_rb->GetID()].insert(rb->GetID());
 
 					rb->m_bCollided_ = true;
 					other_rb->m_bCollided_ = true;
