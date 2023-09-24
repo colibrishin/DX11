@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "EGD3DDevice.hpp"
 #include "../Client/CLApplication.hpp"
 #include "EGMesh.hpp"
@@ -65,26 +65,7 @@ Engine::Graphics::D3DDevice::D3DDevice(HWND hwnd, UINT width, UINT height)
 	DX::ThrowIfFailed(
 		mDevice->CreateRenderTargetView(mFrameBuffer.Get(), nullptr, mRenderTargetView.GetAddressOf()));
 
-	// DepthStencilTexture
-	D3D11_TEXTURE2D_DESC texdesc = {};
-
-	texdesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
-
-	texdesc.Usage = D3D11_USAGE_DEFAULT;
-	texdesc.CPUAccessFlags = 0;
-
-	texdesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-	texdesc.Width = width;
-	texdesc.Height = height;
-	texdesc.ArraySize = 1;
-
-	texdesc.SampleDesc.Count = 1;
-	texdesc.SampleDesc.Quality = 0;
-
-	texdesc.MipLevels = 0;
-	texdesc.MiscFlags = 0;
-
-	CreateDepthStencil(texdesc);
+	AdjustViewport();
 
 	m_common_states_ = std::make_unique<DirectX::CommonStates>(mDevice.Get());
 }
@@ -130,9 +111,26 @@ void Engine::Graphics::D3DDevice::CreateDepthStencil(const D3D11_TEXTURE2D_DESC&
 	// Create Depth Stencil Buffer
 	DX::ThrowIfFailed(mDevice->CreateTexture2D(&desc, nullptr, mDepthStencilBuffer.ReleaseAndGetAddressOf()));
 
+	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc = {};
+
+	depthStencilViewDesc.Format = desc.Format;
+	depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+	depthStencilViewDesc.Texture2D.MipSlice = 0;
+
 	// Create Depth Stencil Buffer View
 	DX::ThrowIfFailed(
-		mDevice->CreateDepthStencilView(mDepthStencilBuffer.Get(), nullptr, mDepthStencilView.ReleaseAndGetAddressOf()));
+		mDevice->CreateDepthStencilView(mDepthStencilBuffer.Get(), &depthStencilViewDesc, mDepthStencilView.ReleaseAndGetAddressOf()));
+
+	D3D11_DEPTH_STENCIL_DESC depthStencilDesc = {};
+
+	depthStencilDesc.DepthEnable = true;
+	depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+	depthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS;
+
+	DX::ThrowIfFailed(
+		mDevice->CreateDepthStencilState(&depthStencilDesc, mDepthStencilState.ReleaseAndGetAddressOf()));
+
+	mContext->OMSetDepthStencilState(mDepthStencilState.Get(), 1);
 }
 
 void Engine::Graphics::D3DDevice::CreateShaderResourceView(

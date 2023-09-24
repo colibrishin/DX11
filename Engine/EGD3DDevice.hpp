@@ -114,6 +114,7 @@ namespace Engine::Graphics
 		ComPtr<ID3D11RenderTargetView> mRenderTargetView;
 		ComPtr<ID3D11Texture2D> mDepthStencilBuffer;
 		ComPtr<ID3D11DepthStencilView> mDepthStencilView;
+		ComPtr<ID3D11DepthStencilState> mDepthStencilState;
 		ComPtr<IDXGISwapChain> mSwapChain;
 		ComPtr<ID3D11SamplerState> mSamplers[static_cast<UINT>(Filter::MAXIMUM_ANISOTROPIC)];
 	};

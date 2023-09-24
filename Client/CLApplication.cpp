@@ -58,7 +58,6 @@ void Client::Application::Render()
 	}
 
 	dev->Clear();
-	dev->AdjustViewport();
 	Engine::Manager::SceneManager::Render();
 	dev->Present();
 }
