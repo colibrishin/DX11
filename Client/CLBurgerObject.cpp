@@ -56,7 +56,7 @@ namespace Client::Object
 	{
 		const auto tr = GetComponent<Engine::Abstract::Transform>().lock();
 		auto pos = tr->GetPosition();
-		pos += {0, 10.0f * Engine::DeltaTime::GetDeltaTime()->GetElapsedSeconds(), 0};
+		pos += {0, 30.0f * Engine::DeltaTime::GetDeltaTime()->GetElapsedSeconds(), 0};
 		tr->SetPosition(pos);
 		m_offset_ = DirectX::SimpleMath::Vector3::Up;
 	}
@@ -65,7 +65,7 @@ namespace Client::Object
 	{
 		const auto tr = GetComponent<Engine::Abstract::Transform>().lock();
 		auto pos = tr->GetPosition();
-		pos += {0, -10.0f * Engine::DeltaTime::GetDeltaTime()->GetElapsedSeconds(), 0};
+		pos += {0, -30.0f * Engine::DeltaTime::GetDeltaTime()->GetElapsedSeconds(), 0};
 		tr->SetPosition(pos);
 		m_offset_ = DirectX::SimpleMath::Vector3::Down;
 	}
@@ -74,7 +74,7 @@ namespace Client::Object
 	{
 		const auto tr = GetComponent<Engine::Abstract::Transform>().lock();
 		auto pos = tr->GetPosition();
-		pos += {-10.0f * Engine::DeltaTime::GetDeltaTime()->GetElapsedSeconds(), -0.0f, 0};
+		pos += {-30.0f * Engine::DeltaTime::GetDeltaTime()->GetElapsedSeconds(), -0.0f, 0};
 		tr->SetPosition(pos);
 		m_offset_ = DirectX::SimpleMath::Vector3::Left;
 	}
@@ -83,7 +83,7 @@ namespace Client::Object
 	{
 		const auto tr = GetComponent<Engine::Abstract::Transform>().lock();
 		auto pos = tr->GetPosition();
-		pos += {10.0f * Engine::DeltaTime::GetDeltaTime()->GetElapsedSeconds(), -0.0f, 0};
+		pos += {30.0f * Engine::DeltaTime::GetDeltaTime()->GetElapsedSeconds(), -0.0f, 0};
 		tr->SetPosition(pos);
 		m_offset_ = DirectX::SimpleMath::Vector3::Right;
 	}
