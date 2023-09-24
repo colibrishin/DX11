@@ -9,7 +9,7 @@ namespace Engine::Abstract
 	class Transform : public Component
 	{
 	public:
-		Transform();
+		Transform(const Abstract::GameObject* owner);
 		~Transform() override = default;
 
 		void Initialize() override;
@@ -40,6 +40,6 @@ namespace Engine::Abstract
 	private:
 		DirectX::SimpleMath::Vector3 m_position_{};
 		DirectX::SimpleMath::Vector3 m_rotation_{};
-		DirectX::SimpleMath::Vector3 m_scale_{};
+		DirectX::SimpleMath::Vector3 m_scale_{1.0f, 1.0f, 1.0f};
 	};
 }

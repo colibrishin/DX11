@@ -10,7 +10,6 @@ namespace Engine::Abstract
 	class Component : public Entity
 	{
 	public:
-		friend GameObject;
 		~Component() override = default;
 
 		virtual void Initialize() = 0;
@@ -18,19 +17,18 @@ namespace Engine::Abstract
 		virtual void FixedUpdate() = 0;
 		virtual void Render() = 0;
 
-		[[nodiscard]] std::weak_ptr<GameObject> GetOwner() const { return mOwner; }
+		[[nodiscard]] const GameObject* GetOwner() const { return mOwner; }
 		[[nodiscard]] UINT GetUpdateOrder() const { return static_cast<UINT>(mType); }
 
 	protected:
-		Component(const std::wstring& name, Enums::COMPONENTTYPE type);
+		Component(const std::wstring& name, Enums::COMPONENTTYPE type, const Abstract::GameObject* owner);
 
 	private:
 		const Enums::COMPONENTTYPE mType;
-		std::weak_ptr<GameObject> mOwner;
+		const Abstract::GameObject* mOwner;
 	};
 
-	inline Component::Component(const std::wstring& name, Enums::COMPONENTTYPE type) : Entity(name), mType(type),
-		mOwner({})
+	inline Component::Component(const std::wstring& name, Enums::COMPONENTTYPE type, const Abstract::GameObject* owner) : Entity(name), mType(type), mOwner(owner)
 	{
 	}
 }

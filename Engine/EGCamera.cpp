@@ -14,12 +14,14 @@ namespace Engine::Object
 
 	void Camera::Initialize()
 	{
-		const auto tr = Manager::ComponentManager::Create<Abstract::Transform>().lock();
+		const auto tr = Manager::ComponentManager::Create<Abstract::Transform>(this).lock();
 		AddComponent(tr);
 	}
 
 	void Camera::SetPosition(SimpleMath::Vector3 position)
 	{
+		// TODO: Lerp movement
+		// https://github.com/microsoft/DirectXTK/wiki/Basic-game-math#moving-the-camera
 		const auto tr = GetComponent<Abstract::Transform>().lock();
 		tr->SetPosition(position);
 	}

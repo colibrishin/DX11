@@ -3,8 +3,8 @@
 
 namespace Engine::Abstract
 {
-	Transform::Transform()
-		: Component(L"Transform" + std::to_wstring(GetID()), Enums::COMPONENTTYPE::TRANSFORM)
+	Transform::Transform(const Abstract::GameObject* owner)
+		: Component(L"Transform" + std::to_wstring(GetID()), Enums::COMPONENTTYPE::TRANSFORM, owner)
 	{
 	}
 

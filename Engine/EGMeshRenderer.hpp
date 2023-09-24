@@ -15,7 +15,7 @@ namespace Engine
 	class MeshRenderer : public Abstract::Component
 	{
 	public:
-		MeshRenderer();
+		MeshRenderer(const Abstract::GameObject* owner);
 		~MeshRenderer() override = default;
 		
 		void Initialize() override;
@@ -31,8 +31,8 @@ namespace Engine
 		std::weak_ptr<Abstract::Mesh> mMesh{};
 	};
 
-	inline MeshRenderer::MeshRenderer()
-		: Component(L"MeshRenderer" + std::to_wstring(GetID()), Enums::COMPONENTTYPE::MESH)
+	inline MeshRenderer::MeshRenderer(const Abstract::GameObject* owner)
+		: Component(L"MeshRenderer" + std::to_wstring(GetID()), Enums::COMPONENTTYPE::MESH, owner)
 	{
 	}
 
@@ -50,7 +50,7 @@ namespace Engine
 
 	inline void MeshRenderer::Render()
 	{
-		if(const auto tr = GetOwner().lock()->GetComponent<Abstract::Transform>().lock())
+		if(const auto tr = GetOwner()->GetComponent<Abstract::Transform>().lock())
 		{
 			XMMATRIX view{};
 			XMMATRIX projection{};
@@ -61,6 +61,8 @@ namespace Engine
 				tr->GetPosition(), DirectX::SimpleMath::Vector3::Forward, DirectX::SimpleMath::Vector3::Up);
 
 			const auto rotMat = SimpleMath::Matrix::CreateFromYawPitchRoll(tr->GetRotation());
+			XMMATRIX scaleMat = XMMatrixScalingFromVector(tr->GetScale());
+
 			worldPos = XMMatrixMultiply(worldPos, rotMat);
 
 			mMesh.lock()->Render(
