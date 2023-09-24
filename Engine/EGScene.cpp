@@ -18,12 +18,12 @@ namespace Engine::Abstract
 			SimpleMath::Vector3::Forward,
 			SimpleMath::Vector3::Up);
 
-		m_ortho_ = XMMatrixOrthographicLH(
+		m_ortho_ = XMMatrixOrthographicRH(
 			Graphics::D3DDevice::GetDevice()->GetWidth(),
 			Graphics::D3DDevice::GetDevice()->GetHeight(),
 			nearZ,
 			farZ);
-		m_projection_ = XMMatrixPerspectiveFovLH(
+		m_projection_ = XMMatrixPerspectiveFovRH(
 			fov,
 			Graphics::D3DDevice::GetDevice()->GetAspectRatio(), nearZ, farZ);
 		m_camera_.lock()->SetPosition({ 0.0f, 0.0f, 5.0f });

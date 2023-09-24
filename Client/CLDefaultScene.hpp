@@ -31,12 +31,12 @@ namespace Client
 	{
 		Scene::Initialize();
 
-		m_cup_ = Engine::Manager::GameObjectManager::Add<Object::BurgerObject>(L"Burger");
-		m_camera_.lock()->SetPosition({ 0.0f, 0.0f, -500.0f });
-		AddGameObject(m_cup_, Engine::Enums::LAYER::NONE);
-
 		m_plane_ = Engine::Manager::GameObjectManager::Add<Object::PlaneObject>(L"Plane");
 		AddGameObject(m_plane_, Engine::Enums::LAYER::NONE);
+
+		m_cup_ = Engine::Manager::GameObjectManager::Add<Object::BurgerObject>(L"Burger");
+		m_camera_.lock()->SetPosition({ 0.0f, 50.0f, 120.0f });
+		AddGameObject(m_cup_, Engine::Enums::LAYER::NONE);
 	}
 
 	inline void DefaultScene::Update()
