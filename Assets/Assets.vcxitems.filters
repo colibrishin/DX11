@@ -9,11 +9,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <MeshContentTask Include="$(MSBuildThisFileDirectory)Mesh\uploads_files_3998079_burger_3.fbx">
-      <Filter>Mesh</Filter>
-    </MeshContentTask>
-  </ItemGroup>
-  <ItemGroup>
     <CopyFileToFolders Include="$(MSBuildThisFileDirectory)Texture\stone01.tga">
       <Filter>Texture</Filter>
     </CopyFileToFolders>
@@ -23,5 +18,8 @@
     <CopyFileToFolders Include="$(MSBuildThisFileDirectory)Mesh\cup.cmo">
       <Filter>Mesh</Filter>
     </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <MeshContentTask Include="$(MSBuildThisFileDirectory)Mesh\burger.fbx" />
   </ItemGroup>
 </Project>

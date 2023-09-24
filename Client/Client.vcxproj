@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -155,12 +155,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CLApplication.hpp" />
+    <ClInclude Include="CLBurgerObject.hpp" />
     <ClInclude Include="CLExampleCupMesh.hpp" />
     <ClInclude Include="CLExampleCupObject.hpp" />
+    <ClInclude Include="CLTestHamburgerMesh.hpp" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CLBurgerObject.cpp" />
     <ClCompile Include="CLDefaultScene.hpp" />
     <ClCompile Include="CLExampleCupObject.cpp" />
     <ClCompile Include="Client.cpp" />

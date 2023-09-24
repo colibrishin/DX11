@@ -41,9 +41,6 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <MeshContentTask Include="$(MSBuildThisFileDirectory)Mesh\uploads_files_3998079_burger_3.fbx" />
-  </ItemGroup>
-  <ItemGroup>
     <CopyFileToFolders Include="$(MSBuildThisFileDirectory)Mesh\cup.cmo">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
@@ -54,6 +51,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <MeshContentTask Include="$(MSBuildThisFileDirectory)Mesh\burger.fbx" />
   </ItemGroup>
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />

@@ -28,6 +28,12 @@
     <ClInclude Include="CLExampleCupObject.hpp">
       <Filter>Object</Filter>
     </ClInclude>
+    <ClInclude Include="CLTestHamburgerMesh.hpp">
+      <Filter>Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="CLBurgerObject.hpp">
+      <Filter>Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -37,6 +43,9 @@
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="CLExampleCupObject.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CLBurgerObject.cpp">
       <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>
