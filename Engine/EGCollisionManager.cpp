@@ -41,6 +41,7 @@ namespace Engine::Manager
 						other_rb->m_bCollided_ = m_collided_[other_rb->GetID()].size() > 0;
 
 						rb->OnCollisionExit();
+						other_rb->OnCollisionExit();
 					}
 				}
 
@@ -57,6 +58,7 @@ namespace Engine::Manager
 					other_rb->m_bCollided_ = true;
 
 					rb->OnCollision(other_rb.get());
+					other_rb->OnCollision(rb.get());
 				}
 			}
 		}
