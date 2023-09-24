@@ -44,6 +44,8 @@
 #include "VertexTypes.h"
 #include "WICTextureLoader.h"
 
+#include "EGCommon.hpp"
+
 #include <DirectXTex.h>
 
 #include <exception>
