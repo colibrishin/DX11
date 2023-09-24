@@ -15,8 +15,8 @@ namespace Engine::Abstract
 	{
 		m_world_ = SimpleMath::Matrix::CreateWorld(
 			SimpleMath::Vector3::Zero,
-			FORWARD,
-			UP);
+			SimpleMath::Vector3::Forward,
+			SimpleMath::Vector3::Up);
 
 		m_ortho_ = XMMatrixOrthographicLH(
 			Graphics::D3DDevice::GetDevice()->GetWidth(),

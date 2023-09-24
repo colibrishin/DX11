@@ -57,7 +57,9 @@ namespace Engine
 
 			Manager::SceneManager::GetActiveScene().lock()->GetSceneCoordination(view, projection);
 
-			XMMATRIX worldPos = SimpleMath::Matrix::CreateWorld(tr->GetPosition(), FORWARD, UP);
+			XMMATRIX worldPos = SimpleMath::Matrix::CreateWorld(
+				tr->GetPosition(), DirectX::SimpleMath::Vector3::Forward, DirectX::SimpleMath::Vector3::Up);
+
 			const auto rotMat = SimpleMath::Matrix::CreateFromYawPitchRoll(tr->GetRotation());
 			worldPos = XMMatrixMultiply(worldPos, rotMat);
 

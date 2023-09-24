@@ -34,7 +34,7 @@ namespace Engine::Object
 	{
 		GameObject::Render();
 		const XMFLOAT3 up = SimpleMath::Vector3::Up;
-		const XMFLOAT3 lookAt = SimpleMath::Vector3::Backward;
+		const XMFLOAT3 lookAt = SimpleMath::Vector3::Forward;
 
 		const auto tr = GetComponent<Abstract::Transform>().lock();
 		const auto position = tr->GetPosition();
@@ -50,7 +50,7 @@ namespace Engine::Object
 		
 		lookAtVector = XMVectorAdd(positionVector, lookAtVector);
 		
-		m_view_matrix_ = XMMatrixLookAtLH(positionVector, lookAtVector, upVector);
+		m_view_matrix_ = XMMatrixLookAtRH(positionVector, lookAtVector, upVector);
 	}
 
 	void Camera::GetViewMatrix(XMMATRIX& view) const
