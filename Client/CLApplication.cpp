@@ -36,11 +36,13 @@ void Client::Application::Initialize(HWND hwnd, UINT width, UINT height)
 	Engine::Manager::SceneManager::SetScene(L"Default");
 
 	m_input_ = std::make_unique<DirectX::Keyboard>();
+	Engine::Manager::CollisionManager::Initialize();
 }
 
 void Client::Application::Update()
 {
 	Engine::Manager::SceneManager::Update();
+	Engine::Manager::CollisionManager::Update();
 }
 
 void Client::Application::FixedUpdate()
