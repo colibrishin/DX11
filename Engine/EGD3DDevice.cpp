@@ -416,3 +416,8 @@ void Engine::Graphics::D3DDevice::Resize(UINT width, UINT height)
 
 	m_resized_ = false;
 }
+
+std::unique_ptr<DirectX::GeometricPrimitive> Engine::Graphics::D3DDevice::CreateBox(const DirectX::XMFLOAT3& size) const
+{
+	return std::move(DirectX::GeometricPrimitive::CreateBox(mContext.Get(), size));
+}

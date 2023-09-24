@@ -159,6 +159,7 @@
     <ClInclude Include="EGLayer.hpp" />
     <ClInclude Include="EGMesh.hpp" />
     <ClInclude Include="EGMeshRenderer.hpp" />
+    <ClInclude Include="EGPlaneMesh.hpp" />
     <ClInclude Include="EGResource.hpp" />
     <ClInclude Include="EGResourceManager.hpp" />
     <ClInclude Include="EGRigidBody.hpp" />

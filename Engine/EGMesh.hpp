@@ -15,7 +15,7 @@ namespace Engine::Abstract
 		~Mesh() override = default;
 
 		void Load() override;
-		void Render(const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj);
+		virtual void Render(const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj);
 
 	protected:
 		virtual void SetParameter(ID3D11Device* device, ID3D11DeviceContext* ctx, const DirectX::CommonStates* state) = 0;
@@ -32,6 +32,11 @@ namespace Engine::Abstract
 
 	inline void Mesh::Load()
 	{
+		if(GetPath().empty())
+		{
+			return;
+		}
+
 		m_model_ = Graphics::D3DDevice::GetDevice()->LoadModelFromCMO(GetPath(), m_effect_factory_.get());
 	}
 
