@@ -13,8 +13,8 @@ namespace Engine::Abstract
 		RigidBody(
 			const std::wstring& name,
 			bool gravity,
-			const SimpleMath::Vector3& center,
-			const SimpleMath::Vector3& size);
+			const SimpleMath::Vector3& position,
+			const std::weak_ptr<Mesh>& mesh);
 
 		RigidBody(const RigidBody& other) = default;
 		~RigidBody() override;
@@ -24,7 +24,10 @@ namespace Engine::Abstract
 		void FixedUpdate() override;
 		void Render() override;
 
+		void SetPosition(const SimpleMath::Vector3& center);
+
 		SimpleMath::Vector3 GetSize() const;
+		SimpleMath::Vector3 GetCenter() const;
 
 		bool IsGravity() const;
 		bool IsGrounded() const;
@@ -35,11 +38,9 @@ namespace Engine::Abstract
 	private:
 		friend class Engine::Manager::CollisionManager;
 
-		void UpdatePosition(const SimpleMath::Vector3& center) const;
-		SimpleMath::Vector3 GetCenter() const;
 		void GetBoundingBox(BoundingBox& box) const;
 
-		const SimpleMath::Vector3 m_size_;
+		BoundingBox m_boundingBox_;
 
 		SimpleMath::Vector3	m_velocity_;
 		SimpleMath::Vector3 m_acceleration_;

@@ -2,30 +2,40 @@
 #include "EGRigidBody.hpp"
 
 #include "EGDeltaTime.hpp"
+#include "EGMesh.hpp"
+#include "EGMeshRenderer.hpp"
+#include "EGScript.hpp"
 
 namespace Engine::Abstract
 {
 	RigidBody::RigidBody(
 		const std::wstring& name, 
 		bool gravity,
-		const SimpleMath::Vector3& center,
-		const SimpleMath::Vector3& size) :
+		const SimpleMath::Vector3& position,
+		const std::weak_ptr<Mesh>& mesh) :
 		GameObject(name),
-		m_size_(size),
 		m_bGravity_override_(gravity),
 		m_bGravity_(gravity),
 		m_bGrounded_(false),
 		m_bCollided_(false)
 	{
 		AddComponent(
-			Manager::ComponentManager::Create<Abstract::Transform>(this));
+			Manager::ComponentManager::Create<Engine::Component::Transform>(this));
 
-		UpdatePosition(center);
+		const auto meshRenderer = Manager::ComponentManager::Create<Engine::Component::MeshRenderer>(this);
+		meshRenderer.lock()->SetMesh(mesh);
+
+		AddComponent(meshRenderer);
+		GetBoundingBoxFromMesh(m_boundingBox_, mesh);
+		m_boundingBox_.Center = position;
+
+		SetPosition(m_boundingBox_.Center);
 	}
 
 	RigidBody::~RigidBody()
 	{
-		Manager::ComponentManager::Remove(GetComponent<Abstract::Transform>().lock()->GetID());
+		Manager::ComponentManager::Remove(GetComponent<Engine::Component::Transform>().lock()->GetID());
+		Manager::ComponentManager::Remove(GetComponent<Engine::Component::MeshRenderer>().lock()->GetID());
 	}
 
 	void RigidBody::Initialize()
@@ -46,7 +56,7 @@ namespace Engine::Abstract
 		{
 			auto position = GetCenter();
 			position.y -= GRAVITY_ACCEL * DeltaTime::GetDeltaTime()->GetElapsedSeconds();
-			UpdatePosition(position);
+			SetPosition(position);
 		}
 	}
 
@@ -62,7 +72,7 @@ namespace Engine::Abstract
 
 	SimpleMath::Vector3 RigidBody::GetSize() const
 	{
-		return m_size_;
+		return SimpleMath::Vector3(m_boundingBox_.Extents) * 2.0f;
 	}
 
 	bool RigidBody::IsGravity() const
@@ -80,13 +90,10 @@ namespace Engine::Abstract
 		if(m_bGravity_override_)
 		{
 			const auto nextT = GetCenter() + SimpleMath::Vector3{
-				0, -GRAVITY_ACCEL * DeltaTime::GetDeltaTime()->GetElapsedSeconds(), 0};
+				0, -1.0f, 0};
 
-			BoundingBox nextTBB;
-			BoundingBox::CreateFromPoints(
-				nextTBB, 
-				nextT + (GetSize() / 2), 
-				nextT - (GetSize() / 2));
+			BoundingBox nextTBB = m_boundingBox_;
+			nextTBB.Center = nextT;
 
 			BoundingBox bb;
 			other->GetBoundingBox(bb);
@@ -108,23 +115,21 @@ namespace Engine::Abstract
 		}
 	}
 
-	void RigidBody::UpdatePosition(const SimpleMath::Vector3& center) const
+	void RigidBody::SetPosition(const SimpleMath::Vector3& center)
 	{
-		const auto transform = GetComponent<Abstract::Transform>().lock();
+		const auto transform = GetComponent<Engine::Component::Transform>().lock();
 		transform->SetPosition(center);
+		m_boundingBox_.Center = center;
 	}
 
 	SimpleMath::Vector3 RigidBody::GetCenter() const
 	{
-		const auto transform = GetComponent<Abstract::Transform>().lock();
+		const auto transform = GetComponent<Engine::Component::Transform>().lock();
 		return transform->GetPosition();
 	}
 
 	void RigidBody::GetBoundingBox(BoundingBox& box) const
 	{
-		BoundingBox::CreateFromPoints(
-			box, 
-			GetCenter() + (GetSize() / 2), 
-			GetCenter() - (GetSize() / 2));
+		box = m_boundingBox_;
 	}
 }
