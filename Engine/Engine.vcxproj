@@ -184,6 +184,7 @@
     <ClCompile Include="EGGameObject.cpp" />
     <ClCompile Include="EGGameObjectManager.hpp" />
     <ClCompile Include="EGLayer.cpp" />
+    <ClCompile Include="EGMesh.cpp" />
     <ClCompile Include="EGMeshRenderer.cpp" />
     <ClCompile Include="EGRigidBody.cpp" />
     <ClCompile Include="EGScene.cpp" />

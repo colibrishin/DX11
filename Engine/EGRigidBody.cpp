@@ -97,6 +97,12 @@ namespace Engine::Abstract
 	{
 	}
 
+	Enums::BOUNDINGTYPE RigidBody::GetBoundingType() const
+	{
+		const auto renderer = GetComponent<Engine::Component::MeshRenderer>().lock();
+		return renderer->GetBoundingType();
+	}
+
 	void RigidBody::GetBoundingBox(BoundingOrientedBox& box) const
 	{
 		BoundingOrientedBox::CreateFromBoundingBox(box, m_bounding_box_);
@@ -105,6 +111,8 @@ namespace Engine::Abstract
 
 	void RigidBody::GetBoundingSphere(BoundingSphere& sphere) const
 	{
+		// todo: somehow radius calculated is bigger than the actual radius?
+		// {1, 1, 1} -> radius = 1.73205
 		BoundingSphere::CreateFromBoundingBox(sphere, m_bounding_box_);
 		sphere.Center = GetComponent<Engine::Component::Transform>().lock()->GetPosition();
 	}

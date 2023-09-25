@@ -40,7 +40,7 @@ namespace Engine::Mesh
 	{
 	}
 
-	inline BoxMesh::BoxMesh(const std::wstring& key, const SimpleMath::Vector3& size) : Mesh(std::to_wstring(GetID()) + L" BoxMesh", key, "")
+	inline BoxMesh::BoxMesh(const std::wstring& key, const SimpleMath::Vector3& size) : Mesh(Enums::BOUNDINGTYPE_BOX, std::to_wstring(GetID()) + L" BoxMesh", key, "")
 	{
 		m_size_ = size;
 		m_box_ = GetDevice()->CreateBox(m_size_);

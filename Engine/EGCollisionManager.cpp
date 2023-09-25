@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "EGCollisionManager.hpp"
-
+#include <any>
 #include "EGGameObjectManager.hpp"
 #include "EGLayer.hpp"
 
@@ -22,34 +22,12 @@ namespace Engine::Manager
 		return nullptr;
 	}
 
-	Enums::COLLISIONCODE CollisionManager::CheckCollision(const std::shared_ptr<Abstract::RigidBody>& rb,
-	                                                      DirectX::BoundingOrientedBox& bb1, DirectX::BoundingOrientedBox& bb2,
-	                                                      const std::shared_ptr<Abstract::RigidBody>& other_rb)
+	void CollisionManager::ReleaseBoundingBox(void* bb2, const std::shared_ptr<Abstract::RigidBody>& shared)
 	{
-		if(m_collided_[rb->GetID()].contains(other_rb->GetID()) && 
-			m_collided_[other_rb->GetID()].contains(rb->GetID()))
-		{
-			if(!bb1.Intersects(bb2))
-			{
-				m_collided_[rb->GetID()].erase(other_rb->GetID());
-				m_collided_[other_rb->GetID()].erase(rb->GetID());
-
-				return Enums::COLLISIONCODE_END;
-			}
-			else if(bb1.Intersects(bb2))
-			{
-				return Enums::COLLISIONCODE_STAY;
-			}
-		}
-		else if (bb1.Intersects(bb2))
-		{
-			m_collided_[rb->GetID()].insert(other_rb->GetID());
-			m_collided_[other_rb->GetID()].insert(rb->GetID());
-
-			return Enums::COLLISIONCODE_START;
-		}
-
-		return Enums::COLLISIONCODE_NONE;
+		if(shared->GetBoundingType() == Enums::BOUNDINGTYPE_BOX)
+			delete static_cast<DirectX::BoundingOrientedBox*>(bb2);
+		else
+			delete static_cast<DirectX::BoundingSphere*>(bb2);
 	}
 
 	void CollisionManager::SendEventByCollisionCode(const std::shared_ptr<Abstract::RigidBody>& rb, const std::shared_ptr<Abstract::RigidBody>& other_rb, const Enums::COLLISIONCODE collisionCode)
@@ -71,10 +49,77 @@ namespace Engine::Manager
 		}
 	}
 
+	void CollisionManager::GetBounding(const std::shared_ptr<Abstract::RigidBody>& rb, void* box)
+	{
+		if(rb->GetBoundingType() == Enums::BOUNDINGTYPE_SPHERE)
+			rb->GetBoundingSphere(*static_cast<DirectX::BoundingSphere*>(box));
+		else
+			rb->GetBoundingBox(*static_cast<DirectX::BoundingOrientedBox*>(box));
+	}
+
+	void CollisionManager::CheckBoxSphereCasting(const std::shared_ptr<Abstract::RigidBody>& rb, void* bb1, const std::shared_ptr<Abstract::RigidBody>& other_rb, void* bb2, Enums::COLLISIONCODE& collisionCode)
+	{
+		if(rb->GetBoundingType() == Enums::BOUNDINGTYPE_BOX && other_rb->GetBoundingType() == Enums::BOUNDINGTYPE_BOX)
+		{
+			collisionCode = CheckCollision(
+				rb->GetID(),
+				*static_cast<DirectX::BoundingOrientedBox*>(bb1),
+				*static_cast<DirectX::BoundingOrientedBox*>(bb2),
+				other_rb->GetID());
+		}
+		else if (rb->GetBoundingType() == Enums::BOUNDINGTYPE_SPHERE && other_rb->GetBoundingType() == Enums::BOUNDINGTYPE_SPHERE)
+		{
+			collisionCode = CheckCollision(
+				rb->GetID(),
+				*static_cast<DirectX::BoundingSphere*>(bb1),
+				*static_cast<DirectX::BoundingSphere*>(bb2),
+				other_rb->GetID());
+		}
+		else if (rb->GetBoundingType() == Enums::BOUNDINGTYPE_BOX && other_rb->GetBoundingType() == Enums::BOUNDINGTYPE_SPHERE)
+		{
+			collisionCode = CheckCollision(
+				rb->GetID(),
+				*static_cast<DirectX::BoundingOrientedBox*>(bb1),
+				*static_cast<DirectX::BoundingSphere*>(bb2),
+				other_rb->GetID());
+		}
+		else if (rb->GetBoundingType() == Enums::BOUNDINGTYPE_SPHERE && other_rb->GetBoundingType() == Enums::BOUNDINGTYPE_BOX)
+		{
+			collisionCode = CheckCollision(
+				rb->GetID(),
+				*static_cast<DirectX::BoundingSphere*>(bb1),
+				*static_cast<DirectX::BoundingOrientedBox*>(bb2),
+				other_rb->GetID());
+		}
+		else
+		{
+			collisionCode = Enums::COLLISIONCODE_NONE;
+		}
+	}
+
+	void* CollisionManager::InitializeBoundingBox(const std::shared_ptr<Abstract::RigidBody>& rb)
+	{
+		void* bb1;
+
+		if(rb->GetBoundingType() == Enums::BOUNDINGTYPE_BOX)
+			bb1 = new DirectX::BoundingOrientedBox();
+		else
+			bb1 = new DirectX::BoundingSphere();
+
+		return bb1;
+	}
+
+	void CollisionManager::SetBoundingCenter(const std::shared_ptr<Abstract::RigidBody>& rb, void* get, DirectX::SimpleMath::Vector3 center)
+	{
+		if(rb->GetBoundingType() == Enums::BOUNDINGTYPE_BOX)
+			static_cast<DirectX::BoundingOrientedBox*>(get)->Center = center;
+		else if(rb->GetBoundingType() == Enums::BOUNDINGTYPE_SPHERE)
+			static_cast<DirectX::BoundingSphere*>(get)->Center = center;
+	}
+
 	void CollisionManager::CompareLayerObjects(const Abstract::Layer* layer, const std::shared_ptr<Abstract::RigidBody>& rb)
 	{
-		DirectX::BoundingOrientedBox bb1;
-		DirectX::BoundingOrientedBox bb2;
+		void* bb1 = InitializeBoundingBox(rb);
 
 		for(const auto& obj : layer->mGameObjects)
 		{
@@ -85,13 +130,20 @@ namespace Engine::Manager
 					continue;
 				}
 
-				rb->GetBoundingBox(bb1);
-				other_rb->GetBoundingBox(bb2);
+				void* bb2 = InitializeBoundingBox(other_rb);
 
-				const auto collisionCode = CheckCollision(rb, bb1, bb2, other_rb);
+				GetBounding(rb, bb1);
+				GetBounding(other_rb, bb2);
+
+				Enums::COLLISIONCODE collisionCode;
+				CheckBoxSphereCasting(rb, bb1, other_rb, bb2, collisionCode);
+
 				SendEventByCollisionCode(rb, other_rb, collisionCode);
+				ReleaseBoundingBox(bb2, other_rb);
 			}
 		}
+
+		ReleaseBoundingBox(bb1, rb);
 	}
 
 	void CollisionManager::Initialize()
@@ -187,12 +239,11 @@ namespace Engine::Manager
 	void CollisionManager::CheckGravityCollision(const std::weak_ptr<Abstract::RigidBody>& weak)
 	{
 		const auto rb = weak.lock();
-		auto nextTPos = rb->GetCenter() - DirectX::SimpleMath::Vector3{ 0, 1, 0 };
+		const auto nextTPos = rb->GetCenter() - DirectX::SimpleMath::Vector3{ 0, 1, 0 };
 
-		DirectX::BoundingOrientedBox rb_nextBB;
-		DirectX::BoundingOrientedBox other_nextBB;
-
-		rb->GetBoundingBox(rb_nextBB);
+		void* rb_nextBB = InitializeBoundingBox(rb);
+		GetBounding(rb, rb_nextBB);
+		SetBoundingCenter(rb, rb_nextBB, nextTPos);
 
 		const auto collidedObj = Manager::CollisionManager::GetCollided(rb);
 
@@ -207,9 +258,12 @@ namespace Engine::Manager
 		{
 			if(const auto other_rb = ptr.lock())
 			{
-				other_rb->GetBoundingBox(other_nextBB);
+				void* other_BB = InitializeBoundingBox(other_rb);
+				GetBounding(other_rb, other_BB);
 
-				const auto collisionCode = CheckCollision(rb, rb_nextBB, other_nextBB, other_rb);
+				Enums::COLLISIONCODE collisionCode;
+
+				CheckBoxSphereCasting(rb, rb_nextBB, other_rb, other_BB, collisionCode);
 
 				if(collisionCode == Enums::COLLISIONCODE_START || collisionCode == Enums::COLLISIONCODE_STAY)
 				{
@@ -221,7 +275,11 @@ namespace Engine::Manager
 					rb->m_bGravity_ = true;
 					rb->m_bGrounded_ = false;
 				}
+
+				ReleaseBoundingBox(other_BB, other_rb);
 			}
 		}
+
+		ReleaseBoundingBox(rb_nextBB, rb);
 	}
 }

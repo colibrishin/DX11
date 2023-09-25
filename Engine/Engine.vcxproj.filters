@@ -142,6 +142,9 @@
     <ClCompile Include="EGMeshRenderer.cpp">
       <Filter>Component</Filter>
     </ClCompile>
+    <ClCompile Include="EGMesh.cpp">
+      <Filter>Abstract</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

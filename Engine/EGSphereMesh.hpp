@@ -40,7 +40,7 @@ namespace Engine::Mesh
 	{
 	}
 
-	inline SphereMesh::SphereMesh(const std::wstring& key, float diameter) : Mesh(std::to_wstring(GetID()) + L" BoxMesh", key, "")
+	inline SphereMesh::SphereMesh(const std::wstring& key, float diameter) : Mesh(Enums::BOUNDINGTYPE_SPHERE, std::to_wstring(GetID()) + L" BoxMesh", key, "")
 	{
 		m_diameter_ = diameter;
 		m_sphere_ = GetDevice()->CreateSphere(diameter);

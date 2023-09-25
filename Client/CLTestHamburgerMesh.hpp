@@ -25,7 +25,7 @@ namespace Client::Mesh
 	};
 
 	inline TestBurgerMesh::TestBurgerMesh(const std::wstring& key) : Engine::Abstract::Mesh(
-		L"TestBurgerMesh", key, "burger.cmo")
+		Engine::Enums::BOUNDINGTYPE_BOX, L"TestBurgerMesh", key, "burger.cmo")
 	{
 	}
 

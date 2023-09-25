@@ -28,6 +28,7 @@ namespace Engine::Component
 		// SetTexture
 
 		void GetBoundingBox(BoundingBox& box) const;
+		Enums::BOUNDINGTYPE GetBoundingType() const;
 
 	private:
 		std::weak_ptr<Abstract::Mesh> mMesh{};

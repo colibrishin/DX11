@@ -31,6 +31,7 @@ namespace Engine::Abstract
 		virtual void OnCollision(RigidBody* other);
 		virtual void OnCollisionExit(RigidBody* other);
 
+		Enums::BOUNDINGTYPE GetBoundingType() const;
 		void GetBoundingBox(BoundingOrientedBox& box) const;
 		void GetBoundingSphere(BoundingSphere& sphere) const;
 

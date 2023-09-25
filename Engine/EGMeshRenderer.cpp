@@ -53,4 +53,9 @@ namespace Engine::Component
 	{
 		mMesh.lock()->GetBoundingBox(box);
 	}
+
+	Enums::BOUNDINGTYPE MeshRenderer::GetBoundingType() const
+	{
+		return mMesh.lock()->GetBoundingType();
+	}
 }
