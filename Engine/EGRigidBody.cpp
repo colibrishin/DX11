@@ -111,9 +111,12 @@ namespace Engine::Abstract
 
 	void RigidBody::GetBoundingSphere(BoundingSphere& sphere) const
 	{
-		// todo: somehow radius calculated is bigger than the actual radius?
-		// {1, 1, 1} -> radius = 1.73205
-		BoundingSphere::CreateFromBoundingBox(sphere, m_bounding_box_);
+		// fixme: this is a workaround with not using x, y, z value directly
+		SimpleMath::Vector3 magnitude = m_bounding_box_.Extents;
+		SimpleMath::Viewport viewport {};
+		SimpleMath::Vector3 projection;
+		viewport.Project(magnitude, XMMatrixIdentity(), XMMatrixIdentity(), XMMatrixIdentity(), projection);
+		sphere.Radius = projection.Length();
 		sphere.Center = GetComponent<Engine::Component::Transform>().lock()->GetPosition();
 	}
 
