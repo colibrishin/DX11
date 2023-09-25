@@ -14,7 +14,7 @@ namespace Engine::Object
 
 	void Camera::Initialize()
 	{
-		const auto tr = Manager::ComponentManager::Create<Abstract::Transform>(this).lock();
+		const auto tr = Manager::ComponentManager::Create<Component::Transform>(this).lock();
 		AddComponent(tr);
 	}
 
@@ -22,13 +22,13 @@ namespace Engine::Object
 	{
 		// TODO: Lerp movement
 		// https://github.com/microsoft/DirectXTK/wiki/Basic-game-math#moving-the-camera
-		const auto tr = GetComponent<Abstract::Transform>().lock();
+		const auto tr = GetComponent<Component::Transform>().lock();
 		tr->SetPosition(position);
 	}
 
 	void Camera::SetRotation(SimpleMath::Vector3 rotation)
 	{
-		const auto tr = GetComponent<Abstract::Transform>().lock();
+		const auto tr = GetComponent<Component::Transform>().lock();
 		tr->SetRotation(rotation);
 	}
 
@@ -38,7 +38,7 @@ namespace Engine::Object
 		const XMFLOAT3 up = SimpleMath::Vector3::Up;
 		const XMFLOAT3 lookAt = SimpleMath::Vector3::Forward;
 
-		const auto tr = GetComponent<Abstract::Transform>().lock();
+		const auto tr = GetComponent<Component::Transform>().lock();
 		const auto position = tr->GetPosition();
 		const auto rotation = tr->GetRotation();
 

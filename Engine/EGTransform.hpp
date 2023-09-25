@@ -4,9 +4,9 @@
 
 #include "SimpleMath.h"
 
-namespace Engine::Abstract
+namespace Engine::Component
 {
-	class Transform : public Component
+	class Transform : public Abstract::Component
 	{
 	public:
 		Transform(const Abstract::GameObject* owner);
