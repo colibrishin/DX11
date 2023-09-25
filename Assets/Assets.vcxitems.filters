@@ -12,12 +12,6 @@
     <CopyFileToFolders Include="$(MSBuildThisFileDirectory)Texture\stone01.tga">
       <Filter>Texture</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="$(MSBuildThisFileDirectory)Mesh\cup.jpg">
-      <Filter>Mesh</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="$(MSBuildThisFileDirectory)Mesh\cup.cmo">
-      <Filter>Mesh</Filter>
-    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="$(MSBuildThisFileDirectory)Mesh\burger.fbx" />

@@ -133,6 +133,9 @@
     <ClCompile Include="EGEntity.cpp">
       <Filter>Abstract</Filter>
     </ClCompile>
+    <ClCompile Include="EGMeshRenderer.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -3,7 +3,6 @@
 #include <vector>
 
 #include "CLBurgerObject.hpp"
-#include "CLExampleCupObject.hpp"
 #include "CLPlaneObject.hpp"
 #include "../Engine/EGScene.hpp"
 #include "../Engine/EGGameObjectManager.hpp"

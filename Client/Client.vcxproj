@@ -156,8 +156,6 @@
   <ItemGroup>
     <ClInclude Include="CLApplication.hpp" />
     <ClInclude Include="CLBurgerObject.hpp" />
-    <ClInclude Include="CLExampleCupMesh.hpp" />
-    <ClInclude Include="CLExampleCupObject.hpp" />
     <ClInclude Include="CLPlaneObject.hpp" />
     <ClInclude Include="CLTestHamburgerMesh.hpp" />
     <ClInclude Include="framework.h" />
@@ -166,7 +164,6 @@
   <ItemGroup>
     <ClCompile Include="CLBurgerObject.cpp" />
     <ClCompile Include="CLDefaultScene.hpp" />
-    <ClCompile Include="CLExampleCupObject.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="CLApplication.cpp" />
     <ClCompile Include="CLPlaneObject.cpp" />

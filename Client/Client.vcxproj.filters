@@ -22,16 +22,13 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="CLApplication.hpp" />
-    <ClInclude Include="CLExampleCupMesh.hpp">
-      <Filter>Mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="CLExampleCupObject.hpp">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="CLTestHamburgerMesh.hpp">
       <Filter>Mesh</Filter>
     </ClInclude>
     <ClInclude Include="CLBurgerObject.hpp">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="CLPlaneObject.hpp">
       <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>
@@ -42,10 +39,10 @@
     <ClCompile Include="CLDefaultScene.hpp">
       <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="CLExampleCupObject.cpp">
+    <ClCompile Include="CLBurgerObject.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="CLBurgerObject.cpp">
+    <ClCompile Include="CLPlaneObject.cpp">
       <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>
