@@ -31,6 +31,9 @@
     <ClInclude Include="CLPlaneObject.hpp">
       <Filter>Object</Filter>
     </ClInclude>
+    <ClInclude Include="CLSphereObject.hpp">
+      <Filter>Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -43,6 +46,9 @@
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="CLPlaneObject.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CLSphereObject.cpp">
       <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>

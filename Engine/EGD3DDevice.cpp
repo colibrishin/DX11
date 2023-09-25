@@ -419,3 +419,9 @@ std::unique_ptr<DirectX::GeometricPrimitive> Engine::Graphics::D3DDevice::Create
 {
 	return std::move(DirectX::GeometricPrimitive::CreateBox(mContext.Get(), size));
 }
+
+std::unique_ptr<DirectX::GeometricPrimitive> Engine::Graphics::D3DDevice::CreateSphere(
+	float radius) const
+{
+	return std::move(DirectX::GeometricPrimitive::CreateSphere(mContext.Get(), radius));
+}

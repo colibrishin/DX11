@@ -10,13 +10,9 @@ namespace Engine::Abstract
 	class RigidBody : public Abstract::GameObject
 	{
 	public:
-		RigidBody(
-			const std::wstring& name,
-			bool gravity,
-			const SimpleMath::Vector3& position,
-			const std::weak_ptr<Mesh>& mesh);
-
 		RigidBody(const RigidBody& other) = default;
+		RigidBody(const std::wstring& name, bool gravity, const SimpleMath::Vector3& position,
+		          const std::weak_ptr<Mesh>& mesh);
 		~RigidBody() override;
 
 		void Initialize() override;
@@ -32,15 +28,16 @@ namespace Engine::Abstract
 		bool IsGravity() const;
 		bool IsGrounded() const;
 
-		void OnCollision(RigidBody* other);
-		void OnCollisionExit();
+		virtual void OnCollision(RigidBody* other);
+		virtual void OnCollisionExit(RigidBody* other);
+
+		void GetBoundingBox(BoundingOrientedBox& box) const;
+		void GetBoundingSphere(BoundingSphere& sphere) const;
 
 	private:
 		friend class Engine::Manager::CollisionManager;
 
-		void GetBoundingBox(BoundingBox& box) const;
-
-		BoundingBox m_boundingBox_;
+		BoundingBox m_bounding_box_;
 
 		SimpleMath::Vector3	m_velocity_;
 		SimpleMath::Vector3 m_acceleration_;

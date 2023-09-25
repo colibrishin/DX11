@@ -2,9 +2,10 @@
 
 #include <SimpleMath.h>
 
+#include "EGMesh.hpp"
+
 namespace Engine::Abstract
 {
-	class Mesh;
 	class GameObject;
 }
 
@@ -23,4 +24,13 @@ constexpr float GRAVITY_ACCEL = 9.8f;
 
 Engine::Graphics::D3DDevice* GetDevice();
 UINT32 GetIDFromPointer(void* ptr);
-void GetBoundingBoxFromMesh(DirectX::BoundingBox& bb, const std::weak_ptr<Engine::Abstract::Mesh>& mesh);
+
+struct UnionBoundingType
+{
+	Engine::Enums::BOUNDINGTYPE type;
+	union
+	{
+		DirectX::BoundingSphere sphere;
+		DirectX::BoundingOrientedBox box;
+	};
+};

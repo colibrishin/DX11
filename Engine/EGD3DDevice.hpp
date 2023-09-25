@@ -77,7 +77,9 @@ namespace Engine::Graphics
 
 		void SetWidth(UINT width) { m_width_ = width; }
 		void SetHeight(UINT height) { m_height_ = height; }
+
 		std::unique_ptr<DirectX::GeometricPrimitive> CreateBox(const DirectX::XMFLOAT3& size) const;
+		std::unique_ptr<DirectX::GeometricPrimitive> CreateSphere(float radius) const;
 
 		static void Initialize(HWND hwnd, UINT width, UINT height)
 		{

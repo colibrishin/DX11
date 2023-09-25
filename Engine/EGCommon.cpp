@@ -17,8 +17,3 @@ UINT32 GetIDFromPointer(void* ptr)
 {
 	return reinterpret_cast<UINT64>(ptr) & 0xFFFFFFFF;
 }
-
-void GetBoundingBoxFromMesh(DirectX::BoundingBox& bb, const std::weak_ptr<Engine::Abstract::Mesh>& mesh)
-{
-	mesh.lock()->GetBoundingBox(bb);
-}

@@ -20,9 +20,14 @@ namespace Engine::Component
 		void FixedUpdate() override;
 		void Render() override;
 
-		void SetMesh(const std::weak_ptr<Abstract::Mesh>& mesh) { mMesh = mesh; }
+		void SetMesh(const std::weak_ptr<Abstract::Mesh>& mesh)
+		{
+			mMesh = mesh;
+		}
 		// SetShader
 		// SetTexture
+
+		void GetBoundingBox(BoundingBox& box) const;
 
 	private:
 		std::weak_ptr<Abstract::Mesh> mMesh{};

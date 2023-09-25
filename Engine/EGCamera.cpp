@@ -26,7 +26,7 @@ namespace Engine::Object
 		tr->SetPosition(position);
 	}
 
-	void Camera::SetRotation(SimpleMath::Vector3 rotation)
+	void Camera::SetRotation(SimpleMath::Quaternion rotation)
 	{
 		const auto tr = GetComponent<Component::Transform>().lock();
 		tr->SetRotation(rotation);
@@ -45,7 +45,7 @@ namespace Engine::Object
 		XMVECTOR upVector = XMLoadFloat3(&up);
 		XMVECTOR lookAtVector = XMLoadFloat3(&lookAt);
 		const XMVECTOR positionVector = XMLoadFloat3(&position);
-		const XMMATRIX rotationMatrix = XMMatrixRotationRollPitchYawFromVector(rotation * 0.0174532925f);
+		const XMMATRIX rotationMatrix = XMMatrixRotationQuaternion(rotation);
 
 		lookAtVector = XMVector3TransformCoord(lookAtVector, rotationMatrix);
 		upVector = XMVector3TransformCoord(upVector, rotationMatrix);

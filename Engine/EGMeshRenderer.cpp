@@ -35,8 +35,7 @@ namespace Engine::Component
 			XMMATRIX worldPos = SimpleMath::Matrix::CreateWorld(
 				DirectX::SimpleMath::Vector3::Zero, DirectX::SimpleMath::Vector3::Forward, DirectX::SimpleMath::Vector3::Up);
 
-			const auto rotMat = SimpleMath::Matrix::CreateFromYawPitchRoll(tr->GetRotation());
-			XMMATRIX scaleMat = XMMatrixScalingFromVector(tr->GetScale());
+			const auto rotMat = SimpleMath::Matrix::CreateFromQuaternion(tr->GetRotation());
 
 			XMMATRIX translateMat = XMMatrixTranslationFromVector(tr->GetPosition());
 
@@ -48,5 +47,10 @@ namespace Engine::Component
 				view,
 				projection);
 		}
+	}
+
+	void MeshRenderer::GetBoundingBox(BoundingBox& box) const
+	{
+		mMesh.lock()->GetBoundingBox(box);
 	}
 }

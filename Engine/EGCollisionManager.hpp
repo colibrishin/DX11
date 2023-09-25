@@ -23,10 +23,19 @@ namespace Engine::Manager
 		static void Update();
 		static void SetCollision(const Enums::LAYER& layer1, const Enums::LAYER& layer2);
 		static void UnsetCollision(const Enums::LAYER& layer1, const Enums::LAYER& layer2);
+		static std::vector<std::weak_ptr<Abstract::RigidBody>> GetCollided(const std::weak_ptr<Abstract::GameObject>& weak);
+		static void CheckGravityCollision(const std::weak_ptr<Abstract::RigidBody>& weak);
 
 	private:
 		static std::shared_ptr<Abstract::RigidBody> CheckCollisionality(const std::weak_ptr<Abstract::GameObject>& weak);
 		static void CompareLayerObjects(const Abstract::Layer* layer, const std::shared_ptr<Abstract::RigidBody>& rb);
+		static Enums::COLLISIONCODE CheckCollision(const std::shared_ptr<Abstract::RigidBody>& rb,
+		                                           DirectX::BoundingOrientedBox& bb1,
+		                                           DirectX::BoundingOrientedBox& bb2,
+		                                           const std::shared_ptr<Abstract::RigidBody>& other_rb);
+		static void SendEventByCollisionCode(const std::shared_ptr<Abstract::RigidBody>& rb,
+		                                     const std::shared_ptr<Abstract::RigidBody>& other_rb,
+		                                     Enums::COLLISIONCODE collisionCode);
 
 		inline static std::bitset<Enums::LAYER::MAX> m_collision_table_[Enums::LAYER::MAX];
 		inline static std::map<UINT, std::set<UINT>> m_collided_;

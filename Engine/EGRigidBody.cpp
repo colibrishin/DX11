@@ -2,6 +2,7 @@
 #include "EGRigidBody.hpp"
 
 #include "EGDeltaTime.hpp"
+#include "EGGameObjectManager.hpp"
 #include "EGMesh.hpp"
 #include "EGMeshRenderer.hpp"
 #include "EGScript.hpp"
@@ -26,10 +27,9 @@ namespace Engine::Abstract
 		meshRenderer.lock()->SetMesh(mesh);
 
 		AddComponent(meshRenderer);
-		GetBoundingBoxFromMesh(m_boundingBox_, mesh);
-		m_boundingBox_.Center = position;
 
-		SetPosition(m_boundingBox_.Center);
+		meshRenderer.lock()->GetBoundingBox(m_bounding_box_);
+		SetPosition(position);
 	}
 
 	RigidBody::~RigidBody()
@@ -52,11 +52,15 @@ namespace Engine::Abstract
 			return;
 		}
 
-		if (m_bGravity_ && m_bGravity_override_)
+		if (m_bGravity_override_)
 		{
-			auto position = GetCenter();
-			position.y -= GRAVITY_ACCEL * DeltaTime::GetDeltaTime()->GetElapsedSeconds();
-			SetPosition(position);
+			if(m_bGravity_)
+			{
+				auto position = GetCenter();
+				position.y -= GRAVITY_ACCEL * DeltaTime::GetDeltaTime()->GetElapsedSeconds();
+
+				SetPosition(position);
+			}
 		}
 	}
 
@@ -72,7 +76,7 @@ namespace Engine::Abstract
 
 	SimpleMath::Vector3 RigidBody::GetSize() const
 	{
-		return SimpleMath::Vector3(m_boundingBox_.Extents) * 2.0f;
+		return SimpleMath::Vector3(m_bounding_box_.Extents) * 2.0f;
 	}
 
 	bool RigidBody::IsGravity() const
@@ -87,49 +91,34 @@ namespace Engine::Abstract
 
 	void RigidBody::OnCollision(RigidBody* other)
 	{
-		if(m_bGravity_override_)
-		{
-			const auto nextT = GetCenter() + SimpleMath::Vector3{
-				0, -1.0f, 0};
-
-			BoundingBox nextTBB = m_boundingBox_;
-			nextTBB.Center = nextT;
-
-			BoundingBox bb;
-			other->GetBoundingBox(bb);
-
-			if(bb.Intersects(nextTBB))
-			{
-				m_bGrounded_ = true;
-				m_bGravity_ = false;
-			}
-		}
 	}
 
-	void RigidBody::OnCollisionExit()
+	void RigidBody::OnCollisionExit(RigidBody* other)
 	{
-		if(!m_bGravity_)
-		{
-			m_bGrounded_ = false;
-			m_bGravity_ = true;
-		}
+	}
+
+	void RigidBody::GetBoundingBox(BoundingOrientedBox& box) const
+	{
+		BoundingOrientedBox::CreateFromBoundingBox(box, m_bounding_box_);
+		box.Orientation = GetComponent<Engine::Component::Transform>().lock()->GetRotation();
+	}
+
+	void RigidBody::GetBoundingSphere(BoundingSphere& sphere) const
+	{
+		BoundingSphere::CreateFromBoundingBox(sphere, m_bounding_box_);
+		sphere.Center = GetComponent<Engine::Component::Transform>().lock()->GetPosition();
 	}
 
 	void RigidBody::SetPosition(const SimpleMath::Vector3& center)
 	{
 		const auto transform = GetComponent<Engine::Component::Transform>().lock();
 		transform->SetPosition(center);
-		m_boundingBox_.Center = center;
+		m_bounding_box_.Center = center;
 	}
 
 	SimpleMath::Vector3 RigidBody::GetCenter() const
 	{
 		const auto transform = GetComponent<Engine::Component::Transform>().lock();
 		return transform->GetPosition();
-	}
-
-	void RigidBody::GetBoundingBox(BoundingBox& box) const
-	{
-		box = m_boundingBox_;
 	}
 }

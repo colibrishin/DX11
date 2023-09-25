@@ -14,7 +14,7 @@ namespace Engine::Object
 		void Initialize() override;
 
 		void SetPosition(SimpleMath::Vector3 position);
-		void SetRotation(SimpleMath::Vector3 rotation);
+		void SetRotation(SimpleMath::Quaternion rotation);
 
 		void Render() override;
 		void GetViewMatrix(XMMATRIX& view) const;

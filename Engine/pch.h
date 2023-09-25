@@ -24,6 +24,9 @@
 #include <vector>
 #include <memory>
 
+#include <algorithm>
+#include <execution>
+
 #include "BufferHelpers.h"
 #include "CommonStates.h"
 #include "DDSTextureLoader.h"

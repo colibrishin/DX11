@@ -63,7 +63,7 @@ namespace Engine::Abstract
 
 		Manager::SceneManager::GetActiveScene().lock()->RemoveGameObject(
 			std::dynamic_pointer_cast<GameObject>(shared_from_this()), Enums::NONE);
-		Manager::GameObjectManager::Remove(GetName());
+		Manager::GameObjectManager::Remove(GetID());
 	}
 
 	GameObject::eState GameObject::GetState() const

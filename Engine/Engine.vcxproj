@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="EGBoxMesh.hpp" />
     <ClInclude Include="EGCamera.hpp" />
     <ClInclude Include="EGCollisionManager.hpp" />
     <ClInclude Include="EGCommon.hpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="EGSceneManager.hpp" />
     <ClInclude Include="EGScript.hpp" />
     <ClInclude Include="EGShader.hpp" />
+    <ClInclude Include="EGSphereMesh.hpp" />
     <ClInclude Include="EGTransform.hpp" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />

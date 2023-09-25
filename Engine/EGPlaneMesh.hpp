@@ -1,12 +1,15 @@
 #pragma once
+#include "pch.h"
 #include "EGMesh.hpp"
 #include <GeometricPrimitive.h>
+
+#include "EGBoxMesh.hpp"
 
 namespace Engine::Mesh
 {
 	using namespace DirectX;
 
-	class PlaneMesh : public Abstract::Mesh
+	class PlaneMesh : public Mesh::BoxMesh
 	{
 	public:
 		PlaneMesh(const std::wstring& key, const SimpleMath::Vector3& size);
@@ -14,7 +17,6 @@ namespace Engine::Mesh
 		~PlaneMesh() override = default;
 
 		void Render(const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj) override;
-		void GetBoundingBox(BoundingBox& box) const override;
 
 	protected:
 		void SetParameter(ID3D11Device* device, ID3D11DeviceContext* ctx, const DirectX::CommonStates* state) override;
@@ -29,17 +31,12 @@ namespace Engine::Mesh
 		m_plane_->Draw(world, view, proj, Colors::White, nullptr, false, nullptr);
 	}
 
-	inline void PlaneMesh::GetBoundingBox(BoundingBox& box) const
-	{
-		BoundingBox::CreateFromPoints(box, +m_size_ / 2, -m_size_ / 2);
-	}
-
 	inline void PlaneMesh::SetParameter(ID3D11Device* device, ID3D11DeviceContext* ctx,
 	                                    const DirectX::CommonStates* state)
 	{
 	}
 
-	inline PlaneMesh::PlaneMesh(const std::wstring& key, const SimpleMath::Vector3& size): Mesh(std::to_wstring(GetID()) + L" PlaneMesh", key, "")
+	inline PlaneMesh::PlaneMesh(const std::wstring& key, const SimpleMath::Vector3& size): BoxMesh(key, {size.x, 1.0f, size.z})
 	{
 		m_size_ = size;
 		m_size_.y = 1.0f;

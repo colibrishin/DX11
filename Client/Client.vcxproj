@@ -157,6 +157,7 @@
     <ClInclude Include="CLApplication.hpp" />
     <ClInclude Include="CLBurgerObject.hpp" />
     <ClInclude Include="CLPlaneObject.hpp" />
+    <ClInclude Include="CLSphereObject.hpp" />
     <ClInclude Include="CLTestHamburgerMesh.hpp" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
@@ -167,6 +168,7 @@
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="CLApplication.cpp" />
     <ClCompile Include="CLPlaneObject.cpp" />
+    <ClCompile Include="CLSphereObject.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
