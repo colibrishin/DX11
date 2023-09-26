@@ -11,7 +11,7 @@ namespace Engine::Abstract
 	{
 	public:
 		RigidBody(const RigidBody& other) = default;
-		RigidBody(const std::wstring& name, bool gravity, const SimpleMath::Vector3& position,
+		RigidBody(const std::wstring& name, bool gravity, bool movable, float mass, float friction, const SimpleMath::Vector3& position,
 		          const std::weak_ptr<Mesh>& mesh);
 		~RigidBody() override;
 
@@ -35,14 +35,20 @@ namespace Engine::Abstract
 		void GetBoundingBox(BoundingOrientedBox& box) const;
 		void GetBoundingSphere(BoundingSphere& sphere) const;
 
+	protected:
+		SimpleMath::Vector3 m_previous_position_;
+		SimpleMath::Vector3	m_velocity_;
+		SimpleMath::Vector3 m_acceleration_;
+
+		float m_mass_;
+		float m_friction_;
+
 	private:
 		friend class Engine::Manager::CollisionManager;
 
 		BoundingBox m_bounding_box_;
 
-		SimpleMath::Vector3	m_velocity_;
-		SimpleMath::Vector3 m_acceleration_;
-
+		bool m_bMovable_;
 		bool m_bGravity_override_;
 		bool m_bGravity_;
 		bool m_bGrounded_;

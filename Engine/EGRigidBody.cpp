@@ -6,15 +6,23 @@
 #include "EGMesh.hpp"
 #include "EGMeshRenderer.hpp"
 #include "EGScript.hpp"
+#undef max
 
 namespace Engine::Abstract
 {
 	RigidBody::RigidBody(
 		const std::wstring& name, 
 		bool gravity,
+		bool movable,
+		float mass,
+		float friction,
 		const SimpleMath::Vector3& position,
 		const std::weak_ptr<Mesh>& mesh) :
 		GameObject(name),
+		m_previous_position_(position),
+		m_mass_(mass),
+		m_friction_(friction),
+		m_bMovable_(movable),
 		m_bGravity_override_(gravity),
 		m_bGravity_(gravity),
 		m_bGrounded_(false),
@@ -52,6 +60,8 @@ namespace Engine::Abstract
 			return;
 		}
 
+		m_previous_position_ = GetCenter();
+
 		if (m_bGravity_override_)
 		{
 			if(m_bGravity_)
@@ -61,6 +71,15 @@ namespace Engine::Abstract
 
 				SetPosition(position);
 			}
+		}
+
+		if(m_velocity_.LengthSquared() > 0.0f && m_bMovable_)
+		{
+			auto position = GetCenter();
+			const auto nextT = m_velocity_ * DeltaTime::GetDeltaTime()->GetElapsedSeconds();
+			position += nextT;
+
+			SetPosition(position);
 		}
 	}
 

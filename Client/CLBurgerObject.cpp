@@ -12,7 +12,7 @@
 namespace Client::Object
 {
 	BurgerObject::BurgerObject(const std::wstring& name) : RigidBody(
-		name, true, {}, Engine::Manager::ResourceManager::Load<Client::Mesh::TestBurgerMesh>(
+		name, true, true, 20.0f, 10.0f, {}, Engine::Manager::ResourceManager::Load<Client::Mesh::TestBurgerMesh>(
 			L"BurgerMesh"))
 	{
 	}
@@ -24,6 +24,8 @@ namespace Client::Object
 
 	void BurgerObject::Update()
 	{
+		m_velocity_.Clamp(DirectX::SimpleMath::Vector3::One * -30.0f, DirectX::SimpleMath::Vector3::One * 30.0f);
+
 		RigidBody::Update();
 	}
 
@@ -39,33 +41,31 @@ namespace Client::Object
 
 	void BurgerObject::move_up()
 	{
-		auto pos = GetCenter();
-		pos += {0, 30.0f * Engine::DeltaTime::GetDeltaTime()->GetElapsedSeconds(), 0};
-		SetPosition(pos);
+		m_velocity_ += DirectX::SimpleMath::Vector3::Up * 30.0f;
 		m_offset_ = DirectX::SimpleMath::Vector3::Up;
 	}
 
 	void BurgerObject::move_down()
 	{
-		auto pos = GetCenter();
-		pos += {0, -30.0f * Engine::DeltaTime::GetDeltaTime()->GetElapsedSeconds(), 0};
-		SetPosition(pos);
+		m_velocity_ += DirectX::SimpleMath::Vector3::Down * 30.0f;
 		m_offset_ = DirectX::SimpleMath::Vector3::Down;
 	}
 
 	void BurgerObject::move_left()
 	{
-		auto pos = GetCenter();
-		pos += {-30.0f * Engine::DeltaTime::GetDeltaTime()->GetElapsedSeconds(), -0.0f, 0};
-		SetPosition(pos);
+		m_velocity_ += DirectX::SimpleMath::Vector3::Left * 30.0f;
 		m_offset_ = DirectX::SimpleMath::Vector3::Left;
 	}
 
 	void BurgerObject::move_right()
 	{
-		auto pos = GetCenter();
-		pos += {30.0f * Engine::DeltaTime::GetDeltaTime()->GetElapsedSeconds(), -0.0f, 0};
-		SetPosition(pos);
+		m_velocity_ += DirectX::SimpleMath::Vector3::Right * 30.0f;
 		m_offset_ = DirectX::SimpleMath::Vector3::Right;
+	}
+
+	void BurgerObject::stop()
+	{
+		m_velocity_ = DirectX::SimpleMath::Vector3::Zero;
+		m_offset_ = DirectX::SimpleMath::Vector3::Zero;
 	}
 }

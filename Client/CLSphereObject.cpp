@@ -12,7 +12,7 @@
 namespace Client::Object
 {
 	SphereObject::SphereObject(const std::wstring& name) : RigidBody(
-		name, false, {}, Engine::Manager::ResourceManager::Load<Engine::Mesh::SphereMesh>(
+		name, false, true, 1000.0f, 5.0f, {}, Engine::Manager::ResourceManager::Load<Engine::Mesh::SphereMesh>(
 			L"SphereMesh", 10.0f))
 	{
 	}

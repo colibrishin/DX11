@@ -65,5 +65,9 @@ namespace Client
 		{
 			obj->move_right();
 		}
+		if(key.R)
+		{
+			obj->stop();
+		}
 	}
 }

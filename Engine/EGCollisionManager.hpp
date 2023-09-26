@@ -29,6 +29,8 @@ namespace Engine::Manager
 	private:
 		static std::shared_ptr<Abstract::RigidBody> CheckCollisionality(const std::weak_ptr<Abstract::GameObject>& weak);
 		static void ReleaseBoundingBox(void* bb2, const std::shared_ptr<Abstract::RigidBody>& shared);
+		static void UpdateReflection(const std::shared_ptr<Abstract::RigidBody>& rb, const std::shared_ptr<Abstract::RigidBody>& other_rb, Enums::COLLISIONCODE collisioncode);
+		static void UpdateFriction(const std::shared_ptr<Abstract::RigidBody>& rb, const std::shared_ptr<Abstract::RigidBody>& other_rb, Enums::COLLISIONCODE collisioncode);
 		static void CompareLayerObjects(const Abstract::Layer* layer, const std::shared_ptr<Abstract::RigidBody>& rb);
 
 		template <typename BoundingA, typename BoundingB>

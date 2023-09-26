@@ -12,7 +12,7 @@
 namespace Client::Object
 {
 	PlaneObject::PlaneObject(const std::wstring& name) : RigidBody(
-		name, false, {}, Engine::Manager::ResourceManager::Load<Engine::Mesh::PlaneMesh>(
+		name, false, true, 500.0f, 1.0f, {}, Engine::Manager::ResourceManager::Load<Engine::Mesh::PlaneMesh>(
 			L"PlaneMesh", DirectX::SimpleMath::Vector3{100.0f, 1.0f, 100.0f}))
 	{
 	}

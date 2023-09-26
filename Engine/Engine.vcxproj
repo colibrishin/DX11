@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BoundingBoxWrapper.hpp" />
     <ClInclude Include="EGBoxMesh.hpp" />
     <ClInclude Include="EGCamera.hpp" />
     <ClInclude Include="EGCollisionManager.hpp" />

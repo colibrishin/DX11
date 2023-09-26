@@ -30,6 +30,73 @@ namespace Engine::Manager
 			delete static_cast<DirectX::BoundingSphere*>(bb2);
 	}
 
+	void CollisionManager::UpdateReflection(const std::shared_ptr<Abstract::RigidBody>& rb,
+		const std::shared_ptr<Abstract::RigidBody>& other_rb, Enums::COLLISIONCODE collisioncode)
+	{
+		if (collisioncode & Enums::COLLISIONCODE_START)
+		{
+			const auto force = rb->m_velocity_ - other_rb->m_velocity_;
+			DirectX::SimpleMath::Vector3 force_normal;
+			force.Normalize(force_normal);
+
+			if (force.LengthSquared() == 0.0f)
+			{
+				rb->m_velocity_ = DirectX::SimpleMath::Vector3::Zero;
+				other_rb->m_velocity_ = DirectX::SimpleMath::Vector3::Zero;
+			}
+			else if (force.LengthSquared() > 0.0f)
+			{
+				if(rb->m_velocity_ == -other_rb->m_velocity_)
+				{
+					rb->m_velocity_ = DirectX::SimpleMath::Vector3::Zero;
+					other_rb->m_velocity_ = DirectX::SimpleMath::Vector3::Zero;
+				}
+				else
+				{
+					const float rb_mass_ration = rb->m_mass_ / (other_rb->m_mass_ + rb->m_mass_);
+					const float other_rb_mass_ratio = other_rb->m_mass_ / (rb->m_mass_ + other_rb->m_mass_);
+
+					const auto total_f = rb->m_velocity_ * other_rb->m_velocity_;
+
+					rb->m_velocity_ = DirectX::SimpleMath::Vector3::Reflect(rb->m_velocity_ * total_f * rb_mass_ration, force_normal);
+
+					other_rb->m_velocity_ = DirectX::SimpleMath::Vector3::Reflect(rb->m_velocity_ * total_f * other_rb_mass_ratio, force_normal);
+				}
+			}
+		}
+	}
+
+	void CollisionManager::UpdateFriction(const std::shared_ptr<Abstract::RigidBody>& rb,
+		const std::shared_ptr<Abstract::RigidBody>& other_rb, Enums::COLLISIONCODE collisioncode)
+	{
+		if (rb->m_velocity_.LengthSquared() > 0.0f &&
+			(collisioncode & (Enums::COLLISIONCODE_STAY)))
+		{
+			const auto frictionF = rb->m_mass_ * other_rb->m_friction_;
+
+			const auto frictionVX = (rb->m_velocity_.x != 0 ? DirectX::SimpleMath::Vector3::UnitX * frictionF * GetReversePolarityOf(rb->m_velocity_.x) : DirectX::SimpleMath::Vector3::Zero);
+
+			const auto frictionVZ = (rb->m_velocity_.z != 0 ? DirectX::SimpleMath::Vector3::UnitZ * frictionF * GetReversePolarityOf(rb->m_velocity_.z) : DirectX::SimpleMath::Vector3::Zero);
+
+			const auto frictionV = frictionVX + frictionVZ;
+
+			auto velocityP = rb->m_velocity_ - frictionV;
+			const auto velocityD = rb->m_velocity_ - velocityP;
+
+			// If polarities are different, then force is zero. (friction force is bigger than moving force)
+			if (CheckPolarityFlip(rb->m_velocity_.x, velocityD.x) || std::abs(velocityD.x) > MAXIMUM_SPEED)
+			{
+				velocityP.x = 0.0f;
+			}
+			else if (CheckPolarityFlip(rb->m_velocity_.z, velocityD.z) || std::abs(velocityD.z) > MAXIMUM_SPEED)
+			{
+				velocityP.z = 0.0f;
+			}
+
+			rb->m_velocity_ = velocityP;
+		}
+	}
+
 	void CollisionManager::SendEventByCollisionCode(const std::shared_ptr<Abstract::RigidBody>& rb, const std::shared_ptr<Abstract::RigidBody>& other_rb, const Enums::COLLISIONCODE collisionCode)
 	{
 		switch(collisionCode)
@@ -137,6 +204,9 @@ namespace Engine::Manager
 
 				Enums::COLLISIONCODE collisionCode;
 				CheckBoxSphereCasting(rb, bb1, other_rb, bb2, collisionCode);
+				UpdateFriction(rb, other_rb, collisionCode);
+				UpdateReflection(rb, other_rb, collisionCode);
+
 
 				SendEventByCollisionCode(rb, other_rb, collisionCode);
 				ReleaseBoundingBox(bb2, other_rb);
@@ -265,12 +335,12 @@ namespace Engine::Manager
 
 				CheckBoxSphereCasting(rb, rb_nextBB, other_rb, other_BB, collisionCode);
 
-				if(collisionCode == Enums::COLLISIONCODE_START || collisionCode == Enums::COLLISIONCODE_STAY)
+				if(collisionCode & (Enums::COLLISIONCODE_STAY | Enums::COLLISIONCODE_START))
 				{
 					rb->m_bGravity_ = false;
 					rb->m_bGrounded_ = true;
 				}
-				else if(collisionCode == Enums::COLLISIONCODE_END || collisionCode == Enums::COLLISIONCODE_NONE)
+				else if (collisionCode & (Enums::COLLISIONCODE_END | Enums::COLLISIONCODE_NONE))
 				{
 					rb->m_bGravity_ = true;
 					rb->m_bGrounded_ = false;

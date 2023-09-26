@@ -20,6 +20,7 @@ namespace Client::Object
 		void move_down();
 		void move_left();
 		void move_right();
+		void stop();
 
 	protected:
 		DirectX::SimpleMath::Vector3 m_offset_;

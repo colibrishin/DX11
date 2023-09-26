@@ -26,6 +26,9 @@
     <Filter Include="Mesh">
       <UniqueIdentifier>{59ed5c6d-3486-401d-a9bd-ea54de0ce7e8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Physics">
+      <UniqueIdentifier>{64fe0402-a7dd-43df-9fbf-656fcc3c0d1f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EGResource.hpp">
@@ -95,6 +98,7 @@
     <ClInclude Include="EGSphereMesh.hpp">
       <Filter>Mesh</Filter>
     </ClInclude>
+    <ClInclude Include="BoundingBoxWrapper.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EGD3DDevice.cpp">
