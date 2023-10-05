@@ -26,17 +26,11 @@
     <Filter Include="Mesh">
       <UniqueIdentifier>{59ed5c6d-3486-401d-a9bd-ea54de0ce7e8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="리소스 파일\VS">
-      <UniqueIdentifier>{4e2e6456-ad47-4963-85c8-b184e3ab50d4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="리소스 파일\PS">
-      <UniqueIdentifier>{48cdeb6d-fef1-4b8e-aa4a-7abd76980f15}</UniqueIdentifier>
+    <Filter Include="Physics">
+      <UniqueIdentifier>{64fe0402-a7dd-43df-9fbf-656fcc3c0d1f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EGRenderer.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="EGResource.hpp">
       <Filter>Abstract</Filter>
     </ClInclude>
@@ -49,20 +43,11 @@
     <ClInclude Include="EGGraphics.hpp">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="EGConstantBuffer.hpp">
-      <Filter>Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="EGD3DDevice.hpp">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="EGShader.hpp">
       <Filter>Abstract</Filter>
-    </ClInclude>
-    <ClInclude Include="EGDefaultVertexShader.hpp">
-      <Filter>Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="EGDefaultPixelShader.hpp">
-      <Filter>Shader</Filter>
     </ClInclude>
     <ClInclude Include="EGSceneManager.hpp">
       <Filter>Manager</Filter>
@@ -91,34 +76,29 @@
     <ClInclude Include="EGMeshRenderer.hpp">
       <Filter>Component</Filter>
     </ClInclude>
-    <ClInclude Include="EGTrianlgeMesh.hpp">
-      <Filter>Mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="EGTexture2D.hpp">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="EGTextureTriangleMesh.hpp">
-      <Filter>Mesh</Filter>
-    </ClInclude>
     <ClInclude Include="EGCommon.hpp" />
-    <ClInclude Include="EGTexturePS.hpp">
-      <Filter>Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="EGSquareMesh.hpp">
-      <Filter>Mesh</Filter>
-    </ClInclude>
     <ClInclude Include="EGCamera.hpp">
       <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="EGCircleMesh.hpp">
-      <Filter>Mesh</Filter>
     </ClInclude>
     <ClInclude Include="EGScript.hpp">
       <Filter>Component</Filter>
     </ClInclude>
-    <ClInclude Include="EGLight.hpp">
+    <ClInclude Include="EGRigidBody.hpp">
       <Filter>Object</Filter>
     </ClInclude>
+    <ClInclude Include="EGCollisionManager.hpp">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="EGPlaneMesh.hpp">
+      <Filter>Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="EGBoxMesh.hpp">
+      <Filter>Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="EGSphereMesh.hpp">
+      <Filter>Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="BoundingBoxWrapper.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EGD3DDevice.cpp">
@@ -141,23 +121,8 @@
     <ClCompile Include="EGShaderManager.hpp">
       <Filter>Manager</Filter>
     </ClCompile>
-    <ClCompile Include="EGRenderer.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="EGTexture2D.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="EGTextureVS.hpp">
-      <Filter>Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="EGTexturePS.cpp">
-      <Filter>Shader</Filter>
-    </ClCompile>
     <ClCompile Include="EGGameObject.cpp">
       <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="EGTextureSquareMesh.hpp">
-      <Filter>Mesh</Filter>
     </ClCompile>
     <ClCompile Include="EGCamera.cpp">
       <Filter>Object</Filter>
@@ -165,23 +130,27 @@
     <ClCompile Include="EGScene.cpp">
       <Filter>Abstract</Filter>
     </ClCompile>
-    <ClCompile Include="EGLight.cpp" />
+    <ClCompile Include="EGRigidBody.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="EGCollisionManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="EGLayer.cpp">
+      <Filter>Abstract</Filter>
+    </ClCompile>
+    <ClCompile Include="EGCommon.cpp" />
+    <ClCompile Include="EGEntity.cpp">
+      <Filter>Abstract</Filter>
+    </ClCompile>
+    <ClCompile Include="EGMeshRenderer.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="EGMesh.cpp">
+      <Filter>Abstract</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="..\TexturePS.hlsl">
-      <Filter>리소스 파일\PS</Filter>
-    </FxCompile>
-    <FxCompile Include="..\TrianglePS.hlsl">
-      <Filter>리소스 파일\PS</Filter>
-    </FxCompile>
-    <FxCompile Include="..\TextureVS.hlsl">
-      <Filter>리소스 파일\VS</Filter>
-    </FxCompile>
-    <FxCompile Include="..\TriangleVS.hlsl">
-      <Filter>리소스 파일\VS</Filter>
-    </FxCompile>
   </ItemGroup>
 </Project>

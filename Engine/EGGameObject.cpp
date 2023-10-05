@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "EGEntity.hpp"
 #include "EGGameObject.hpp"
 
 #include "EGComponetManager.hpp"
@@ -25,8 +26,6 @@ namespace Engine::Abstract
 	{
 		const int myOrder = component.lock()->GetUpdateOrder();
 		mComponents[myOrder] = component;
-		auto ptr = GetPtr();
-		mComponents[myOrder].lock()->mOwner = std::static_pointer_cast<GameObject>(ptr);
 	}
 
 	void GameObject::Update()
@@ -64,6 +63,11 @@ namespace Engine::Abstract
 
 		Manager::SceneManager::GetActiveScene().lock()->RemoveGameObject(
 			std::dynamic_pointer_cast<GameObject>(shared_from_this()), Enums::NONE);
-		Manager::GameObjectManager::Remove(GetName());
+		Manager::GameObjectManager::Remove(GetID());
+	}
+
+	GameObject::eState GameObject::GetState() const
+	{
+		return mState;
 	}
 }

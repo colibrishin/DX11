@@ -1,14 +1,10 @@
 #include "pch.h"
 #include "EGTransform.hpp"
 
-#include "EGConstantBuffer.hpp"
-#include "EGRenderer.h"
-
-namespace Engine::Abstract
+namespace Engine::Component
 {
-	Transform::Transform()
-		: Component(L"Transform" + std::to_wstring(GetID()), Enums::COMPONENTTYPE::TRANSFORM),
-		m_buffer_({}, {}, DirectX::SimpleMath::Vector3::Up, {}, {1.0f, 1.0f, 1.0f}, 1.0f)
+	Transform::Transform(const Abstract::GameObject* owner)
+		: Component(L"Transform" + std::to_wstring(GetID()), Enums::COMPONENTTYPE::TRANSFORM, owner)
 	{
 	}
 
@@ -30,10 +26,6 @@ namespace Engine::Abstract
 
 	void Transform::SetConstantBuffer()
 	{
-		const std::weak_ptr pb = Renderer::constantBuffers[(UINT)Graphics::CBTYPES::TRANSFORM];
-
-		pb.lock()->Bind(&m_buffer_);
-		pb.lock()->SetPipeline(Graphics::ShaderStage::VS);
 	}
 
 }

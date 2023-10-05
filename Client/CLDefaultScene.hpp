@@ -2,10 +2,11 @@
 #include "pch.h"
 #include <vector>
 
-#include "CLTestCircleObject.hpp"
+#include "CLBurgerObject.hpp"
+#include "CLPlaneObject.hpp"
+#include "CLSphereObject.hpp"
 #include "../Engine/EGScene.hpp"
 #include "../Engine/EGGameObjectManager.hpp"
-#include "CLTestObejct.hpp"
 #include "../Engine/EGDeltaTime.hpp"
 
 namespace Client
@@ -20,59 +21,53 @@ namespace Client
 		void Update() override;
 
 	private:
-		std::weak_ptr<Engine::Abstract::GameObject> m_triangle_;
-		std::weak_ptr<Engine::Abstract::GameObject> m_circle_;
+		std::weak_ptr<Engine::Abstract::GameObject> m_burger_;
+		std::weak_ptr<Engine::Abstract::GameObject> m_plane_;
+		std::weak_ptr<Engine::Abstract::GameObject> m_sphere_;
 	};
 
 	inline void DefaultScene::Initialize()
 	{
 		Scene::Initialize();
+		m_camera_.lock()->SetPosition({ 0.0f, 30.0f, 200.0f });
 
-		m_triangle_ = Engine::Manager::GameObjectManager::Add<Object::TestObject>(L"Test");
-		AddGameObject(m_triangle_, Engine::Enums::LAYER::NONE);
+		m_plane_ = Engine::Manager::GameObjectManager::Add<Object::PlaneObject>(L"Plane");
+		AddGameObject(m_plane_, Engine::Enums::LAYER::NONE);
 
-		//m_circle_ = Engine::Manager::GameObjectManager::Add<Object::TestCircleObject>(L"TestCircle");
-		//AddGameObject(m_circle_, Engine::Enums::LAYER::NONE);
+		m_burger_ = Engine::Manager::GameObjectManager::Add<Object::BurgerObject>(L"Burger");
+		AddGameObject(m_burger_, Engine::Enums::LAYER::NONE);
+
+		m_sphere_ = Engine::Manager::GameObjectManager::Add<Object::SphereObject>(L"Sphere");
+		AddGameObject(m_sphere_, Engine::Enums::LAYER::NONE);
 	}
 
 	inline void DefaultScene::Update()
 	{
 		Scene::Update();
-		static float yaw = 0.f;
-		const auto key = Application::GetKeyState();
-		const auto cast = std::dynamic_pointer_cast<Object::TestObject>(m_triangle_.lock());
 
-		const auto tr = m_triangle_.lock()->GetComponent<Engine::Abstract::Transform>();
-		tr.lock()->SetRotation(DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(yaw, 0, 0));
-		yaw += Engine::DeltaTime::GetDeltaTime()->GetElapsedSeconds();
+		const auto obj = std::dynamic_pointer_cast<Object::BurgerObject>(m_burger_.lock());
+		const auto key = Application::GetKeyState();
+
 
 		if(key.W)
 		{
-			cast->move_up();
+			obj->move_up();
 		}
-		if(key.S)
+		if (key.S)
 		{
-			cast->move_down();
+			obj->move_down();
 		}
-		if(key.A)
+		if (key.A)
 		{
-			cast->move_left();
+			obj->move_left();
 		}
-		if(key.D)
+		if (key.D)
 		{
-			cast->move_right();
+			obj->move_right();
 		}
-		if(key.Up)
+		if(key.R)
 		{
-			cast->scale_up();
-		}
-		if(key.Down)
-		{
-			cast->scale_down();
-		}
-		if(key.Space)
-		{
-			cast->shoot();
+			obj->stop();
 		}
 	}
 }

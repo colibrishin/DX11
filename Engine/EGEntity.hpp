@@ -10,20 +10,12 @@ namespace Engine::Abstract
 		const std::wstring& GetName() const { return mName; }
 		UINT32 GetID() const { return mID; }
 		virtual ~Entity() = default;
-
-		std::shared_ptr<Entity> GetPtr()
-		{
-			return shared_from_this();
-		}
+		template<typename T>
+		std::shared_ptr<T> GetPtr() { return std::static_pointer_cast<T>(shared_from_this()); }
 
 	protected:
-		explicit Entity(const std::wstring& name) : mName(name), mID(reinterpret_cast<UINT32>(this))
-		{
-		}
-
-		Entity(const Entity& other) : mName(other.mName), mID(reinterpret_cast<UINT32>(this))
-		{
-		}
+		explicit Entity(const std::wstring& name);
+		Entity(const Entity& other);
 
 		void SetName(const std::wstring& name) { mName = name; }
 

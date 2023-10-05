@@ -14,9 +14,9 @@ namespace Engine::Manager
 		~ComponentManager() = delete;
 
 		template <typename T, typename... Args>
-		static std::weak_ptr<T> Create(Args... args)
+		static std::weak_ptr<T> Create(const Abstract::GameObject* owner, Args... args)
 		{
-			auto comp = std::make_shared<T>(args...);
+			auto comp = std::make_shared<T>(owner, args...);
 
 			mComponents.emplace(std::to_wstring(comp->GetID()), comp);
 

@@ -19,7 +19,7 @@ namespace Engine::Abstract
 
 		void AddComponent(const std::weak_ptr<Component>& component);
 		template <typename T>
-		std::weak_ptr<T> GetComponent()
+		std::weak_ptr<T> GetComponent() const
 		{
 			for (auto c : mComponents)
 			{
@@ -37,6 +37,7 @@ namespace Engine::Abstract
 		virtual void FixedUpdate();
 		virtual void Render();
 		void Destroy();
+		eState GetState() const;
 
 	private:
 		eState mState;

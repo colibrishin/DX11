@@ -53,9 +53,9 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <ImportGroup Label="ExtensionSettings">
-  </ImportGroup>
+  <ImportGroup Label="ExtensionSettings" />
   <ImportGroup Label="Shared">
+    <Import Project="..\Assets\Assets.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -155,19 +155,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CLApplication.hpp" />
-    <ClInclude Include="CLTestObejct.hpp" />
-    <ClInclude Include="CLTestCircleObject.hpp" />
+    <ClInclude Include="CLBurgerObject.hpp" />
+    <ClInclude Include="CLPlaneObject.hpp" />
+    <ClInclude Include="CLSphereObject.hpp" />
+    <ClInclude Include="CLTestHamburgerMesh.hpp" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CLBurgerObject.cpp" />
     <ClCompile Include="CLDefaultScene.hpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="CLApplication.cpp" />
-    <ClCompile Include="CLProjectileTestObject.hpp" />
-    <ClCompile Include="CLStoneTexture.hpp" />
-    <ClCompile Include="CLTestCircleObject.cpp" />
-    <ClCompile Include="CLTestObject.cpp" />
+    <ClCompile Include="CLPlaneObject.cpp" />
+    <ClCompile Include="CLSphereObject.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -182,6 +183,14 @@
     <ProjectReference Include="..\Engine\Engine.vcxproj">
       <Project>{6ecb7359-9375-4095-a3dd-3712e9b86f52}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <MeshContentTask Update="D:\document\Work\git\DX11\Assets\..\cup._obj">
+      <FileType>Document</FileType>
+    </MeshContentTask>
+    <MeshContentTask Update="D:\document\Work\git\DX11\Assets\Mesh\Cup\cup._obj">
+      <FileType>Document</FileType>
+    </MeshContentTask>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

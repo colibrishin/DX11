@@ -24,8 +24,8 @@ namespace Engine::Manager
 			return {};
 		}
 
-		template <typename T>
-		static std::weak_ptr<T> Load(const std::wstring& key)
+		template <typename T, typename... Args>
+		static std::weak_ptr<T> Load(const std::wstring& key, Args... args)
 		{
 			auto resource = Find<T>(key);
 			if (resource.lock())
@@ -33,7 +33,7 @@ namespace Engine::Manager
 				return resource;
 			}
 
-			auto insertion = std::make_shared<T>(key);
+			auto insertion = std::make_shared<T>(key, args...);
 			insertion->Load();
 			insertion->SetKey(key);
 			mResources.insert({key, insertion});

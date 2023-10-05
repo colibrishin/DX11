@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Mesh">
+      <UniqueIdentifier>{c2a2e8a8-fb17-481a-8bc8-85d8b09209bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Texture">
+      <UniqueIdentifier>{0d0dfdc0-28e7-4ac2-a375-efc2d70d5bb0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="$(MSBuildThisFileDirectory)Texture\stone01.tga">
+      <Filter>Texture</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <MeshContentTask Include="$(MSBuildThisFileDirectory)Mesh\burger.fbx" />
+  </ItemGroup>
+</Project>

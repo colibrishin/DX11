@@ -1,7 +1,6 @@
 ﻿#include "pch.h"
 #include "EGD3DDevice.hpp"
 #include "../Client/CLApplication.hpp"
-#include "EGRenderer.h"
 #include "EGMesh.hpp"
 #include "EGShader.hpp"
 
@@ -66,26 +65,9 @@ Engine::Graphics::D3DDevice::D3DDevice(HWND hwnd, UINT width, UINT height)
 	DX::ThrowIfFailed(
 		mDevice->CreateRenderTargetView(mFrameBuffer.Get(), nullptr, mRenderTargetView.GetAddressOf()));
 
-	// DepthStencilTexture
-	D3D11_TEXTURE2D_DESC texdesc = {};
+	AdjustViewport();
 
-	texdesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
-
-	texdesc.Usage = D3D11_USAGE_DEFAULT;
-	texdesc.CPUAccessFlags = 0;
-
-	texdesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-	texdesc.Width = width;
-	texdesc.Height = height;
-	texdesc.ArraySize = 1;
-
-	texdesc.SampleDesc.Count = 1;
-	texdesc.SampleDesc.Quality = 0;
-
-	texdesc.MipLevels = 0;
-	texdesc.MiscFlags = 0;
-
-	CreateDepthStencil(texdesc);
+	m_common_states_ = std::make_unique<DirectX::CommonStates>(mDevice.Get());
 }
 
 void Engine::Graphics::D3DDevice::ResizeSwapChain() const
@@ -129,9 +111,26 @@ void Engine::Graphics::D3DDevice::CreateDepthStencil(const D3D11_TEXTURE2D_DESC&
 	// Create Depth Stencil Buffer
 	DX::ThrowIfFailed(mDevice->CreateTexture2D(&desc, nullptr, mDepthStencilBuffer.ReleaseAndGetAddressOf()));
 
+	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc = {};
+
+	depthStencilViewDesc.Format = desc.Format;
+	depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+	depthStencilViewDesc.Texture2D.MipSlice = 0;
+
 	// Create Depth Stencil Buffer View
 	DX::ThrowIfFailed(
-		mDevice->CreateDepthStencilView(mDepthStencilBuffer.Get(), nullptr, mDepthStencilView.ReleaseAndGetAddressOf()));
+		mDevice->CreateDepthStencilView(mDepthStencilBuffer.Get(), &depthStencilViewDesc, mDepthStencilView.ReleaseAndGetAddressOf()));
+
+	D3D11_DEPTH_STENCIL_DESC depthStencilDesc = {};
+
+	depthStencilDesc.DepthEnable = true;
+	depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+	depthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS;
+
+	DX::ThrowIfFailed(
+		mDevice->CreateDepthStencilState(&depthStencilDesc, mDepthStencilState.ReleaseAndGetAddressOf()));
+
+	mContext->OMSetDepthStencilState(mDepthStencilState.Get(), 1);
 }
 
 void Engine::Graphics::D3DDevice::CreateShaderResourceView(
@@ -199,6 +198,31 @@ void Engine::Graphics::D3DDevice::CreatePixelShader(ID3DBlob* pShaderBytecode,
 	                                             , pShaderBytecode->GetBufferSize()
 	                                             , nullptr
 	                                             , ppPixelShader));
+}
+
+std::unique_ptr<DirectX::IEffectFactory> Engine::Graphics::D3DDevice::CreateEffectFactory() const
+{
+	return std::move(std::make_unique<DirectX::EffectFactory>(mDevice.Get()));
+}
+
+std::unique_ptr<DirectX::CommonStates> Engine::Graphics::D3DDevice::CreateCommonStates() const
+{
+	return std::move(std::make_unique<DirectX::CommonStates>(mDevice.Get()));
+}
+
+std::unique_ptr<DirectX::Model> Engine::Graphics::D3DDevice::LoadModelFromCMO(const std::filesystem::path& fileName,
+                                                                              DirectX::IEffectFactory* effectFactory)
+const
+{
+	const auto path = std::filesystem::absolute(fileName);
+	auto model = DirectX::Model::CreateFromCMO(mDevice.Get(), path.c_str(), *effectFactory);
+
+	if (model == nullptr)
+	{
+		throw std::exception("Failed to load model. See the debug output for more details.");
+	}
+
+	return std::move(model);
 }
 
 void Engine::Graphics::D3DDevice::BindInputLayout(ID3D11InputLayout* pInputLayout) const
@@ -305,9 +329,9 @@ void Engine::Graphics::D3DDevice::Clear() const
 void Engine::Graphics::D3DDevice::AdjustViewport()
 {
 	// ViewPort, RenderTaget
-	RECT winRect;
-	D3D11_VIEWPORT mViewPort = {
-		0.0f, 0.0f, static_cast<float>(m_width_), static_cast<float>(m_height_)
+	D3D11_VIEWPORT mViewPort = 
+	{
+		0.0f, 0.0f, static_cast<float>(m_width_), static_cast<float>(m_height_), 0.0f, 1.0f
 	};
 
 	BindViewports(&mViewPort);
@@ -336,6 +360,21 @@ void Engine::Graphics::D3DDevice::AdjustViewport()
 void Engine::Graphics::D3DDevice::Draw(UINT VertexCount, UINT StartVertexLocation) const
 {
 	mContext->Draw(VertexCount, StartVertexLocation);
+}
+
+void Engine::Graphics::D3DDevice::Draw(const DirectX::Model* model, const DirectX::XMMATRIX& world, const DirectX::XMMATRIX& view, const DirectX::XMMATRIX& proj, const std::function<void(ID3D11Device*, ID3D11DeviceContext*, const DirectX::CommonStates*)>& customState, const bool wireframe) const
+{
+	model->Draw(
+		mContext.Get(), 
+		*m_common_states_, 
+		world, 
+		view, 
+		proj, 
+		wireframe, 
+		[&]()
+		{
+			customState(mDevice.Get(), mContext.Get(), m_common_states_.get());
+		});
 }
 
 void Engine::Graphics::D3DDevice::DrawIndexed(UINT IndexCount, UINT StartIndexLocation, INT BaseVertexLocation) const
@@ -374,4 +413,15 @@ void Engine::Graphics::D3DDevice::Resize(UINT width, UINT height)
 	AdjustViewport();
 
 	m_resized_ = false;
+}
+
+std::unique_ptr<DirectX::GeometricPrimitive> Engine::Graphics::D3DDevice::CreateBox(const DirectX::XMFLOAT3& size) const
+{
+	return std::move(DirectX::GeometricPrimitive::CreateBox(mContext.Get(), size));
+}
+
+std::unique_ptr<DirectX::GeometricPrimitive> Engine::Graphics::D3DDevice::CreateSphere(
+	float diameter) const
+{
+	return std::move(DirectX::GeometricPrimitive::CreateSphere(mContext.Get(), diameter));
 }

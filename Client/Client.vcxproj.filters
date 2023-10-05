@@ -14,15 +14,26 @@
     <Filter Include="Texture">
       <UniqueIdentifier>{7cfe7ef4-99c7-4b90-8337-53e71b3b3bde}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Mesh">
+      <UniqueIdentifier>{deeb590b-b51a-4606-9fcc-95d127163371}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="CLApplication.hpp" />
-    <ClInclude Include="CLTestObejct.hpp">
+    <ClInclude Include="CLTestHamburgerMesh.hpp">
+      <Filter>Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="CLBurgerObject.hpp">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="CLTestCircleObject.hpp" />
+    <ClInclude Include="CLPlaneObject.hpp">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="CLSphereObject.hpp">
+      <Filter>Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -31,16 +42,13 @@
     <ClCompile Include="CLDefaultScene.hpp">
       <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="CLStoneTexture.hpp">
-      <Filter>Texture</Filter>
-    </ClCompile>
-    <ClCompile Include="CLProjectileTestObject.hpp">
+    <ClCompile Include="CLBurgerObject.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="CLTestObject.cpp">
+    <ClCompile Include="CLPlaneObject.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="CLTestCircleObject.cpp">
+    <ClCompile Include="CLSphereObject.cpp">
       <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>
